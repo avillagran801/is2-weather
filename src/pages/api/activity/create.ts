@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { name, minTemp, maxTemp, rain, category_id } = req.body;
 
   try {
-    if( !name ) { // CHECK ALL FIELDS
+    if( !name || isNaN(minTemp) || isNaN(maxTemp) || !rain || !category_id ) {
       return res.status(400).json({ error: "Falta al menos un campo obligatorio "});
     }
 

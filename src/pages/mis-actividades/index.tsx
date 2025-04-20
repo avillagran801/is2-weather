@@ -38,7 +38,7 @@ export default function MisActividades() {
 
   const handleAddActivity = async (newActivity: Omit<Activity, "id">) => {
     try {
-      if( !newActivity.name ) { // CHECK ALL FIELDS
+      if( !newActivity.name ) {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
