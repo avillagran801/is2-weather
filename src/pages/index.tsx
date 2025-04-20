@@ -3,8 +3,6 @@ export default function Home() {
     <>
       <div>
         Mi primera página :D
-
-        
       </div>
     </>
   );

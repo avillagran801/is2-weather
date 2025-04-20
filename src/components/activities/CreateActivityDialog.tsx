@@ -8,13 +8,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
-import { Activity } from '@/pages/mis-actividades';
+import { Activity } from '@/generated/prisma/client';
 
 type CreateActivityDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: (activity: Omit<Activity, "id">) => void;
-  existingActivities: Activity[]
 }
 
 const defaultFormValues = {
@@ -23,7 +22,7 @@ const defaultFormValues = {
   rain: "sí"
 }
 
-export default function CreateActivityDialog({open, setOpen, onSubmit, existingActivities}: CreateActivityDialogProps) {
+export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateActivityDialogProps) {
   const [formData, setFormData] = React.useState(defaultFormValues);
   
   // Variables asociadas a temperatura
@@ -67,21 +66,12 @@ export default function CreateActivityDialog({open, setOpen, onSubmit, existingA
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // En teoría se podría chequear dentro de la base de datos esto, pero queda así de momento
-    const isDuplicate = existingActivities.some(
-      activity => activity.name.toLowerCase() === formData.name.trim().toLowerCase()
-    );
-
-    if(isDuplicate){
-      alert("Ya existe una actividad con este nombre");
-      return;
-    }
-
     onSubmit({
       name: formData.name,
       minTemp: formData.temperature[0],
       maxTemp: formData.temperature[1],
       rain: formData.rain === "sí",
+      category_id: 1, // CHANGE LATER
     });
 
     handleClose();

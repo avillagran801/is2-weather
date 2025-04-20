@@ -8,6 +8,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
+import HomeIcon from '@mui/icons-material/Home';
 import Link from 'next/link';
 
 type TemporaryDrawerProps = {
@@ -17,6 +18,11 @@ type TemporaryDrawerProps = {
 
 export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProps) {
   const pagesList = [
+    {
+      name: "Inicio",
+      url: "/",
+      icon: <HomeIcon />
+    },
     {
       name: "Mis actividades",
       url: "/mis-actividades",

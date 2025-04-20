@@ -1,70 +1,123 @@
 import React from "react";
+import { Activity } from "@/generated/prisma/client";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
-
-// Eventualmente este tipo debería venir de la base de datos por Prisma
-export type Activity = {
-  id: string;
-  name: string;
-  minTemp: number;
-  maxTemp: number;
-  rain: boolean;
-}
+import CreateActivityCard from "@/components/activities/CreateActivityCard";
+import Loading from "@/components/layout/loading";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<Activity[]>([]);
+  const [refreshActivities, setRefreshActivities] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
 
-  const handleAddActivity = (newActivity: Omit<Activity, "id">) => {
-    setActivities((prev) => [
-      ...prev,
-      {
-        ...newActivity,
-        id: crypto.randomUUID(), // Eventualmente esto lo debería hacer la base de datos
+  React.useEffect(() => {
+    const fetchActivities = async() => {
+      try {
+        const response = await fetch("/api/activity/readAll");
+        const data = await response.json();
+
+        if(!response.ok){
+          throw new Error(data.error);
+        }
+
+        setActivities(data);
+      } catch (error) {
+        console.error("Error al obtener actividades: ", error);
+        alert("Error al obtener actividades");
+      } finally {
+        setRefreshActivities(false);
+        setLoading(false);
       }
-    ]);
+    };
+
+    fetchActivities()
+  }, [refreshActivities]);
+
+
+  const handleAddActivity = async (newActivity: Omit<Activity, "id">) => {
+    try {
+      if( !newActivity.name ) { // CHECK ALL FIELDS
+        throw new Error("Hay al menos un campo obligatorio incompleto");
+      }
+
+      const response = await fetch("/api/activity/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: newActivity.name,
+          minTemp: newActivity.minTemp,
+          maxTemp: newActivity.maxTemp,
+          rain: newActivity.rain,
+          category_id: 1, // CHANGE LATER
+        })
+      });
+
+      if(!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Solicitud fallida");
+      }
+
+      setRefreshActivities(true);
+      setLoading(true);
+    }
+    catch (error) {
+      console.log(error);
+      if(error instanceof Error){
+        alert(error.message);
+      }
+    }
   };
 
   return(
     <>
-      <Box sx={{
-        margin: "1rem"
-      }}>
-        <Typography variant="h6">
-          Mis actividades
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid
-            size={{ xs: 12, sm: 6, md: 4}}
-          >
-            <ActivityCard
-              title="Crear actividad"
-              customColor="lightgreen"
-              onClick={() => {setOpenCreateDialog(true)}}
-            />
-          </Grid>
-          {
-            activities.map((activity) => (
+      {loading?
+        <Loading />
+        : 
+        <>
+          <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            margin: "1rem",
+            gap: "1rem"
+          }}>
+            <Typography variant="h5">
+            Mis actividades
+            </Typography>
+            <Grid container spacing={2} alignItems="stretch">
               <Grid
-                key={activity.id}
                 size={{ xs: 12, sm: 6, md: 4}}
               >
-                <ActivityCard
-                  title={activity.name}
-                  onClick={() => {}}
+                <CreateActivityCard
+                  onClick={() => {setOpenCreateDialog(true)}}
                 />
               </Grid>
-            ))
-          }
-        </Grid>
-      </Box>
-      <CreateActivityDialog
-        open={openCreateDialog}
-        setOpen={setOpenCreateDialog}
-        onSubmit={handleAddActivity}
-        existingActivities={activities}
-      />
+              {
+                activities.map((activity) => (
+                  <Grid
+                    key={activity.id}
+                    size={{ xs: 12, sm: 6, md: 4}}
+                  >
+                    <ActivityCard
+                      activity={activity}
+                      onClick={() => {}}
+                    />
+                  </Grid>
+                ))
+              }
+            </Grid>
+          </Box>
+          <CreateActivityDialog
+            open={openCreateDialog}
+            setOpen={setOpenCreateDialog}
+            onSubmit={handleAddActivity}
+          />
+        </>
+      }
+
     </>
   );
 }

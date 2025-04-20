@@ -19,7 +19,10 @@ export default function MenuAppBar() {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        style={{ background: "#3a5a40"}}
+      >
         <Toolbar>
           <IconButton
             size="large"
