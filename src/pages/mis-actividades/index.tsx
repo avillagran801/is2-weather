@@ -5,12 +5,25 @@ import { Box, Grid, Typography } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
+import EditActivityDialog from "@/components/activities/EditActivityDialog";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<Activity[]>([]);
+
   const [refreshActivities, setRefreshActivities] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
+  const [openEditDialog, setOpenEditDialog] = React.useState(false);
+
+  const [selectedActivity, setSelectedActivity] = React.useState<Activity>({
+    id: 0,
+    name: "",
+    minTemp: 0,
+    maxTemp: 0,
+    rain: false,
+    category_id: 0,
+  });
 
   React.useEffect(() => {
     const fetchActivities = async() => {
@@ -51,7 +64,7 @@ export default function MisActividades() {
           name: newActivity.name,
           minTemp: newActivity.minTemp,
           maxTemp: newActivity.maxTemp,
-          rain: newActivity.rain? "true" : "false",
+          rain: newActivity.rain, // Se envía como string, así que la conversión ocurre en el endpoint
           category_id: 1, // CHANGE LATER
         })
       });
@@ -59,6 +72,43 @@ export default function MisActividades() {
       if(!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Solicitud fallida");
+      }
+
+      setRefreshActivities(true);
+      setLoading(true);
+    }
+    catch (error) {
+      console.log(error);
+      if(error instanceof Error){
+        alert(error.message);
+      }
+    }
+  };
+
+  const handleEditActivity = async (editedActivity: Activity) => {
+    try {
+      if( !editedActivity.name ) {
+        throw new Error("Hay al menos un campo obligatorio incompleto");
+      }
+
+      const response = await fetch("/api/activity/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: editedActivity.id,
+          name: editedActivity.name,
+          minTemp: editedActivity.minTemp,
+          maxTemp: editedActivity.maxTemp,
+          rain: editedActivity.rain, // Se envía como string, así que la conversión ocurre en el endpoint
+          category_id: editedActivity.category_id,
+        })
+      });
+
+      if(!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Solicitud fallida");  
       }
 
       setRefreshActivities(true);
@@ -103,21 +153,27 @@ export default function MisActividades() {
                   >
                     <ActivityCard
                       activity={activity}
-                      onClick={() => {}}
+                      onClick={() => {setSelectedActivity(activity); setOpenEditDialog(true)}}
                     />
                   </Grid>
                 ))
               }
             </Grid>
           </Box>
+
           <CreateActivityDialog
             open={openCreateDialog}
             setOpen={setOpenCreateDialog}
             onSubmit={handleAddActivity}
           />
+          <EditActivityDialog
+            open={openEditDialog}
+            setOpen={setOpenEditDialog}
+            selectedActivity={selectedActivity}
+            onSubmit={handleEditActivity}
+          />
         </>
       }
-
     </>
   );
 }

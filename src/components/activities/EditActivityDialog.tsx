@@ -1,31 +1,35 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import Slider from '@mui/material/Slider';
-import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
-import { Activity } from '@/generated/prisma/client';
-import { temperatureMarks, temperatureMinDistance } from '@/lib/activities_utils/temperature';
+import { Activity } from "@/generated/prisma";
+import { temperatureMarks, temperatureMinDistance } from "@/lib/activities_utils/temperature";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Slider, TextField } from "@mui/material";
+import React from "react";
 
-type CreateActivityDialogProps = {
+type EditActivityDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit: (activity: Omit<Activity, "id">) => void;
+  selectedActivity: Activity;
+  onSubmit: (activity: Activity) => void;
 }
 
-const defaultFormValues = {
-  name: "",
-  temperature: [15, 24] as [number, number],
-  rain: false
-}
+export default function CreateActivityDialog({open, setOpen, selectedActivity, onSubmit}: EditActivityDialogProps) {
+  const [formData, setFormData] = React.useState({
+    name: "",
+    temperature: [0, 0],
+    rain: false,
+    category_id: 0
+  });
 
-export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateActivityDialogProps) {
-  const [formData, setFormData] = React.useState(defaultFormValues);
-  
+  // Se resetea la información del form cada vez que se abre el dialog
+  React.useEffect(() => {
+    if(open) {
+      setFormData({
+        name: selectedActivity.name,
+        temperature: [selectedActivity.minTemp, selectedActivity.maxTemp],
+        rain: selectedActivity.rain,
+        category_id: selectedActivity.category_id,
+      })
+    }
+  }, [selectedActivity, open]);
+
   // Maneja cambios en campos distintos al de temperatura
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,39 +56,40 @@ export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateAc
 
   const handleClose = () => {
     setOpen(false);
-
-    // Limpia valores cada vez que se cierra
-    setFormData(defaultFormValues);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("DIALOG FORM");
+    console.log(formData);
+
     onSubmit({
+      id: selectedActivity.id,
       name: formData.name,
       minTemp: formData.temperature[0],
       maxTemp: formData.temperature[1],
       rain: formData.rain,
-      category_id: 1, // CHANGE LATER
+      category_id: formData.category_id,
     });
 
     handleClose();
   }
 
-  return (
+  return(
     <>
       <Dialog
         open={open}
         onClose={handleClose}
       >
         <DialogTitle>
-          Crear nueva actividad
+          Editar actividad
         </DialogTitle>
 
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <DialogContentText>
-            Para crear una nueva actividad por favor rellene los campos a continuación.
+            Para editar una actividad por favor rellene los campos a continuación.
             </DialogContentText>
 
             <Box sx={{
@@ -155,7 +160,7 @@ export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateAc
               Cancelar
             </Button>
             <Button type="submit">
-              Crear
+              Editar
             </Button>
           </DialogActions>
         </form>
