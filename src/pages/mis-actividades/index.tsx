@@ -51,7 +51,7 @@ export default function MisActividades() {
           name: newActivity.name,
           minTemp: newActivity.minTemp,
           maxTemp: newActivity.maxTemp,
-          rain: newActivity.rain,
+          rain: newActivity.rain? "true" : "false",
           category_id: 1, // CHANGE LATER
         })
       });

@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { name, minTemp, maxTemp, rain, category_id } = req.body;
 
   try {
-    if( !name || isNaN(minTemp) || isNaN(maxTemp) || !rain || !category_id ) {
+    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !category_id ) {
       return res.status(400).json({ error: "Falta al menos un campo obligatorio "});
     }
 
@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         name: name,
         minTemp: parseInt(minTemp),
         maxTemp: parseInt(maxTemp),
-        rain: rain === "true"? true : false,
+        rain: rain === "true" || rain === true,
         category_id: parseInt(category_id)
       }
     });

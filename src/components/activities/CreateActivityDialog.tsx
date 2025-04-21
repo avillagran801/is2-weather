@@ -19,7 +19,7 @@ type CreateActivityDialogProps = {
 const defaultFormValues = {
   name: "",
   temperature: [15, 24] as [number, number],
-  rain: "sí"
+  rain: false
 }
 
 export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateActivityDialogProps) {
@@ -70,7 +70,7 @@ export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateAc
       name: formData.name,
       minTemp: formData.temperature[0],
       maxTemp: formData.temperature[1],
-      rain: formData.rain === "sí",
+      rain: formData.rain,
       category_id: 1, // CHANGE LATER
     });
 
@@ -149,8 +149,8 @@ export default function CreateActivityDialog({open, setOpen, onSubmit}: CreateAc
                   value={formData.rain}
                   onChange={handleInputChange}
                 >
-                  <FormControlLabel value="sí" control={<Radio />} label="Sí" />
-                  <FormControlLabel value="no" control={<Radio />} label="No" />
+                  <FormControlLabel value={true} control={<Radio />} label="Sí" />
+                  <FormControlLabel value={false} control={<Radio />} label="No" />
                 </RadioGroup>
               </FormControl>
             </Box>
