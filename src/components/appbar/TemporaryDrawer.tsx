@@ -29,13 +29,13 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       icon: <DirectionsRunIcon />
     },
     {
-      name: "Blabla",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      name: "Mi ubicación",
+      url: "/mi-ubicacion",
       icon: undefined
     },
     {
       name: "Blabla",
-      url: "/",
+      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       icon: undefined
     },
   ];
