@@ -31,3 +31,10 @@ model Category {
 
   Activity Activity[]
 }
+
+model Location {
+  latitude Float 
+  longitude Float
+  @@id([latitude, longitude])
+  name String
+}
