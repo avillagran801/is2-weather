@@ -36,8 +36,8 @@ const MiUbicacion: React.FC = () => {
         noValidate
         autoComplete="off"
       >
-        <TextField id="outlined-basic" label="País" variant="outlined" onChange={(e) => setCountry(e.target.value)} />
-        <TextField id="outlined-basic" label="Ciudad" variant="outlined"  onChange={(e) => setCity(e.target.value)}/>
+        <TextField id="outlined-basic" label="País" variant="outlined" onChange={(e) => {setCountry(e.target.value); console.log('Country changed to:', e.target.value);}} />
+        <TextField id="outlined-basic" label="Ciudad" variant="outlined"  onChange={(e) => {setCity(e.target.value); console.log('City changed to:', e.target.value);}}/>
         <button type="submit">Actualizar Ciudad</button>
       </Box>
       {coords && (
@@ -46,6 +46,7 @@ const MiUbicacion: React.FC = () => {
           <p>Longitud: {coords.lng}</p>
         </div>
       )}
+      {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
     </>
   );
 };
