@@ -33,8 +33,8 @@ model Category {
 }
 
 model Location {
+  id Int @id @default(autoincrement())
   latitude Float 
   longitude Float
-  @@id([latitude, longitude])
   name String
 }
