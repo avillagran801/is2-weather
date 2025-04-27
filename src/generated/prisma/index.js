@@ -130,7 +130,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\anii-\\Desktop\\is2-weather\\src\\generated\\prisma",
+      "value": "C:\\Users\\pedro\\Desktop\\is2-weather\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -144,12 +144,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\anii-\\Desktop\\is2-weather\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\pedro\\Desktop\\is2-weather\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.6.0",

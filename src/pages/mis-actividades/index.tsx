@@ -122,6 +122,34 @@ export default function MisActividades() {
     }
   };
 
+  const handleDeleteActivity = async (deletedActivity: Activity) => {
+    try {
+      const response = await fetch("/api/activity/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: deletedActivity.id,
+        })
+      });
+
+      if(!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Solicitud fallida");  
+      }
+
+      setRefreshActivities(true);
+      setLoading(true);
+    }
+    catch (error) {
+      console.log(error);
+      if(error instanceof Error){
+        alert(error.message);
+      }
+    }
+  };
+
   return(
     <>
       {loading?
@@ -154,6 +182,8 @@ export default function MisActividades() {
                     <ActivityCard
                       activity={activity}
                       onClick={() => {setSelectedActivity(activity); setOpenEditDialog(true)}}
+                      onDelete={() => {handleDeleteActivity(activity)}
+                      }
                     />
                   </Grid>
                 ))
