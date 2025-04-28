@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 const MiUbicacion: React.FC = () => {
   const [city, setCity] = useState('');
@@ -16,7 +17,7 @@ const MiUbicacion: React.FC = () => {
     const query = `${city}, ${country}`;
 
     try {
-      const res = await fetch(`/api/geocode?city=${encodeURIComponent(city)}`);
+      const res = await fetch(`/api/geocode/coordinates?city=${encodeURIComponent(city)}`);
       const data = await res.json();
 
       if (!res.ok) {
@@ -30,6 +31,9 @@ const MiUbicacion: React.FC = () => {
   };
   return (
     <>
+      <Typography variant="h4" gutterBottom>
+           Actualizar ubicación:
+      </Typography>  
       <Box
         component="form"
         sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
@@ -38,10 +42,12 @@ const MiUbicacion: React.FC = () => {
       >
         <TextField id="outlined-basic" label="País" variant="outlined" onChange={(e) => {setCountry(e.target.value); console.log('Country changed to:', e.target.value);}} />
         <TextField id="outlined-basic" label="Ciudad" variant="outlined"  onChange={(e) => {setCity(e.target.value); console.log('City changed to:', e.target.value);}}/>
-        <button type="submit">Actualizar Ciudad</button>
       </Box>
+      <Typography variant="h4" gutterBottom>
+            Ciudad Actual: {city}, {country}
+      </Typography>  
       {coords && (
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: '1rem' }}>      
           <p>Latitud: {coords.lat}</p>
           <p>Longitud: {coords.lng}</p>
         </div>
