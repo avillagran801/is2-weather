@@ -17,7 +17,7 @@ const MiUbicacion: React.FC = () => {
     const query = `${city}, ${country}`;
 
     try {
-      const res = await fetch(`/api/geocode/coordinates?city=${encodeURIComponent(city)}`);
+      const res = await fetch(`/api/geocoder/coordinates?city=${encodeURIComponent(query)}`);
       const data = await res.json();
 
       if (!res.ok) {
@@ -36,12 +36,14 @@ const MiUbicacion: React.FC = () => {
       </Typography>  
       <Box
         component="form"
+        onSubmit={handleSubmit}
         sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
         noValidate
         autoComplete="off"
       >
         <TextField id="outlined-basic" label="País" variant="outlined" onChange={(e) => {setCountry(e.target.value); console.log('Country changed to:', e.target.value);}} />
         <TextField id="outlined-basic" label="Ciudad" variant="outlined"  onChange={(e) => {setCity(e.target.value); console.log('City changed to:', e.target.value);}}/>
+        <button type = "submit">Actualizar Ciudad</button>
       </Box>
       <Typography variant="h4" gutterBottom>
             Ciudad Actual: {city}, {country}
