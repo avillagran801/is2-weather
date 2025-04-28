@@ -40,15 +40,16 @@ model Location {
   longitude Float
   name String
 
-  User User[]
+
+  User User?
 }
 
 model User{
   id Int @id @default(autoincrement())
   name String
-  location_id Int @unique
 
-  Location Location @relation(fields: [location_id], references: [id])
+  location_id Int @unique
+  Location Location? @relation(fields: [location_id], references: [id])
 
   UserActivity UserActivity[]
 }
