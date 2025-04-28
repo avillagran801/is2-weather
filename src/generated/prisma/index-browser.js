@@ -138,6 +138,17 @@ exports.Prisma.LocationScalarFieldEnum = {
   name: 'name'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  location_id: 'location_id'
+};
+
+exports.Prisma.UserActivityScalarFieldEnum = {
+  user_id: 'user_id',
+  activity_id: 'activity_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -152,7 +163,9 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   Activity: 'Activity',
   Category: 'Category',
-  Location: 'Location'
+  Location: 'Location',
+  User: 'User',
+  UserActivity: 'UserActivity'
 };
 
 /**
