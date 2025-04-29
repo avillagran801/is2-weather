@@ -78,12 +78,30 @@ export default function Clima() {
         weatherCode: weatherCodeDescriptions[weather?.hourly?.weather_code?.[index]] || "Desconocido",
     }));
 
+    // Extract current weather data
+    const currentTemperature = weather?.current?.temperature_2m;
+    const currentWeatherCode = weather?.current?.weather_code;
+    const currentWeatherDescription = weatherCodeDescriptions[currentWeatherCode] || "Desconocido";
+
     return (
         <>
             {loading ? (
                 <Loading />
             ) : (
                 <Box sx={{ padding: 2 }}>
+                    {/* Current Weather */}
+                    <Typography variant="h4" gutterBottom>
+                        Clima Actual
+                    </Typography>
+                    <Box sx={{ marginBottom: 4 }}>
+                        <Typography variant="h6">
+                            Temperatura Actual: {currentTemperature} °C
+                        </Typography>
+                        <Typography variant="h6">
+                            Condición Actual: {currentWeatherDescription}
+                        </Typography>
+                    </Box>
+
                     {graphData ? (
                         <>
                             {/* Temperature Graph */}
@@ -102,7 +120,7 @@ export default function Clima() {
 
                             {/* Precipitation Graph */}
                             <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-                                Probabilidad de lluvia
+                                Probabilidad de Lluvia
                             </Typography>
                             <ResponsiveContainer width="100%" height={400}>
                                 <LineChart data={graphData}>
@@ -122,7 +140,6 @@ export default function Clima() {
                             <Typography variant="body2" color="textSecondary">
                                 (Los datos crudos pueden contener información adicional sobre el clima.)
                             </Typography>
-
                         </>
                     ) : (
                         <Typography variant="body1">No se encontraron datos de clima.</Typography>
