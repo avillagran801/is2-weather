@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Loading from "@/components/layout/loading";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function Clima() {
     const [loading, setLoading] = React.useState(true);
@@ -67,30 +68,61 @@ export default function Clima() {
         fetchWeather();
     }, []);
 
+    // Prepare data for the graphs
+    const graphData = weather?.hourly?.temperature_2m?.map((temp: number, index: number) => ({
+        hour: `${index}:00`,
+        temperature: temp,
+        precipitation_probability: weather?.hourly?.precipitation_probability?.[index] || 0,
+        relative_humidity: weather?.hourly?.relative_humidity_2m?.[index] || 0,
+        uv_index: weather?.hourly?.uv_index?.[index] || 0,
+        weatherCode: weatherCodeDescriptions[weather?.hourly?.weather_code?.[index]] || "Desconocido",
+    }));
+
     return (
         <>
             {loading ? (
                 <Loading />
             ) : (
                 <Box sx={{ padding: 2 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Clima Actual
-                    </Typography>
-                    {weather && weather.hourly && weather.hourly.temperature_2m && weather.hourly.weather_code ? (
+                    {graphData ? (
                         <>
-                            <Grid container spacing={2}>
-                                {weather.hourly.temperature_2m.map((temp: number, index: number) => (
-                                    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}                                    >
-                                        <Box sx={{ border: "1px solid #ccc", padding: 2, borderRadius: 1 }}>
-                                            <Typography variant="h6">Hora: {index}:00</Typography>
-                                            <Typography variant="body1">Temperatura: {temp} °C</Typography>
-                                            <Typography variant="body1">
-                                                Estado del tiempo: {weatherCodeDescriptions[weather.hourly.weather_code[index]] || "Desconocido"}
-                                            </Typography>
-                                        </Box>
-                                    </Grid>
-                                ))}
-                            </Grid>
+                            {/* Temperature Graph */}
+                            <Typography variant="h6" gutterBottom>
+                                Temperatura
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={400}>
+                                <LineChart data={graphData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="hour" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Line type="monotone" dataKey="temperature" stroke="#8884d8" activeDot={{ r: 8 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+
+                            {/* Precipitation Graph */}
+                            <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
+                                Probabilidad de lluvia
+                            </Typography>
+                            <ResponsiveContainer width="100%" height={400}>
+                                <LineChart data={graphData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="hour" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Line type="monotone" dataKey="precipitation_probability" stroke="#82ca9d" activeDot={{ r: 8 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+
+                            {/* Raw Data */}
+                            <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
+                                Datos Crudos
+                            </Typography>
+                            <pre>{JSON.stringify(weather, null, 2)}</pre>
+                            <Typography variant="body2" color="textSecondary">
+                                (Los datos crudos pueden contener información adicional sobre el clima.)
+                            </Typography>
+
                         </>
                     ) : (
                         <Typography variant="body1">No se encontraron datos de clima.</Typography>

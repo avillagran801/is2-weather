@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { latitude, longitude } = req.body;
     const url = "https://api.open-meteo.com/v1/forecast";
-    const queries = "&hourly=temperature_2m,weather_code,relative_humidity_2m,uv_index&forecast_days=3";
+    const queries = "&hourly=temperature_2m,weather_code,relative_humidity_2m,precipitation_probability,uv_index&forecast_days=3";
 
     try {
         if (!latitude || !longitude) {
