@@ -34,8 +34,8 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       icon: undefined
     },
     {
-      name: "Blabla",
-      url: "/",
+      name: "Recomendaciones",
+      url: "/recomendaciones",
       icon: undefined
     },
   ];
