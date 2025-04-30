@@ -16,9 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const response = await fetch(`${url}?latitude=${latitude}&longitude=${longitude}${queries}`);
-    const data = await response.json(); // Parse the response as JSON
+    const data = await response.json(); 
 
-    return res.status(200).json(data); // Return the parsed JSON
+    return res.status(200).json(data); 
   } catch (error) {
     console.error("Error fetching weather data:", error);
     return res.status(500).json({ error: "Error interno del servidor" });
