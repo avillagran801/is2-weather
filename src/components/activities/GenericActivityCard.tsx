@@ -7,7 +7,7 @@ type GenericActivityCardProps = {
   activity: Activity;
 };
 
-function GenericActivityCard({ activity }: GenericActivityCardProps) {
+export default function GenericActivityCard({ activity }: GenericActivityCardProps) {
   return (
     <Card sx={{
       height: "100%",
