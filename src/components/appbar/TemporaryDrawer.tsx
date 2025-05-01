@@ -9,6 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import HomeIcon from '@mui/icons-material/Home';
+import InterestsIcon from '@mui/icons-material/Interests';
 import Link from 'next/link';
 
 type TemporaryDrawerProps = {
@@ -29,12 +30,17 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       icon: <DirectionsRunIcon />
     },
     {
+      name: "Categorias",
+      url: "/categorias",
+      icon: <InterestsIcon/>
+    },
+    {
       name: "Mi ubicación",
       url: "/mi-ubicacion",
       icon: undefined
     },
     {
-      name: "Blabla",
+      name: "Gift",
       url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       icon: undefined
     },
