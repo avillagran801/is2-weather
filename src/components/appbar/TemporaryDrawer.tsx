@@ -30,7 +30,7 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       icon: <DirectionsRunIcon />
     },
     {
-      name: "Categorias",
+      name: "Mis categorias",
       url: "/categorias",
       icon: <InterestsIcon/>
     },
@@ -67,7 +67,7 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
 
   return (
     <>
-      <Drawer open={open} onClose={handleClose}>
+      <Drawer open={open} onClose={handleClose} disableScrollLock={true}>
         {DrawerList}
       </Drawer>
     </>

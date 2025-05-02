@@ -1,14 +1,16 @@
 import React from "react";
-import { Activity } from "@/generated/prisma/client";
+import { Activity, Category } from "@/generated/prisma/client";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
 import EditActivityDialog from "@/components/activities/EditActivityDialog";
+import { ActivityWithCategory } from "../api/activity/readAll";
 
 export default function MisActividades() {
-  const [activities, setActivities] = React.useState<Activity[]>([]);
+  const [activities, setActivities] = React.useState<ActivityWithCategory[]>([]);
+  const [categories, setCategories] = React.useState<Category[]>([]);
 
   const [refreshActivities, setRefreshActivities] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -16,13 +18,17 @@ export default function MisActividades() {
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openEditDialog, setOpenEditDialog] = React.useState(false);
 
-  const [selectedActivity, setSelectedActivity] = React.useState<Activity>({
+  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategory>({
     id: 0,
     name: "",
     minTemp: 0,
     maxTemp: 0,
     rain: false,
     category_id: 0,
+    category: {
+      id: 0,
+      name: "",
+    }
   });
 
   React.useEffect(() => {
@@ -45,9 +51,29 @@ export default function MisActividades() {
       }
     };
 
-    fetchActivities()
+    fetchActivities();
   }, [refreshActivities]);
 
+  React.useEffect(() => {
+    const fetchCategories = async() => {
+      try {
+        const response = await fetch("/api/category/catReadAll");
+        const data = await response.json();
+
+        if(!response.ok){
+          throw new Error(data.error);
+        }
+
+        setCategories(data);
+      }
+      catch (error) {
+        console.error("Error al obtener categorías: ", error);
+        alert("Error al obtener categorías");
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
   const handleAddActivity = async (newActivity: Omit<Activity, "id">) => {
     try {
@@ -65,7 +91,7 @@ export default function MisActividades() {
           minTemp: newActivity.minTemp,
           maxTemp: newActivity.maxTemp,
           rain: newActivity.rain, // Se envía como string, así que la conversión ocurre en el endpoint
-          category_id: 1, // CHANGE LATER
+          category_id: newActivity.category_id,
         })
       });
 
@@ -195,12 +221,14 @@ export default function MisActividades() {
             open={openCreateDialog}
             setOpen={setOpenCreateDialog}
             onSubmit={handleAddActivity}
+            categories={categories}
           />
           <EditActivityDialog
             open={openEditDialog}
             setOpen={setOpenEditDialog}
             selectedActivity={selectedActivity}
             onSubmit={handleEditActivity}
+            categories={categories}
           />
         </>
       }

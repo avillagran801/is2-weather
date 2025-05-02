@@ -13,8 +13,8 @@ export default async function handler(
     const categories = await prisma.category.findMany();
 
     if (categories.length === 0) {
-        return res.status(404).json({ message: 'No se encontraron categorias' });
-      }
+      return res.status(404).json({ message: 'No se encontraron categorias' });
+    }
 
     return res.status(200).json(categories);
   } catch (error) {

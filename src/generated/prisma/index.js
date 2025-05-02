@@ -154,7 +154,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\GitHub\\is2-weather\\src\\generated\\prisma",
+      "value": "C:\\Users\\anii-\\Desktop\\is2-weather\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -168,7 +168,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\GitHub\\is2-weather\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\anii-\\Desktop\\is2-weather\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -182,11 +182,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_d3Z4lzVNMYCg@ep-dry-frost-acuaum8y-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&connect_timeout=60"
+        "value": null
       }
     }
   },

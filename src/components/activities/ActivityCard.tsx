@@ -1,11 +1,11 @@
-import { Activity } from "@/generated/prisma/client";
 import { Box, Card, CardActionArea, CardContent, Typography, IconButton } from "@mui/material";
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ActivityWithCategory } from "@/pages/api/activity/readAll";
 
 type CardProps = {
-  activity: Activity;
+  activity: ActivityWithCategory;
   onClick: () => void;
   onDelete: () => void; // Add a prop for the delete action
 }
@@ -52,6 +52,17 @@ export default function ActivityCard({ activity, onClick, onDelete }: CardProps)
               <WbSunnyIcon />
               <Typography sx={{ fontSize: "1rem"}}>
                 Lluvia: {activity.rain? "Sí" : "No"}
+              </Typography>
+            </Box>
+
+            <Box sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.8rem"
+            }}>
+              <WbSunnyIcon />
+              <Typography sx={{ fontSize: "1rem"}}>
+                Categoría: {activity.category.name}
               </Typography>
             </Box>
           </CardContent>

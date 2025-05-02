@@ -1,5 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma";
+
+export type ActivityWithCategory = Prisma.ActivityGetPayload<{
+  include: {
+    category: true,
+  }  
+}>
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if(req.method != "GET"){
@@ -7,7 +14,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const activities = await prisma.activity.findMany();
+    const activities = await prisma.activity.findMany({
+      include: {
+        category: true,
+      }
+    });
 
     return res.status(200).json(activities);
   }
