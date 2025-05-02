@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -9,24 +9,48 @@ const MiUbicacion: React.FC = () => {
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    const fetchUserLocation = async () => {
+      try {
+        const res = await fetch('/api/location/findUnique');
+        const data = await res.json();
+
+        if (res.ok) {
+          setCity(data.city);
+          setCountry(data.country);
+          setCoords({ lat: data.lat, lng: data.lng });
+        } else {
+          setError(data.error || 'No se pudo obtener la ubicación del usuario');
+        }
+      } catch (err) {
+        setError('Error de red al obtener ubicación');
+      }
+    };
+
+    fetchUserLocation();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setCoords(null);
-    
-    const query = `${city}, ${country}`;
-
+  
     try {
-      const res = await fetch(`/api/geocoder/coordinates?city=${encodeURIComponent(query)}`);
+      const res = await fetch('/api/location/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ city, country }),
+      });
+  
       const data = await res.json();
-
+  
       if (!res.ok) {
         setError(data.error || 'Algo salió mal');
       } else {
-        setCoords(data);
+        setCoords({ lat: data.latitude, lng: data.longitude });
       }
     } catch (err) {
-      setError('Error de fetch');
+      setError('Error de red al enviar la ubicación');
     }
   };
   return (

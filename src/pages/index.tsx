@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function Clima() {
   const [loading, setLoading] = React.useState(true);
   const [weather, setWeather] = React.useState<any>(null);
+  const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
 
   const weatherCodeDescriptions: { [key: number]: string } = {
     0: "Cielo despejado",
@@ -41,15 +42,27 @@ export default function Clima() {
   React.useEffect(() => {
     const fetchWeather = async () => {
       try {
+        const locationRes = await fetch("/api/location/findUnique");
+        const locationData = await locationRes.json();
+        
+        if (!locationRes.ok) {
+          throw new Error(locationData.error || "Error obteniendo ubicación");
+        }
+
+        const { city, country, lat, lng } = locationData;
+
+        if (!city || !country || lat == null || lng == null) {
+          throw new Error("Datos de ubicación inválidos");
+        }
+
+        setLocation({ city: city,country: country, lat: lat, lng: lng });
+
         const response = await fetch("/api/weather/consult", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            latitude: -36.827, // Latitude for Concepción, Chile
-            longitude: -73.050, // Longitude for Concepción, Chile
-          }),
+          body: JSON.stringify({ latitude: lat, longitude: lng }),
         });
 
         const data = await response.json();
@@ -60,7 +73,7 @@ export default function Clima() {
         setWeather(data);
       } catch (error) {
         console.error("Error al obtener el clima: ", error);
-        alert("Error al obtener el clima");
+        alert("Error al obtener el clima o la ubicación");
       } finally {
         setLoading(false);
       }
@@ -91,7 +104,7 @@ export default function Clima() {
         <Box sx={{ padding: 2 }}>
           {/* Current Weather */}
           <Typography variant="h4" gutterBottom>
-                        Clima Actual
+                        Clima Actual en {location?.city}, {location?.country}
           </Typography>
           <Box sx={{ marginBottom: 4 }}>
             <Typography variant="h6">
