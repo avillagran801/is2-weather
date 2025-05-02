@@ -38,7 +38,7 @@ model Location {
   id Int @id @default(autoincrement())
   latitude Float 
   longitude Float
-  name String
+  name String @unique
 
 
   User User?
