@@ -145,14 +145,11 @@ export default function Clima() {
                 </LineChart>
               </ResponsiveContainer>
 
-              {/* Raw Data */}
+              {/* Raw response
               <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-                                Datos Crudos
+                                Respuesta formato json de open-meteo
               </Typography>
-              <pre>{JSON.stringify(weather, null, 2)}</pre>
-              <Typography variant="body2" color="textSecondary">
-                                (Los datos crudos pueden contener información adicional sobre el clima.)
-              </Typography>
+              <pre>{JSON.stringify(weather, null, 2)}</pre> */}
             </>
           ) : (
             <Typography variant="body1">No se encontraron datos de clima.</Typography>
