@@ -126,30 +126,27 @@ exports.Prisma.ActivityScalarFieldEnum = {
   minTemp: 'minTemp',
   maxTemp: 'maxTemp',
   rain: 'rain',
-  category_id: 'category_id'
+  user_id: 'user_id'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  user_id: 'user_id'
 };
 
-exports.Prisma.LocationScalarFieldEnum = {
-  id: 'id',
-  latitude: 'latitude',
-  longitude: 'longitude',
-  name: 'name'
+exports.Prisma.ActivityCategoryScalarFieldEnum = {
+  activity_id: 'activity_id',
+  category_id: 'category_id'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  location_id: 'location_id'
-};
-
-exports.Prisma.UserActivityScalarFieldEnum = {
-  user_id: 'user_id',
-  activity_id: 'activity_id'
+  password: 'password',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  city_name: 'city_name'
 };
 
 exports.Prisma.SortOrder = {
@@ -166,9 +163,8 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   Activity: 'Activity',
   Category: 'Category',
-  Location: 'Location',
-  User: 'User',
-  UserActivity: 'UserActivity'
+  ActivityCategory: 'ActivityCategory',
+  User: 'User'
 };
 
 /**

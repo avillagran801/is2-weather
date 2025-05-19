@@ -8,16 +8,22 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
-import { Activity, Category } from '@/generated/prisma/client';
 import { temperatureMarks, temperatureMinDistance } from '@/lib/activities_utils/temperature';
+import { PlainCategory } from '@/pages/api/category/readUserCategories';
+import { ActivityWithCategories } from '@/pages/api/activity/readUserActivities';
+
+export type ActivityCreatePayload = Omit<ActivityWithCategories, "id" | "user_id" | "ActivityCategory"> & {
+  categories_id: number[];
+};
 
 type CreateActivityDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit: (activity: Omit<Activity, "id">) => void;
-  categories: Category[];
+  onSubmit: (activity: ActivityCreatePayload) => void;
+  categories: PlainCategory[];
 }
 
+// CHANGE LATER
 const defaultFormValues = {
   name: "",
   temperature: [15, 24] as [number, number],
@@ -68,12 +74,15 @@ export default function CreateActivityDialog({open, setOpen, onSubmit, categorie
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
     onSubmit({
       name: formData.name,
       minTemp: formData.temperature[0],
       maxTemp: formData.temperature[1],
       rain: formData.rain,
-      category_id: formData.category_id,
+      categories_id: [ // <--- CHANGE THIS
+        formData.category_id,
+      ]
     });
 
     handleClose();

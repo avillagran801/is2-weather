@@ -1,16 +1,17 @@
 import React from "react";
-import { Activity, Category } from "@/generated/prisma/client";
+import { Activity } from "@/generated/prisma/client";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography } from "@mui/material";
-import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
+import CreateActivityDialog, { ActivityCreatePayload } from "@/components/activities/CreateActivityDialog";
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
-import EditActivityDialog from "@/components/activities/EditActivityDialog";
-import { ActivityWithCategory } from "../api/activity/readAll";
+import EditActivityDialog, { ActivityEditPayload } from "@/components/activities/EditActivityDialog";
+import { ActivityWithCategories } from "../api/activity/readUserActivities";
+import { PlainCategory } from "../api/category/readUserCategories";
 
 export default function MisActividades() {
-  const [activities, setActivities] = React.useState<ActivityWithCategory[]>([]);
-  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
+  const [categories, setCategories] = React.useState<PlainCategory[]>([]);
 
   const [refreshActivities, setRefreshActivities] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -18,23 +19,22 @@ export default function MisActividades() {
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openEditDialog, setOpenEditDialog] = React.useState(false);
 
-  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategory>({
+  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>({
     id: 0,
     name: "",
     minTemp: 0,
     maxTemp: 0,
     rain: false,
-    category_id: 0,
-    category: {
-      id: 0,
-      name: "",
-    }
+    user_id: 0,
+    ActivityCategory: [],
   });
 
+  // Fetch all activities associated with the user
   React.useEffect(() => {
     const fetchActivities = async() => {
       try {
-        const response = await fetch("/api/activity/readAll");
+        // CHANGE USER_ID LATER
+        const response = await fetch("/api/activity/readUserActivities?user_id=2");
         const data = await response.json();
 
         if(!response.ok){
@@ -54,10 +54,12 @@ export default function MisActividades() {
     fetchActivities();
   }, [refreshActivities]);
 
+  // Fetch all categories associated with the user
   React.useEffect(() => {
     const fetchCategories = async() => {
       try {
-        const response = await fetch("/api/category/catReadAll");
+        // CHANGE USER_ID LATER
+        const response = await fetch("/api/category/readUserCategories?user_id=2");
         const data = await response.json();
 
         if(!response.ok){
@@ -75,12 +77,14 @@ export default function MisActividades() {
     fetchCategories();
   }, []);
 
-  const handleAddActivity = async (newActivity: Omit<Activity, "id">) => {
+  const handleAddActivity = async (newActivity: ActivityCreatePayload) => {
     try {
       if( !newActivity.name ) {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
+      // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
+      // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/create", {
         method: "POST",
         headers: {
@@ -90,8 +94,9 @@ export default function MisActividades() {
           name: newActivity.name,
           minTemp: newActivity.minTemp,
           maxTemp: newActivity.maxTemp,
-          rain: newActivity.rain, // Se envía como string, así que la conversión ocurre en el endpoint
-          category_id: newActivity.category_id,
+          rain: newActivity.rain,
+          user_id: 2, // <--- CHANGE THIS
+          category_id: newActivity.categories_id[0], // <--- CHANGE THIS
         })
       });
 
@@ -111,12 +116,14 @@ export default function MisActividades() {
     }
   };
 
-  const handleEditActivity = async (editedActivity: Activity) => {
+  const handleEditActivity = async (editedActivity: ActivityEditPayload) => {
     try {
       if( !editedActivity.name ) {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
+      // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
+      // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/update", {
         method: "POST",
         headers: {
@@ -127,8 +134,9 @@ export default function MisActividades() {
           name: editedActivity.name,
           minTemp: editedActivity.minTemp,
           maxTemp: editedActivity.maxTemp,
-          rain: editedActivity.rain, // Se envía como string, así que la conversión ocurre en el endpoint
-          category_id: editedActivity.category_id,
+          rain: editedActivity.rain,
+          user_id: 2, // <--- CHANGE THIS
+          category_id: editedActivity.categories_id[0], // <--- CHANGE THIS
         })
       });
 

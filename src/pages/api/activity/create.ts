@@ -1,16 +1,16 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/generated/prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
+// CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if(req.method !== "POST"){
     return res.status(405).json({ error: "Método no permitido" });    
   }
 
-  const { name, minTemp, maxTemp, rain, category_id } = req.body;
+  const { name, minTemp, maxTemp, rain, category_id, user_id } = req.body;
 
   try {
-    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !category_id ) {
+    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !category_id || !user_id ) {
       return res.status(400).json({ error: "Falta al menos un campo obligatorio "});
     }
 
@@ -20,20 +20,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         minTemp: parseInt(minTemp),
         maxTemp: parseInt(maxTemp),
         rain: rain === "true" || rain === true,
-        category_id: parseInt(category_id)
+
+        // Connect activity to existing user
+        User: {
+          connect: {
+            id: user_id,
+          }
+        },
+
+        // Create relationship between the activity and an existing category
+        ActivityCategory: {
+          create: {
+            category_id: category_id,
+          }
+        }
       }
     });
 
     return res.status(201).json(activity);
   }
   catch (error) {
-    if(error instanceof Prisma.PrismaClientKnownRequestError){
-      if(error.code === "P2002"){
-        return res.status(422).json({ error: "Ya existe una entrada con este nombre" });
-      }
-    }
-    else {
-      return res.status(500).json({ error: "Error al crear actividad" });
-    }
+    return res.status(500).json({ error: {error} });
   }
 }

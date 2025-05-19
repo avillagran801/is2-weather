@@ -1,14 +1,19 @@
-import { Activity, Category } from "@/generated/prisma";
 import { temperatureMarks, temperatureMinDistance } from "@/lib/activities_utils/temperature";
+import { ActivityWithCategories } from "@/pages/api/activity/readUserActivities";
+import { PlainCategory } from "@/pages/api/category/readUserCategories";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Slider, TextField } from "@mui/material";
 import React from "react";
+
+export type ActivityEditPayload = Omit<ActivityWithCategories, "user_id" | "ActivityCategory"> & {
+  categories_id: number[];
+};
 
 type EditActivityDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedActivity: Activity;
-  onSubmit: (activity: Activity) => void;
-  categories: Category[];
+  selectedActivity: ActivityWithCategories;
+  onSubmit: (activity: ActivityEditPayload) => void;
+  categories: PlainCategory[];
 }
 
 export default function EditActivityDialog({open, setOpen, selectedActivity, onSubmit, categories}: EditActivityDialogProps) {
@@ -19,6 +24,7 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
     category_id: 0
   });
 
+  // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
   // Se resetea la información del form cada vez que se abre el dialog
   React.useEffect(() => {
     if(open) {
@@ -26,7 +32,7 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
         name: selectedActivity.name,
         temperature: [selectedActivity.minTemp, selectedActivity.maxTemp],
         rain: selectedActivity.rain,
-        category_id: selectedActivity.category_id,
+        category_id: selectedActivity.ActivityCategory[0].Category.id, // <--- CHANGE THIS
       })
     }
   }, [selectedActivity, open]);
@@ -68,16 +74,16 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("DIALOG FORM");
-    console.log(formData);
-
+    // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
     onSubmit({
       id: selectedActivity.id,
       name: formData.name,
       minTemp: formData.temperature[0],
       maxTemp: formData.temperature[1],
       rain: formData.rain,
-      category_id: formData.category_id,
+      categories_id: [ // <--- CHANGE THIS
+        formData.category_id,
+      ]
     });
 
     handleClose();

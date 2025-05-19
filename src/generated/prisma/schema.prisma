@@ -16,48 +16,47 @@ datasource db {
 
 model Activity {
   id      Int     @id @default(autoincrement())
-  name    String  @unique
+  name    String
   minTemp Int
   maxTemp Int
   rain    Boolean
 
-  category_id Int
-  category    Category @relation(fields: [category_id], references: [id])
+  user_id Int
+  User    User @relation(fields: [user_id], references: [id])
 
-  UserActivity UserActivity[]
+  ActivityCategory ActivityCategory[]
 }
 
 model Category {
   id   Int    @id @default(autoincrement())
-  name String @unique
+  name String
 
-  Activity Activity[]
+  user_id Int
+  User    User @relation(fields: [user_id], references: [id])
+
+  ActivityCategory ActivityCategory[]
 }
 
-model Location {
-  id        Int    @id @default(autoincrement())
-  latitude  Float
-  longitude Float
-  name      String @unique
+// One activity can have more than one category
+model ActivityCategory {
+  activity_id Int
+  category_id Int
 
-  User User?
+  Activity Activity @relation(fields: [activity_id], references: [id])
+  Category Category @relation(fields: [category_id], references: [id])
+
+  @@id([activity_id, category_id])
 }
 
 model User {
-  id   Int    @id @default(autoincrement())
-  name String
+  id       Int    @id @default(autoincrement())
+  name     String
+  password String
 
-  location_id Int       @unique
-  Location    Location? @relation(fields: [location_id], references: [id])
+  latitude  Float
+  longitude Float
+  city_name String
 
-  UserActivity UserActivity[]
-}
-
-model UserActivity {
-  user_id     Int
-  activity_id Int
-  User        User     @relation(fields: [user_id], references: [id])
-  Activity    Activity @relation(fields: [activity_id], references: [id])
-
-  @@id([user_id, activity_id])
+  Activity Activity[]
+  Category Category[]
 }
