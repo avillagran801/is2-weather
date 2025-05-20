@@ -16,7 +16,7 @@ model Activity {
   rain    Boolean
 
   user_id Int
-  User    User @relation(fields: [user_id], references: [id])
+  User    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   ActivityCategory ActivityCategory[]
 }
@@ -26,7 +26,7 @@ model Category {
   name String
 
   user_id Int
-  User    User @relation(fields: [user_id], references: [id])
+  User    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   ActivityCategory ActivityCategory[]
 }
@@ -36,8 +36,8 @@ model ActivityCategory {
   activity_id Int
   category_id Int
 
-  Activity Activity @relation(fields: [activity_id], references: [id])
-  Category Category @relation(fields: [category_id], references: [id])
+  Activity Activity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  Category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
   @@id([activity_id, category_id])
 }
