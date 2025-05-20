@@ -2,10 +2,10 @@ import { Box, Card, CardActionArea, CardContent, Typography, IconButton } from "
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ActivityWithCategory } from "@/pages/api/activity/readAll";
+import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 
 type CardProps = {
-  activity: ActivityWithCategory;
+  activity: ActivityWithCategories;
   onClick: () => void;
   onDelete: () => void; // Add a prop for the delete action
 }
@@ -60,9 +60,11 @@ export default function ActivityCard({ activity, onClick, onDelete }: CardProps)
               alignItems: "center",
               gap: "0.8rem"
             }}>
+
+              {/* CHANGE LATER TO SUPPORT CHIPS */}
               <WbSunnyIcon />
               <Typography sx={{ fontSize: "1rem"}}>
-                Categoría: {activity.category.name}
+                Categoría: {activity.ActivityCategory[0].Category.name}
               </Typography>
             </Box>
           </CardContent>

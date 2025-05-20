@@ -42,7 +42,8 @@ export default function Clima() {
   React.useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const locationRes = await fetch("/api/location/findUnique");
+        // CHANGE USER_ID LATER
+        const locationRes = await fetch("/api/location/read?user_id=2"); // <--- CHANGE THIS
         const locationData = await locationRes.json();
         
         if (!locationRes.ok) {
