@@ -34,7 +34,7 @@ export default function MisActividades() {
     const fetchActivities = async() => {
       try {
         // CHANGE USER_ID LATER
-        const response = await fetch("/api/activity/readByUser?user_id=2");
+        const response = await fetch("/api/activity/readByUser?user_id=2"); // <--- CHANGE THIS
         const data = await response.json();
 
         if(!response.ok){

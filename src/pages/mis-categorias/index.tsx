@@ -1,20 +1,22 @@
 import React from "react";
-import { Activity, Category } from "@/generated/prisma/client";
-import { Box, Typography, Paper, Grid, Card } from "@mui/material";
+import { Box, Typography, Paper, Grid } from "@mui/material";
 import Loading from "@/components/layout/loading";
 import GenericActivityCard from "@/components/activities/GenericActivityCard";
+import { ActivityWithCategories } from "../api/activity/readByUser";
+import { PlainCategory } from "../api/category/readByUser";
 
 export default function Categorias() {
-  const [categories, setCategories] = React.useState<Category[]>([]);
-  const [activities, setActivities] = React.useState<Activity[]>([]);
+  const [categories, setCategories] = React.useState<PlainCategory[]>([]);
+  const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
+        // CHANGE USER_ID LATER
         const [catResponse, actResponse] = await Promise.all([
-          fetch("/api/category/catReadAll"),
-          fetch("/api/activity/readAll")
+          fetch("/api/category/readByUser?user_id=2"), // <--- CHANGE THIS
+          fetch("/api/activity/readByUser?user_id=2") // <--- CHANGE THIS
         ]);
 
         const [catData, actData] = await Promise.all([
@@ -47,8 +49,9 @@ export default function Categorias() {
       </Typography>
 
       {categories.map((category) => {
+        // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
         const categoryActivities = activities.filter(
-          activity => activity.category_id === category.id
+          activity => activity.ActivityCategory[0].Category.id === category.id // <--- CHANGE THIS
         );
 
         return (
