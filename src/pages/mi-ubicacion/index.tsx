@@ -9,37 +9,44 @@ const MiUbicacion: React.FC = () => {
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState('');
 
+  // CHANGE USER_ID LATER
   useEffect(() => {
     const fetchUserLocation = async () => {
       try {
-        const res = await fetch('/api/location/findUnique');
+        const res = await fetch('/api/location/read?user_id=2'); // <--- CHANGE THIS
         const data = await res.json();
 
-        if (res.ok) {
-          setCity(data.city);
-          setCountry(data.country);
-          setCoords({ lat: data.lat, lng: data.lng });
-        } else {
-          setError(data.error || 'No se pudo obtener la ubicación del usuario');
+        if(!res.ok){
+          setError(data.error || 'No se pudo obtener la ubicación del usuario');          
         }
-      } catch (err) {
-        setError('Error de red al obtener ubicación');
+
+        setCity(data.city);
+        setCountry(data.country);
+        setCoords({ lat: data.lat, lng: data.lng });
+      }
+      catch {
+        setError('Error de red al obtener ubicación'); // ¿Realmente es un error de red?
       }
     };
 
     fetchUserLocation();
   }, []);
 
+  // CHANGE USER_ID LATER
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setCoords(null);
   
     try {
-      const res = await fetch('/api/location/update', {
+      const res = await fetch('/api/location/update', { 
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ city, country }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user_id: 2, // <--- CHANGE THIS
+          city,
+          country
+        }),
       });
   
       const data = await res.json();
@@ -49,7 +56,7 @@ const MiUbicacion: React.FC = () => {
       } else {
         setCoords({ lat: data.latitude, lng: data.longitude });
       }
-    } catch (err) {
+    } catch {
       setError('Error de red al enviar la ubicación');
     }
   };

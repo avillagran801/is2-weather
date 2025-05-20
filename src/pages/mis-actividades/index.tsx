@@ -6,8 +6,8 @@ import CreateActivityDialog, { ActivityCreatePayload } from "@/components/activi
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
 import EditActivityDialog, { ActivityEditPayload } from "@/components/activities/EditActivityDialog";
-import { ActivityWithCategories } from "../api/activity/readUserActivities";
-import { PlainCategory } from "../api/category/readUserCategories";
+import { ActivityWithCategories } from "../api/activity/readByUser";
+import { PlainCategory } from "../api/category/readByUser";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
@@ -34,7 +34,7 @@ export default function MisActividades() {
     const fetchActivities = async() => {
       try {
         // CHANGE USER_ID LATER
-        const response = await fetch("/api/activity/readUserActivities?user_id=2");
+        const response = await fetch("/api/activity/readByUser?user_id=2");
         const data = await response.json();
 
         if(!response.ok){
@@ -59,7 +59,7 @@ export default function MisActividades() {
     const fetchCategories = async() => {
       try {
         // CHANGE USER_ID LATER
-        const response = await fetch("/api/category/readUserCategories?user_id=2");
+        const response = await fetch("/api/category/readByUser?user_id=2");
         const data = await response.json();
 
         if(!response.ok){

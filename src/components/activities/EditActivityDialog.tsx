@@ -1,6 +1,6 @@
 import { temperatureMarks, temperatureMinDistance } from "@/lib/activities_utils/temperature";
-import { ActivityWithCategories } from "@/pages/api/activity/readUserActivities";
-import { PlainCategory } from "@/pages/api/category/readUserCategories";
+import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
+import { PlainCategory } from "@/pages/api/category/readByUser";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Slider, TextField } from "@mui/material";
 import React from "react";
 

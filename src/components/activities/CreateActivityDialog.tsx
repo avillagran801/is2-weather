@@ -9,8 +9,8 @@ import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
 import { temperatureMarks, temperatureMinDistance } from '@/lib/activities_utils/temperature';
-import { PlainCategory } from '@/pages/api/category/readUserCategories';
-import { ActivityWithCategories } from '@/pages/api/activity/readUserActivities';
+import { PlainCategory } from '@/pages/api/category/readByUser';
+import { ActivityWithCategories } from '@/pages/api/activity/readByUser';
 
 export type ActivityCreatePayload = Omit<ActivityWithCategories, "id" | "user_id" | "ActivityCategory"> & {
   categories_id: number[];

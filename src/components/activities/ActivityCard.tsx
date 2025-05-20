@@ -2,7 +2,7 @@ import { Box, Card, CardActionArea, CardContent, Typography, IconButton } from "
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ActivityWithCategories } from "@/pages/api/activity/readUserActivities";
+import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 
 type CardProps = {
   activity: ActivityWithCategories;
@@ -60,13 +60,12 @@ export default function ActivityCard({ activity, onClick, onDelete }: CardProps)
               alignItems: "center",
               gap: "0.8rem"
             }}>
+
+              {/* CHANGE LATER TO SUPPORT CHIPS */}
               <WbSunnyIcon />
-              
-              {/* FIX THIS
               <Typography sx={{ fontSize: "1rem"}}>
-                Categoría: {activity.category.name}
+                Categoría: {activity.ActivityCategory[0].Category.name}
               </Typography>
-              */}
             </Box>
           </CardContent>
         </CardActionArea>
