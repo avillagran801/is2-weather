@@ -45,7 +45,7 @@ export default function Clima() {
         // CHANGE USER_ID LATER
         const locationRes = await fetch("/api/location/read?user_id=2"); // <--- CHANGE THIS
         const locationData = await locationRes.json();
-        
+
         if (!locationRes.ok) {
           throw new Error(locationData.error || "Error obteniendo ubicación");
         }
@@ -56,7 +56,7 @@ export default function Clima() {
           throw new Error("Datos de ubicación inválidos");
         }
 
-        setLocation({ city: city,country: country, lat: lat, lng: lng });
+        setLocation({ city: city, country: country, lat: lat, lng: lng });
 
         const response = await fetch("/api/weather/consult", {
           method: "POST",
@@ -83,9 +83,10 @@ export default function Clima() {
   }, []);
 
   // Prepare data for the graphs
-  const graphData = weather?.hourly?.temperature_2m?.map((temp: number, index: number) => ({
-    hour: `${index}:00`,
-    temperature: temp,
+  const graphData = weather?.hourly?.time?.map((hour: string, index: number) => ({
+    hour: hour,
+    temperature: weather?.hourly?.temperature_2m?.[index] || 0,
+    wind_speed: weather?.hourly?.wind_speed_10m?.[index] || 0,
     precipitation_probability: weather?.hourly?.precipitation_probability?.[index] || 0,
     relative_humidity: weather?.hourly?.relative_humidity_2m?.[index] || 0,
     uv_index: weather?.hourly?.uv_index?.[index] || 0,
@@ -105,14 +106,14 @@ export default function Clima() {
         <Box sx={{ padding: 2 }}>
           {/* Current Weather */}
           <Typography variant="h4" gutterBottom>
-                        Clima Actual en {location?.city}, {location?.country}
+            Clima Actual en {location?.city}, {location?.country}
           </Typography>
           <Box sx={{ marginBottom: 4 }}>
             <Typography variant="h6">
-                            Temperatura Actual: {currentTemperature} °C
+              Temperatura Actual: {currentTemperature} °C
             </Typography>
             <Typography variant="h6">
-                            Condición Actual: {currentWeatherDescription}
+              Condición Actual: {currentWeatherDescription}
             </Typography>
           </Box>
 
@@ -120,7 +121,7 @@ export default function Clima() {
             <>
               {/* Temperature Graph */}
               <Typography variant="h6" gutterBottom>
-                                Temperatura
+                Temperatura
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={graphData}>
@@ -134,7 +135,7 @@ export default function Clima() {
 
               {/* Precipitation Graph */}
               <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-                                Probabilidad de Lluvia
+                Probabilidad de Lluvia
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={graphData}>
@@ -146,11 +147,11 @@ export default function Clima() {
                 </LineChart>
               </ResponsiveContainer>
 
-              {/* Raw response
+              // Raw response
               <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-                                Respuesta formato json de open-meteo
+                Respuesta formato json de open-meteo
               </Typography>
-              <pre>{JSON.stringify(weather, null, 2)}</pre> */}
+              <pre>{JSON.stringify(weather, null, 2)}</pre>
             </>
           ) : (
             <Typography variant="body1">No se encontraron datos de clima.</Typography>
