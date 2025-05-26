@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         maxTemp: parseInt(maxTemp),
         rain: rain === "true" || rain === true,
         maxRain: maxRain != null? parseInt(maxRain) : null,
-        snow: snow === "true" || snow === true,
+        snow: (snow === "null" || snow === null)? null : (snow === "true" || snow === true),
         maxSnow: parseInt(maxSnow),
         humidity: parseInt(humidity),
         uv_index: parseInt(uv_index),

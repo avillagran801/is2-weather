@@ -114,7 +114,6 @@ export default function MisActividades() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
-      // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
       // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/update", {
         method: "PATCH",
@@ -122,13 +121,9 @@ export default function MisActividades() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: editedActivity.id,
-          name: editedActivity.name,
-          minTemp: editedActivity.minTemp,
-          maxTemp: editedActivity.maxTemp,
-          rain: editedActivity.rain,
+          ...editedActivity,
           user_id: 2, // <--- CHANGE THIS
-          category_id: editedActivity.categories_id[0], // <--- CHANGE THIS
+          categories_id: editedActivity.categories_id,
         })
       });
 
@@ -228,7 +223,7 @@ export default function MisActividades() {
             setOpen={setOpenEditDialog}
             selectedActivity={selectedActivity}
             onSubmit={handleEditActivity}
-            categories={categories}
+            userCategories={categories}
           />
         </>
       }

@@ -13,7 +13,6 @@ import { ActivityCreateForm } from '@/lib/activities_utils/defaultNewActivity';
 import CustomTextfield from '../form/CustomTextfield';
 import CustomRadioButton from '../form/CustomRadioButton';
 
-
 type BaseActivityFormProps = {
   formTitle: string;
   formSubmitText: string;
@@ -25,7 +24,6 @@ type BaseActivityFormProps = {
   handleSubmit: (e: React.FormEvent) => void;
   userCategories: PlainCategory[];
 }
-
 
 export default function BaseActivityForm({
   handleClose,

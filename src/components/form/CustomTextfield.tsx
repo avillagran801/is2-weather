@@ -16,7 +16,6 @@ export default function CustomTextfield({ id, value, onChange, label, endAdornme
 
   return(
     <TextField
-      autoFocus
       required={required? required : undefined}
       margin="dense"
       id={id}

@@ -16,7 +16,7 @@ export default function CustomRadioButton({ id, value, onChange, label, required
       </FormLabel>
       <RadioGroup
         row
-        aria-label="rain-preference"
+        aria-label="precipitation-preference"
         name={id}
         value={value}
         onChange={onChange}
