@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if(req.method !== "POST"){
+  if(req.method !== "PATCH"){
     return res.status(405).json({ error: "Método no permitido" });    
   }
 

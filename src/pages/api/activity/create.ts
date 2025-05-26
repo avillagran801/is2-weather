@@ -1,18 +1,24 @@
 import { prisma } from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-// CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if(req.method !== "POST"){
     return res.status(405).json({ error: "Método no permitido" });    
   }
 
-  const { name, minTemp, maxTemp, rain, category_id, user_id } = req.body;
+  const { name, minTemp, maxTemp, rain, categories_id, user_id } = req.body;
+
+  console.log(req.body);
 
   try {
-    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !category_id || !user_id ) {
+    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !categories_id || !user_id ) {
       return res.status(400).json({ error: "Falta al menos un campo obligatorio "});
     }
+
+    if (!Array.isArray(categories_id)) {
+      return res.status(400).json({ error: "categories_id debe ser un arreglo" });
+    }
+
 
     const activity = await prisma.activity.create({
       data: {
@@ -28,10 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
         },
 
-        // Create relationship between the activity and an existing category
+        // Create relationship between the activity and existing categories
         ActivityCategory: {
-          create: {
-            category_id: category_id,
+          createMany: {
+            data: categories_id.map((id: string) => ({ category_id: Number(id) })),
           }
         }
       }

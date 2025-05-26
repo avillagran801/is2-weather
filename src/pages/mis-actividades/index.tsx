@@ -83,7 +83,6 @@ export default function MisActividades() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
-      // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
       // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/create", {
         method: "POST",
@@ -96,7 +95,7 @@ export default function MisActividades() {
           maxTemp: newActivity.maxTemp,
           rain: newActivity.rain,
           user_id: 2, // <--- CHANGE THIS
-          category_id: newActivity.categories_id[0], // <--- CHANGE THIS
+          categories_id: newActivity.categories_id,
         })
       });
 
@@ -110,9 +109,7 @@ export default function MisActividades() {
     }
     catch (error) {
       console.log(error);
-      if(error instanceof Error){
-        alert(error.message);
-      }
+      alert("Error al crear la actividad")
     }
   };
 
@@ -125,7 +122,7 @@ export default function MisActividades() {
       // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
       // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/update", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -229,7 +226,7 @@ export default function MisActividades() {
             open={openCreateDialog}
             setOpen={setOpenCreateDialog}
             onSubmit={handleAddActivity}
-            categories={categories}
+            userCategories={categories}
           />
           <EditActivityDialog
             open={openEditDialog}
