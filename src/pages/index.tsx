@@ -42,6 +42,14 @@ export default function Clima() {
   React.useEffect(() => {
     const fetchWeather = async () => {
       try {
+        const shouldAutoUpdate = localStorage.getItem("rememberLocationUpdate") === "true";
+
+        if(shouldAutoUpdate) {
+          await fetch('/api/location/autoupdate', {
+            method: "POST",
+          });
+        }
+        
         // CHANGE USER_ID LATER
         const locationRes = await fetch("/api/location/read?user_id=2"); // <--- CHANGE THIS
         const locationData = await locationRes.json();

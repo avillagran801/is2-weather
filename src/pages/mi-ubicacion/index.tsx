@@ -9,9 +9,13 @@ const MiUbicacion: React.FC = () => {
   const [country, setCountry] = useState('');
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState('');
+  const [rememberChoice, setRemeberChoice] = useState(false);
 
   // CHANGE USER_ID LATER
   useEffect(() => {
+    const savedPreference = localStorage.getItem("rememberLocationUpdate");
+    setRemeberChoice(savedPreference === "true");
+
     const fetchUserLocation = async () => {
       try {
         const res = await fetch('/api/location/read?user_id=2'); // <--- CHANGE THIS
@@ -98,6 +102,12 @@ const MiUbicacion: React.FC = () => {
     });
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked;
+    setRemeberChoice(isChecked);
+    localStorage.setItem("rememberLocationUpdate", String(isChecked));
+  };
+
   return (
     <>
       <Typography variant="h4" gutterBottom>
@@ -118,6 +128,11 @@ const MiUbicacion: React.FC = () => {
       <Button onClick={handleAutoUpdate} variant="outlined" sx={{ mt: 2 }}>
         Usar GPS para actualizar
       </Button>
+
+      <label>
+        <input type = "checkbox" checked={rememberChoice} onChange={handleCheckboxChange}/>
+        Recordar mi elección
+      </label>
 
       <Typography variant="h4" gutterBottom>
             Ciudad Actual: {city}, {country}
