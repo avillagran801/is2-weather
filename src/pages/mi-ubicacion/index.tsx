@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const MiUbicacion: React.FC = () => {
   const [city, setCity] = useState('');
@@ -60,6 +61,43 @@ const MiUbicacion: React.FC = () => {
       setError('Error de red al enviar la ubicación');
     }
   };
+
+  const handleAutoUpdate = async () => {
+    if(!navigator.geolocation) {
+      alert('Geolocalización no es soportada por este navegador.');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      try {
+        const res = await fetch('api/location/autoupdate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json'},
+          body: JSON.stringify({ user_id: 2, latitude, longitude}),
+        });
+
+        const data = await res.json();
+
+        if(!res.ok) {
+          setError(data.error || 'Error al actualizar ubicación automáticamente');
+        } else {
+          const [cityName, countryName] = data.city.split(',').map((s: string) => s.trim());
+          setCity(cityName);
+          setCountry(countryName);
+          setCoords({lat: data.latitude, lng: data.longitude})
+        } 
+      } catch (error) {
+        console.log(error);
+        setError('Error de red al actualizar ubicación automáticamente');
+      }
+
+    }, () => {
+      alert('No se pudo obtener la información del dispositivo.');
+    });
+  };
+
   return (
     <>
       <Typography variant="h4" gutterBottom>
@@ -76,6 +114,11 @@ const MiUbicacion: React.FC = () => {
         <TextField id="outlined-basic" label="Ciudad" variant="outlined"  onChange={(e) => {setCity(e.target.value); console.log('City changed to:', e.target.value);}}/>
         <button type = "submit">Actualizar Ciudad</button>
       </Box>
+
+      <Button onClick={handleAutoUpdate} variant="outlined" sx={{ mt: 2 }}>
+        Usar GPS para actualizar
+      </Button>
+
       <Typography variant="h4" gutterBottom>
             Ciudad Actual: {city}, {country}
       </Typography>  
