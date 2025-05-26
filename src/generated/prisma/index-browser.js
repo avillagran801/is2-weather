@@ -126,6 +126,13 @@ exports.Prisma.ActivityScalarFieldEnum = {
   minTemp: 'minTemp',
   maxTemp: 'maxTemp',
   rain: 'rain',
+  maxRain: 'maxRain',
+  snow: 'snow',
+  maxSnow: 'maxSnow',
+  humidity: 'humidity',
+  uv_index: 'uv_index',
+  wind_speed: 'wind_speed',
+  visibility: 'visibility',
   user_id: 'user_id'
 };
 
@@ -157,6 +164,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

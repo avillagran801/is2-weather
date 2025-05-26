@@ -147,7 +147,7 @@ export default function Clima() {
                 </LineChart>
               </ResponsiveContainer>
 
-              // Raw response
+              {/*  Raw response */}
               <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
                 Respuesta formato json de open-meteo
               </Typography>

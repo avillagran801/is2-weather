@@ -2,12 +2,14 @@ import React from "react";
 import { Activity } from "@/generated/prisma/client";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography } from "@mui/material";
-import CreateActivityDialog, { ActivityCreatePayload } from "@/components/activities/CreateActivityDialog";
+import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
 import EditActivityDialog, { ActivityEditPayload } from "@/components/activities/EditActivityDialog";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import { PlainCategory } from "../api/category/readByUser";
+import { ActivityCreatePayload } from "@/lib/activities_utils/defaultNewActivity";
+import { defaultActivity } from "@/lib/activities_utils/defaultActivity";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
@@ -19,15 +21,7 @@ export default function MisActividades() {
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openEditDialog, setOpenEditDialog] = React.useState(false);
 
-  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>({
-    id: 0,
-    name: "",
-    minTemp: 0,
-    maxTemp: 0,
-    rain: false,
-    user_id: 0,
-    ActivityCategory: [],
-  });
+  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>(defaultActivity);
 
   // Fetch all activities associated with the user
   React.useEffect(() => {
@@ -83,18 +77,19 @@ export default function MisActividades() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
+      if(newActivity.minTemp > newActivity.maxTemp) {
+        throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");        
+      }
+
       // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: newActivity.name,
-          minTemp: newActivity.minTemp,
-          maxTemp: newActivity.maxTemp,
-          rain: newActivity.rain,
-          user_id: 2, // <--- CHANGE THIS
+        body: JSON.stringify({         
+          ...newActivity,
+          user_id: 2, // <--- CHANGE THIS 
           categories_id: newActivity.categories_id,
         })
       });
