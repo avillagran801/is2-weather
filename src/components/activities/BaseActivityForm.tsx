@@ -19,7 +19,7 @@ type BaseActivityFormProps = {
   formData: ActivityCreateForm;
   setFormData: React.Dispatch<React.SetStateAction<ActivityCreateForm>>;
   optionalSettings: boolean;
-  setOptionalSettings:  React.Dispatch<React.SetStateAction<boolean>>;
+  setOptionalSettings: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
   handleClose: () => void;
   handleSubmit: (e: React.FormEvent) => void;
@@ -38,7 +38,6 @@ export default function BaseActivityForm({
   setOptionalSettings,
   userCategories
 }: BaseActivityFormProps) {
-  // const [formData, setFormData] = React.useState(defaultNewActivity);
   const [defaultWeather, setDefaultWeather] = React.useState<null | string>(null);
   
   // Maneja cambios en textfields y radio buttons
@@ -158,7 +157,7 @@ export default function BaseActivityForm({
               gutterBottom={true}
               variant="body1"
             >
-              Para crear una nueva actividad por favor rellene los campos a continuación.              
+              Por favor rellene los campos a continuación.              
             </Typography>
 
             <Typography fontWeight={'fontWeightBold'}>

@@ -77,7 +77,7 @@ export default function MisActividades() {
   const handleAddActivity = async (newActivity: ActivityCreatePayload) => {
     try {
       if( !newActivity.name ) {
-        throw new Error("Hay al menos un campo obligatorio incompleto");
+        throw new Error("La actividad necesita un nombre");
       }
 
       if(newActivity.minTemp > newActivity.maxTemp) {

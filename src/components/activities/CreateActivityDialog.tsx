@@ -10,7 +10,6 @@ type CreateActivityDialogProps = {
   userCategories: PlainCategory[];
 }
 
-
 export default function CreateActivityDialog({open, setOpen, onSubmit, userCategories}: CreateActivityDialogProps) {
   const [formData, setFormData] = React.useState(defaultNewActivity);
   const [optionalSettings, setOptionalSettings] = React.useState(false);
