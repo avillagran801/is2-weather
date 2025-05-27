@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let queries = "&hourly=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers" // hourly
   queries += "&forecast_days=2" // forecast days
   queries += "&current=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers"; // current
-  queries += "&timezone=America%2FSantiago"; // timezone
+  queries += "&timezone=auto"; // timezone
 
   try {
     if (!latitude || !longitude) {
