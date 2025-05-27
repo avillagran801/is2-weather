@@ -90,7 +90,7 @@ export default function Clima() {
     fetchWeather();
   }, []);
 
-  // Prepare data for the graphs
+  // Prepare data for visualization
   const graphData = weather?.hourly?.time?.map((hour: string, index: number) => ({
     hour: hour,
     temperature: weather?.hourly?.temperature_2m?.[index] || 0,
@@ -141,21 +141,7 @@ export default function Clima() {
                 </LineChart>
               </ResponsiveContainer>
 
-              {/* Precipitation Graph */}
-              <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-                Probabilidad de Lluvia
-              </Typography>
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={graphData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="hour" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="precipitation_probability" stroke="#82ca9d" activeDot={{ r: 8 }} />
-                </LineChart>
-              </ResponsiveContainer>
-
-              // Raw response
+              {/* Raw response */}
               <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
                 Respuesta formato json de open-meteo
               </Typography>
