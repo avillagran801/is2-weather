@@ -1,13 +1,16 @@
 import React from "react";
-import { Activity } from "@/generated/prisma/client";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography } from "@mui/material";
-import CreateActivityDialog, { ActivityCreatePayload } from "@/components/activities/CreateActivityDialog";
+import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
 import EditActivityDialog, { ActivityEditPayload } from "@/components/activities/EditActivityDialog";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import { PlainCategory } from "../api/category/readByUser";
+import { ActivityCreatePayload } from "@/lib/activities_utils/defaultNewActivity";
+import { defaultActivity } from "@/lib/activities_utils/defaultActivity";
+import DetailsActivityDialog from "@/components/activities/DetailsActivityDialog";
+import DeleteActivityDialog from "@/components/activities/DeleteActivityDialog";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
@@ -16,18 +19,12 @@ export default function MisActividades() {
   const [refreshActivities, setRefreshActivities] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
+  const [openDetailsDialog, setOpenDetailsDialog] = React.useState(false);
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openEditDialog, setOpenEditDialog] = React.useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
 
-  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>({
-    id: 0,
-    name: "",
-    minTemp: 0,
-    maxTemp: 0,
-    rain: false,
-    user_id: 0,
-    ActivityCategory: [],
-  });
+  const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>(defaultActivity);
 
   // Fetch all activities associated with the user
   React.useEffect(() => {
@@ -83,20 +80,20 @@ export default function MisActividades() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
-      // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
+      if(newActivity.minTemp > newActivity.maxTemp) {
+        throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");        
+      }
+
       // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: newActivity.name,
-          minTemp: newActivity.minTemp,
-          maxTemp: newActivity.maxTemp,
-          rain: newActivity.rain,
-          user_id: 2, // <--- CHANGE THIS
-          category_id: newActivity.categories_id[0], // <--- CHANGE THIS
+        body: JSON.stringify({         
+          ...newActivity,
+          user_id: 2, // <--- CHANGE THIS 
+          categories_id: newActivity.categories_id,
         })
       });
 
@@ -110,9 +107,7 @@ export default function MisActividades() {
     }
     catch (error) {
       console.log(error);
-      if(error instanceof Error){
-        alert(error.message);
-      }
+      alert("Error al crear la actividad")
     }
   };
 
@@ -122,21 +117,16 @@ export default function MisActividades() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
-      // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
       // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/update", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: editedActivity.id,
-          name: editedActivity.name,
-          minTemp: editedActivity.minTemp,
-          maxTemp: editedActivity.maxTemp,
-          rain: editedActivity.rain,
+          ...editedActivity,
           user_id: 2, // <--- CHANGE THIS
-          category_id: editedActivity.categories_id[0], // <--- CHANGE THIS
+          categories_id: editedActivity.categories_id,
         })
       });
 
@@ -156,7 +146,7 @@ export default function MisActividades() {
     }
   };
 
-  const handleDeleteActivity = async (deletedActivity: Activity) => {
+  const handleDeleteActivity = async (deletedActivityId: number) => {
     try {
       const response = await fetch("/api/activity/delete", {
         method: "DELETE",
@@ -164,7 +154,7 @@ export default function MisActividades() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: deletedActivity.id,
+          id: deletedActivityId,
         })
       });
 
@@ -215,9 +205,7 @@ export default function MisActividades() {
                   >
                     <ActivityCard
                       activity={activity}
-                      onClick={() => {setSelectedActivity(activity); setOpenEditDialog(true)}}
-                      onDelete={() => {handleDeleteActivity(activity)}
-                      }
+                      onClick={() => {setSelectedActivity(activity); setOpenDetailsDialog(true)}}
                     />
                   </Grid>
                 ))
@@ -225,18 +213,31 @@ export default function MisActividades() {
             </Grid>
           </Box>
 
+          <DetailsActivityDialog
+            open={openDetailsDialog}
+            setOpen={setOpenDetailsDialog}
+            setOpenEditDialog={setOpenEditDialog}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+            selectedActivity={selectedActivity}
+          />
           <CreateActivityDialog
             open={openCreateDialog}
             setOpen={setOpenCreateDialog}
             onSubmit={handleAddActivity}
-            categories={categories}
+            userCategories={categories}
           />
           <EditActivityDialog
             open={openEditDialog}
             setOpen={setOpenEditDialog}
             selectedActivity={selectedActivity}
             onSubmit={handleEditActivity}
-            categories={categories}
+            userCategories={categories}
+          />
+          <DeleteActivityDialog
+            open={openDeleteDialog}
+            setOpen={setOpenDeleteDialog}
+            onSubmit={handleDeleteActivity}
+            selectedActivity={selectedActivity}
           />
         </>
       }
