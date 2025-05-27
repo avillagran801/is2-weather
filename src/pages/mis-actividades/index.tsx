@@ -1,6 +1,6 @@
 import React from "react";
 import ActivityCard from "@/components/activities/ActivityCard";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
 import CreateActivityCard from "@/components/activities/CreateActivityCard";
 import Loading from "@/components/layout/loading";
@@ -11,6 +11,7 @@ import { ActivityCreatePayload } from "@/lib/activities_utils/defaultNewActivity
 import { defaultActivity } from "@/lib/activities_utils/defaultActivity";
 import DetailsActivityDialog from "@/components/activities/DetailsActivityDialog";
 import DeleteActivityDialog from "@/components/activities/DeleteActivityDialog";
+import { useRouter } from "next/router";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
@@ -25,6 +26,8 @@ export default function MisActividades() {
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
 
   const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>(defaultActivity);
+
+  const router = useRouter();
 
   // Fetch all activities associated with the user
   React.useEffect(() => {
@@ -180,6 +183,15 @@ export default function MisActividades() {
         <Loading />
         : 
         <>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", m: 2}}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => router.push("/setup")}
+            >
+              Seleccionar actividades predeterminadas
+            </Button>
+          </Box>
           <Box sx={{
             display: "flex",
             flexDirection: "column",
