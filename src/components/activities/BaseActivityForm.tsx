@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Box, Chip, FormControl, FormControlLabel, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, Chip, Dialog, FormControl, FormControlLabel, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { PlainCategory } from '@/pages/api/category/readByUser';
 import { defaultWeatherOptions, WeatherOption } from '@/lib/activities_utils/defaultWeather';
 import { ActivityCreateForm } from '@/lib/activities_utils/defaultNewActivity';
@@ -20,12 +20,14 @@ type BaseActivityFormProps = {
   setFormData: React.Dispatch<React.SetStateAction<ActivityCreateForm>>;
   optionalSettings: boolean;
   setOptionalSettings:  React.Dispatch<React.SetStateAction<boolean>>;
+  open: boolean;
   handleClose: () => void;
   handleSubmit: (e: React.FormEvent) => void;
   userCategories: PlainCategory[];
 }
 
 export default function BaseActivityForm({
+  open,
   handleClose,
   handleSubmit,
   formTitle,
@@ -133,150 +135,157 @@ export default function BaseActivityForm({
 
   return (
     <>
-      <DialogTitle
-        fontWeight={'fontWeightBold'}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll="paper"
+        fullWidth
+        maxWidth="sm"
       >
-        {formTitle}
-      </DialogTitle>
+        <DialogTitle
+          fontWeight={'fontWeightBold'}
+        >
+          {formTitle}
+        </DialogTitle>
 
-      <form onSubmit={handleSubmit}>
-        <DialogContent sx={{
-          display: "flex",
-          flexDirection: "column",
-          rowGap: "1rem"
-        }}>
-          <Typography
-            gutterBottom={true}
-            variant="body1"
-          >
-              Para crear una nueva actividad por favor rellene los campos a continuación.              
-          </Typography>
-
-          <Typography fontWeight={'fontWeightBold'}>
-              Sobre la actividad
-          </Typography>
-
-          <Box sx={{
+        <form onSubmit={handleSubmit}>
+          <DialogContent sx={{
             display: "flex",
             flexDirection: "column",
-            rowGap: "1.5rem"
+            rowGap: "1rem"
           }}>
-            {/* Nombre de la actividad */}
-            <CustomTextfield
-              id="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              label="Nombre"
-              required
-            />
-
-            {/* Selector de categorías ya existentes para la actividad */}
-            <FormControl>
-              <InputLabel id="category-label" required sx={{background: "white"}}>Categoría(s)</InputLabel>
-              <Select
-                labelId="category-label"
-                id="category"
-                label="Categoría(s)"
-                multiple
-                value={formData.categories_id}
-                onChange={handleCategoriesChange}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => {
-                      const category_name = userCategories.find((cat) => cat.id === Number(value))?.name;
-                      return(
-                        <Chip key={value} label={category_name} />
-                      );
-                    })}
-                  </Box>
-                )}
-              >
-                {userCategories.map((category) => (
-                  <MenuItem
-                    key={category.id}
-                    value={category.id}
-                  >
-                    {category.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <Typography
+              gutterBottom={true}
+              variant="body1"
+            >
+              Para crear una nueva actividad por favor rellene los campos a continuación.              
+            </Typography>
 
             <Typography fontWeight={'fontWeightBold'}>
-                Sobre las condiciones climatológicas
+              Sobre la actividad
             </Typography>
 
-            <Typography>
-                Puedes seleccionar alguno de los ajustes predeterminados y continuar editando los parámetros.
-            </Typography>
-
-            {/* Opciones de clima predeterminado */}
-            <ToggleButtonGroup
-              value={defaultWeather}
-              onChange={handleDefaultWeatherChange}
-              exclusive
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {
-                defaultWeatherOptions.map(option => {
-                  const Icon = option.icon
-                  return(
-                    <ToggleButton key={option.name} value={option.name}>
-                      <Icon />
-                    </ToggleButton>
-                  );
-                })
-              }
-            </ToggleButtonGroup>
-
-            {/* Temperatura mínima y máxima */}
             <Box sx={{
               display: "flex",
-              gap: "1rem"
+              flexDirection: "column",
+              rowGap: "1.5rem"
             }}>
+              {/* Nombre de la actividad */}
               <CustomTextfield
-                id="minTemp"
-                value={formData.minTemp}
-                onChange={handleNumberInputChange}
-                label="Temperatura mínima"
-                endAdornment="°C"
-                number={true}
-                placeholder="-40 a 40"
+                id="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                label="Nombre"
                 required
               />
-              <CustomTextfield
-                id="maxTemp"
-                value={formData.maxTemp}
-                onChange={handleNumberInputChange}
-                label="Temperatura máxima"
-                endAdornment="°C"
-                number={true}
-                placeholder="-40 a 40"
-                required
-              />
-            </Box>        
+
+              {/* Selector de categorías ya existentes para la actividad */}
+              <FormControl>
+                <InputLabel id="category-label" required sx={{background: "white"}}>Categoría(s)</InputLabel>
+                <Select
+                  labelId="category-label"
+                  id="category"
+                  label="Categoría(s)"
+                  multiple
+                  value={formData.categories_id}
+                  onChange={handleCategoriesChange}
+                  input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value) => {
+                        const category_name = userCategories.find((cat) => cat.id === Number(value))?.name;
+                        return(
+                          <Chip key={value} label={category_name} />
+                        );
+                      })}
+                    </Box>
+                  )}
+                >
+                  {userCategories.map((category) => (
+                    <MenuItem
+                      key={category.id}
+                      value={category.id}
+                    >
+                      {category.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <Typography fontWeight={'fontWeightBold'}>
+                Sobre las condiciones climatológicas
+              </Typography>
+
+              <Typography>
+                Puedes seleccionar alguno de los ajustes predeterminados y continuar editando los parámetros.
+              </Typography>
+
+              {/* Opciones de clima predeterminado */}
+              <ToggleButtonGroup
+                value={defaultWeather}
+                onChange={handleDefaultWeatherChange}
+                exclusive
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {
+                  defaultWeatherOptions.map(option => {
+                    const Icon = option.icon
+                    return(
+                      <ToggleButton key={option.name} value={option.name}>
+                        <Icon />
+                      </ToggleButton>
+                    );
+                  })
+                }
+              </ToggleButtonGroup>
+
+              {/* Temperatura mínima y máxima */}
+              <Box sx={{
+                display: "flex",
+                gap: "1rem"
+              }}>
+                <CustomTextfield
+                  id="minTemp"
+                  value={formData.minTemp}
+                  onChange={handleNumberInputChange}
+                  label="Temperatura mínima"
+                  endAdornment="°C"
+                  number={true}
+                  placeholder="-40 a 40"
+                  required
+                />
+                <CustomTextfield
+                  id="maxTemp"
+                  value={formData.maxTemp}
+                  onChange={handleNumberInputChange}
+                  label="Temperatura máxima"
+                  endAdornment="°C"
+                  number={true}
+                  placeholder="-40 a 40"
+                  required
+                />
+              </Box>        
  
-            {/* Preferencia de lluvia */}
-            <CustomRadioButton
-              id="rain"
-              value={formData.rain}
-              onChange={handleInputChange}
-              label="¿Se puede realizar con lluvia?"
-              required
-            />
-
-            <Box>
-              <FormControlLabel
-                control={<Switch checked={optionalSettings} onChange={handleSwitchChange} />}
-                label="Incluir parámetros opcionales"
+              {/* Preferencia de lluvia */}
+              <CustomRadioButton
+                id="rain"
+                value={formData.rain}
+                onChange={handleInputChange}
+                label="¿Se puede realizar con lluvia?"
+                required
               />
-            </Box>
 
-            {optionalSettings && 
+              <Box>
+                <FormControlLabel
+                  control={<Switch checked={optionalSettings} onChange={handleSwitchChange} />}
+                  label="Incluir parámetros opcionales"
+                />
+              </Box>
+
+              {optionalSettings && 
                 <Box sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -364,19 +373,20 @@ export default function BaseActivityForm({
                     />
                   </Box>
                 </Box>
-            }
-          </Box>
-        </DialogContent>
+              }
+            </Box>
+          </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleClose}>
+          <DialogActions>
+            <Button onClick={handleClose}>
               Cancelar
-          </Button>
-          <Button type="submit">
-            {formSubmitText}
-          </Button>
-        </DialogActions>
-      </form>
+            </Button>
+            <Button type="submit">
+              {formSubmitText}
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </>
   );
 }

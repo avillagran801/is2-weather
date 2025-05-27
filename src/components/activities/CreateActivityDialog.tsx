@@ -1,5 +1,4 @@
 import React from 'react';
-import Dialog from '@mui/material/Dialog';
 import { PlainCategory } from '@/pages/api/category/readByUser';
 import { ActivityCreatePayload, defaultNewActivity } from '@/lib/activities_utils/defaultNewActivity';
 import BaseActivityForm from './BaseActivityForm';
@@ -46,23 +45,18 @@ export default function CreateActivityDialog({open, setOpen, onSubmit, userCateg
 
   return (
     <>
-      <Dialog
+      <BaseActivityForm
+        formTitle="Crear nueva actividad"
+        formSubmitText="Crear"
+        formData={formData}
+        setFormData={setFormData}
+        optionalSettings={optionalSettings}
+        setOptionalSettings={setOptionalSettings}
         open={open}
-        onClose={handleClose}
-        scroll="paper"
-      >
-        <BaseActivityForm
-          formTitle="Crear nueva actividad"
-          formSubmitText="Crear"
-          formData={formData}
-          setFormData={setFormData}
-          optionalSettings={optionalSettings}
-          setOptionalSettings={setOptionalSettings}
-          handleClose={handleClose}
-          handleSubmit={handleSubmit}
-          userCategories={userCategories}
-        />
-      </Dialog>
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        userCategories={userCategories}
+      />
     </>
   );
 }

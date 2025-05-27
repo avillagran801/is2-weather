@@ -19,6 +19,13 @@ export const defaultWeatherOptions: WeatherOption[] = [
     minTemp: 18,
     maxTemp: 24,
     rain: false,
+    maxRain: null,
+    maxSnow: null,
+    snow: null,
+    humidity: 50,
+    uv_index: 12,
+    wind_speed: 5,
+    visibility: 5000,
   },
   {
     name: "cloudy",
@@ -26,6 +33,13 @@ export const defaultWeatherOptions: WeatherOption[] = [
     minTemp: 0,
     maxTemp: 18,
     rain: false,
+    maxRain: null,
+    snow: false,
+    maxSnow: null,
+    humidity: 70,
+    uv_index: 2,
+    wind_speed: 10, 
+    visibility: 8000 
   },
   {
     name: "rainy",
@@ -33,13 +47,26 @@ export const defaultWeatherOptions: WeatherOption[] = [
     minTemp: 0,
     maxTemp: 18,
     rain: true,
+    maxRain: 50,        
+    snow: false,
+    maxSnow: null,
+    humidity: 90,
+    uv_index: 1,
+    wind_speed: 15,      
+    visibility: 4000
   },
   {
     name: "snowy",
     icon: AcUnitIcon,
     minTemp: -20,
     maxTemp: 0,
-    rain: true
+    rain: true,
+    maxRain: null,
+    snow: true,
+    maxSnow: 30,         
+    humidity: 80,
+    uv_index: 1,
+    wind_speed: 20,      
+    visibility: 3000 
   }
-
 ];

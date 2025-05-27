@@ -1,6 +1,5 @@
 import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 import { PlainCategory } from "@/pages/api/category/readByUser";
-import { Dialog } from "@mui/material";
 import React from "react";
 import BaseActivityForm from "./BaseActivityForm";
 import { defaultNewActivity } from "@/lib/activities_utils/defaultNewActivity";
@@ -28,8 +27,6 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
         ...selectedActivity,
         categories_id: selectedActivity.ActivityCategory.map((item => item.Category.id.toString())) // CHANGE LATER
       });
-
-      console.log(selectedActivity);
 
       // Abre ajustes adicionales dependiendo de si ya existían o no 
       setOptionalSettings(
@@ -72,24 +69,18 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
 
   return(
     <>
-      <Dialog
+      <BaseActivityForm
+        formTitle="Editar actividad"
+        formSubmitText="Editar"
+        formData={formData}
+        setFormData={setFormData}
+        optionalSettings={optionalSettings}
+        setOptionalSettings={setOptionalSettings}
         open={open}
-        onClose={handleClose}
-        scroll="paper"
-      >
-        <BaseActivityForm
-          formTitle="Editar actividad"
-          formSubmitText="Editar"
-          formData={formData}
-          setFormData={setFormData}
-          optionalSettings={optionalSettings}
-          setOptionalSettings={setOptionalSettings}
-          handleClose={handleClose}
-          handleSubmit={handleSubmit}
-          userCategories={userCategories}
-        />
-
-      </Dialog>
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        userCategories={userCategories}
+      />
     </>
   );
 }

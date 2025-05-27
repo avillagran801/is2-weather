@@ -1,5 +1,4 @@
 import React from "react";
-import { Activity } from "@/generated/prisma/client";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
@@ -10,6 +9,8 @@ import { ActivityWithCategories } from "../api/activity/readByUser";
 import { PlainCategory } from "../api/category/readByUser";
 import { ActivityCreatePayload } from "@/lib/activities_utils/defaultNewActivity";
 import { defaultActivity } from "@/lib/activities_utils/defaultActivity";
+import DetailsActivityDialog from "@/components/activities/DetailsActivityDialog";
+import DeleteActivityDialog from "@/components/activities/DeleteActivityDialog";
 
 export default function MisActividades() {
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
@@ -18,8 +19,10 @@ export default function MisActividades() {
   const [refreshActivities, setRefreshActivities] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
+  const [openDetailsDialog, setOpenDetailsDialog] = React.useState(false);
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openEditDialog, setOpenEditDialog] = React.useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
 
   const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>(defaultActivity);
 
@@ -143,7 +146,7 @@ export default function MisActividades() {
     }
   };
 
-  const handleDeleteActivity = async (deletedActivity: Activity) => {
+  const handleDeleteActivity = async (deletedActivityId: number) => {
     try {
       const response = await fetch("/api/activity/delete", {
         method: "DELETE",
@@ -151,7 +154,7 @@ export default function MisActividades() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: deletedActivity.id,
+          id: deletedActivityId,
         })
       });
 
@@ -202,9 +205,7 @@ export default function MisActividades() {
                   >
                     <ActivityCard
                       activity={activity}
-                      onClick={() => {setSelectedActivity(activity); setOpenEditDialog(true)}}
-                      onDelete={() => {handleDeleteActivity(activity)}
-                      }
+                      onClick={() => {setSelectedActivity(activity); setOpenDetailsDialog(true)}}
                     />
                   </Grid>
                 ))
@@ -212,6 +213,13 @@ export default function MisActividades() {
             </Grid>
           </Box>
 
+          <DetailsActivityDialog
+            open={openDetailsDialog}
+            setOpen={setOpenDetailsDialog}
+            setOpenEditDialog={setOpenEditDialog}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+            selectedActivity={selectedActivity}
+          />
           <CreateActivityDialog
             open={openCreateDialog}
             setOpen={setOpenCreateDialog}
@@ -224,6 +232,12 @@ export default function MisActividades() {
             selectedActivity={selectedActivity}
             onSubmit={handleEditActivity}
             userCategories={categories}
+          />
+          <DeleteActivityDialog
+            open={openDeleteDialog}
+            setOpen={setOpenDeleteDialog}
+            onSubmit={handleDeleteActivity}
+            selectedActivity={selectedActivity}
           />
         </>
       }
