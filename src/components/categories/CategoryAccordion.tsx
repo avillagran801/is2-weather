@@ -59,6 +59,9 @@ export default function CategoryAccordion({ category, defaultExpanded, onEditCli
           </Button>
           <Button
             onClick={onDeleteClick}
+            sx={{
+              color: "#e31010",
+            }}
           >
             Eliminar
           </Button>
