@@ -14,19 +14,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: "El campo 'id' es obligatorio y debe ser un número válido" });
     }
 
-    const deletedActivity = await prisma.activity.delete({
+    const category = await prisma.category.delete({
       where: {
         id: parseInt(id),
-      },
+      }
     });
 
-    return res.status(200).json({ message: "Actividad eliminada exitosamente", deletedActivity });
-  } catch (error) {
+    return res.status(200).json(category);
+  }
+  catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
-        return res.status(404).json({ error: "No se encontró una actividad con el ID proporcionado" });
+        return res.status(404).json({ error: "No se encontró una categoría con el ID proporcionado" });
       }
     }
-    return res.status(500).json({ error: "Error al eliminar la actividad" });
+    return res.status(500).json({ error: "Error al eliminar la categoría" });
   }
-}
+}  

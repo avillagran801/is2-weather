@@ -10,6 +10,7 @@ import SearchAndCreateBar from "@/components/layout/SearchAndCreateBar";
 import CategoryAccordion from "@/components/categories/CategoryAccordion";
 import { defaultCategory } from "@/lib/categories_utils/defaultCategory";
 import EditCategoryDialog from "@/components/categories/EditCategoryDialog";
+import DeleteCategoryDialog from "@/components/categories/DeleteCategoryDialog";
 
 export default function Categorias() {
   const [categories, setCategories] = React.useState<CategoryWithActivities[]>([]);
@@ -49,6 +50,7 @@ export default function Categorias() {
         console.error("Error:", error);
         alert("Error al cargar los datos");
       } finally {
+        setRefreshCategories(false);
         setLoading(false);
       }
     };
@@ -123,6 +125,33 @@ export default function Categorias() {
     }
   };
 
+  const handleDeleteCategory = async (deletedCategoryId: number) => {
+    try {
+      const response = await fetch("/api/category/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: deletedCategoryId,
+        })
+      });
+
+      if(!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Solicitud fallida");  
+      }
+
+      setRefreshCategories(true);
+      setLoading(true);
+    }
+    catch (error) {
+      console.log(error);
+      if(error instanceof Error){
+        alert(error.message);
+      }
+    }
+  };
 
   // TERMINAR DE IMPLEMENTAR
   const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +165,9 @@ export default function Categorias() {
       <Loading />
     )
   }
+
+  console.log("refreshCategories" , refreshCategories)
+  console.log("loading", loading)
 
   return (
     <>
@@ -176,6 +208,12 @@ export default function Categorias() {
         selectedCategory={selectedCategory}
         onSubmit={handleEditCategory}
         userActivities={activities}
+      />
+      <DeleteCategoryDialog
+        open={openDeleteDialog}
+        setOpen={setOpenDeleteDialog}
+        selectedCategory={selectedCategory}
+        onSubmit={handleDeleteCategory}
       />
     </>
   );
