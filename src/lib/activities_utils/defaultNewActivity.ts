@@ -1,6 +1,11 @@
 import { Activity } from "@/generated/prisma";
+import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 
 export type ActivityCreatePayload = Omit<Activity, "id" | "user_id" > & {
+  categories_id: number[];
+};
+
+export type ActivityEditPayload = Omit<ActivityWithCategories, "user_id" | "ActivityCategory"> & {
   categories_id: number[];
 };
 

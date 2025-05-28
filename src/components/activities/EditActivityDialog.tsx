@@ -2,11 +2,7 @@ import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 import { PlainCategory } from "@/pages/api/category/readByUser";
 import React from "react";
 import BaseActivityForm from "./BaseActivityForm";
-import { defaultNewActivity } from "@/lib/activities_utils/defaultNewActivity";
-
-export type ActivityEditPayload = Omit<ActivityWithCategories, "user_id" | "ActivityCategory"> & {
-  categories_id: number[];
-};
+import { ActivityEditPayload, defaultNewActivity } from "@/lib/activities_utils/defaultNewActivity";
 
 type EditActivityDialogProps = {
   open: boolean;
@@ -25,7 +21,7 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
     if(open) {
       setFormData({
         ...selectedActivity,
-        categories_id: selectedActivity.ActivityCategory.map((item => item.Category.id.toString())) // CHANGE LATER
+        categories_id: selectedActivity.ActivityCategory.map((item => item.Category.id.toString()))
       });
 
       // Abre ajustes adicionales dependiendo de si ya existían o no 

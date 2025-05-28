@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-// CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if(req.method !== "PATCH"){
     return res.status(405).json({ error: "Método no permitido" });    
@@ -9,7 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const {
     id,
-    user_id,
     name,
     minTemp,
     maxTemp,
@@ -25,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } = req.body;
 
   try {
-    if( !id || !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !categories_id || !user_id ) {
+    if( !id || !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !categories_id ) {
       return res.status(400).json({ error: "Falta al menos un campo obligatorio "});
     }
 
@@ -33,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: "categories_id debe ser un arreglo" });
     }
 
-    // Delete existing relations between the activity and the category
+    // Delete existing relations between the activity and the past categories
     await prisma.activityCategory.deleteMany({
       where: {
         activity_id: parseInt(id),
@@ -57,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         wind_speed: parseInt(wind_speed),
         visibility: parseInt(visibility),
 
-        // Create relationship between the activity and an existing category
+        // Create relationship between the activity and the selected categories
         ActivityCategory: {
           createMany: {
             data: categories_id.map((id: string) => ({ category_id: Number(id) })),

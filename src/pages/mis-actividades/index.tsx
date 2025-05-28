@@ -3,10 +3,10 @@ import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
 import Loading from "@/components/layout/Loading";
-import EditActivityDialog, { ActivityEditPayload } from "@/components/activities/EditActivityDialog";
+import EditActivityDialog from "@/components/activities/EditActivityDialog";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import { PlainCategory } from "../api/category/readByUser";
-import { ActivityCreatePayload } from "@/lib/activities_utils/defaultNewActivity";
+import { ActivityCreatePayload, ActivityEditPayload } from "@/lib/activities_utils/defaultNewActivity";
 import { defaultActivity } from "@/lib/activities_utils/defaultActivity";
 import DetailsActivityDialog from "@/components/activities/DetailsActivityDialog";
 import DeleteActivityDialog from "@/components/activities/DeleteActivityDialog";
@@ -122,7 +122,6 @@ export default function MisActividades() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
-      // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/update", {
         method: "PATCH",
         headers: {
@@ -130,7 +129,6 @@ export default function MisActividades() {
         },
         body: JSON.stringify({
           ...editedActivity,
-          user_id: 2, // <--- CHANGE THIS
           categories_id: editedActivity.categories_id,
         })
       });
