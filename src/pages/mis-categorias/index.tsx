@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Typography, Paper, Grid, Button } from "@mui/material";
-import Loading from "@/components/layout/loading";
+import { Box, Typography, Paper, Grid } from "@mui/material";
+import Loading from "@/components/layout/Loading";
 import GenericActivityCard from "@/components/activities/GenericActivityCard";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import CreateCategoryDialog from "@/components/categories/CreateCategoryDialog";
 import { CategoryCreatePayload } from "@/lib/categories_utils/defaultNewCategory";
 import { CategoryWithActivities } from "../api/category/readWithActivitiesByUser";
+import SearchAndCreateBar from "@/components/layout/SearchAndCreateBar";
 
 export default function Categorias() {
   const [categories, setCategories] = React.useState<CategoryWithActivities[]>([]);
@@ -15,6 +16,8 @@ export default function Categorias() {
   const [refreshCategories, setRefreshCategories] = React.useState(false);
 
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
+
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +51,7 @@ export default function Categorias() {
 
   const handleAddCategory = async (newCategory: CategoryCreatePayload) => {
     try {
-      if(!newCategory.name) {
+      if (!newCategory.name) {
         throw new Error("La categoría necesita un nombre");
       }
 
@@ -58,14 +61,14 @@ export default function Categorias() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({         
+        body: JSON.stringify({
           ...newCategory,
           user_id: 2, // <--- CHANGE THIS 
           activities_id: newCategory.activities_id,
         })
-      });      
+      });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Solicitud fallida");
       }
@@ -79,26 +82,43 @@ export default function Categorias() {
     }
   }
 
-  if (loading) return <Loading />;
+  // TERMINAR DE IMPLEMENTAR
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSearch = e.target.value;
+    setSearchTerm(newSearch);
+  };
 
-  console.log(categories)
+
+  if(loading) {
+    return(
+      <Loading />
+    )
+  }
 
   return (
     <>
-      <Box sx={{ padding: "2rem" }}>
-        <Typography variant="h4" sx={{ marginBottom: "2rem" }}>
-          Actividades por Categoría
+      <Box sx={{
+        display: "flex",
+        flexDirection: "column",
+        margin: "1.4rem",
+        gap: "1rem"
+      }}>
+        <Typography variant="h5">
+          Mis categorías
         </Typography>
-        <Button onClick={() => setOpenCreateDialog(true)}>
-          Crear categoría
-        </Button>
+        <SearchAndCreateBar
+          searchTerm={searchTerm}
+          onSearchTermChange={handleSearchTermChange}
+          buttonText="Crear categoría"
+          onButtonClick={() => {setOpenCreateDialog(true)}}
+        />
 
         {categories.map((category) => {
           // CHANGE LATER: EDIT TO SUPPORT MORE THAN ONE CATEGORY
           const categoryActivities = category.ActivityCategory.map((activity) => (activity.Activity));
 
           return (
-            <Paper 
+            <Paper
               key={category.id}
               elevation={2}
               sx={{ marginBottom: "2rem", overflow: "hidden" }}
@@ -111,12 +131,12 @@ export default function Categorias() {
               </Box>
               <Grid container spacing={2} padding={2} alignItems={"stretch"}>
                 {categoryActivities.map((activity) => (
-                  <Grid 
+                  <Grid
                     key={activity.id}
-                    sx={{ xs: 12, sm: 6, md: 4}}  
+                    sx={{ xs: 12, sm: 6, md: 4 }}
                   >
-                    <Box 
-                      sx={{ 
+                    <Box
+                      sx={{
                         height: '100%',
                         display: 'flex',
                         flexDirection: 'column'

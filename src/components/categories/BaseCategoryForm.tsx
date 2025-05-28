@@ -93,7 +93,6 @@ export default function BaseCategoryForm({
               <TextField {...params} label="Seleccione actividades" />
             )}
           />
-
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>
