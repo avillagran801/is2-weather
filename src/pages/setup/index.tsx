@@ -18,7 +18,8 @@ const steps = [
 
 export default function Setup(){
   const [categories, setCategories] = React.useState<{ id: number, name:string }[]>([]);
-  const [selectedCategoryIds, setSelectedCategoryIds] = React.useState<number[]>([]);
+  const [activities, setActivities] = React.useState<{id: number, name:string}[]>([]);  const [selectedCategoryIds, setSelectedCategoryIds] = React.useState<number[]>([]);
+  const [selectedActivityIds, setSelectedActivityIds] = React.useState<number[]>([]);
   const [activeStep, setActiveStep] = React.useState(0);
 
   React.useEffect(() => {
@@ -36,6 +37,27 @@ export default function Setup(){
 
     fetchCategories();
   }, []);
+
+  React.useEffect(() => {
+    const fetchActivities = async () => {
+      try{
+        const res = await fetch("/api/default_activity/read_activities", {
+          method: "POST",
+          headers: {"Content-type": "application/json"},
+          body: JSON.stringify({ categoryIds: selectedCategoryIds}),
+        });
+        if (!res.ok) throw new Error("Error fetching activities");
+        const data = await res.json();
+        setActivities(data);
+      } catch (err) {
+        console.error(err);
+        alert("No se pudieron cargar las actividades");
+      }
+    };
+    if (activeStep === 1 && selectedCategoryIds.length > 0) {
+      fetchActivities();
+    }
+  }, [activeStep, selectedCategoryIds]);
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -75,7 +97,28 @@ export default function Setup(){
         </>
       );
     case 1:
-      return <Typography>Seleciona una o más actividades</Typography>;
+      return (
+        <>
+          <Typography>Seleciona una o más actividades</Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mt: 2}}>
+            {activities.map((activity => (
+              <Button
+                key={activity.id}
+                variant={selectedActivityIds.includes(activity.id) ? "contained": "outlined"}
+                onClick={() => {
+                  setSelectedActivityIds((prev) =>
+                    prev.includes(activity.id)
+                      ? prev.filter((id) => id !== activity.id)
+                      : [...prev, activity.id]
+                  );
+                }}
+              >
+                {activity.name}
+              </Button>
+            )))}
+          </Box>
+        </>
+      ); 
     case 2:
       return <Typography>Confirma tu selección</Typography>;
     }
@@ -107,7 +150,14 @@ export default function Setup(){
                 <Button disabled={activeStep === 0} onClick={handleBack}>
                   Atrás
                 </Button>
-                <Button variant="contained" onClick={handleNext} disabled={activeStep === 0 && selectedCategoryIds.length === 0}>
+                <Button 
+                  variant="contained" 
+                  onClick={handleNext} 
+                  disabled={
+                    (activeStep === 0 && selectedCategoryIds.length === 0) ||
+                    (activeStep === 1 && selectedActivityIds.length === 0)
+                  }
+                >
                   {activeStep === steps.length -1 ? "Finalizar" : "Siguiente"}
                 </Button>
               </Box>
