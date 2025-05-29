@@ -59,9 +59,42 @@ export default function Setup(){
     }
   }, [activeStep, selectedCategoryIds]);
 
-  const handleNext = () => {
-    setActiveStep((prevStep) => prevStep + 1);
+  const handleNext = async () => {
+    if (activeStep === 2) {
+      try {
+        const user_id = 2; // CHANGE THIS
+
+        const catRes = await fetch("/api/default_activity/copy_categories", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id, categoryIds: selectedCategoryIds }),
+        });
+
+        if (!catRes.ok) throw new Error("Error al copiar categorías");
+        const { categoryMapping } = await catRes.json();
+
+        const actRes = await fetch("/api/default_activity/copy_activities", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id,
+            activityIds: selectedActivityIds,
+            categoryMapping,
+          }),
+        });
+
+        if (!actRes.ok) throw new Error("Error al copiar actividades");
+
+        setActiveStep((prevStep) => prevStep + 1);
+      } catch (error) {
+        console.error(error);
+        alert("Ocurrió un error al finalizar la configuración.");
+      }
+    } else {
+      setActiveStep((prevStep) => prevStep + 1);
+    }
   };
+
 
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
@@ -120,7 +153,31 @@ export default function Setup(){
         </>
       ); 
     case 2:
-      return <Typography>Confirma tu selección</Typography>;
+      const selectedCategoryNames = categories
+        .filter((cat) => selectedCategoryIds.includes(cat.id))
+        .map((cat) => cat.name);
+
+      const selectedActivityNames = activities
+        .filter((act) => selectedActivityIds.includes(act.id))
+        .map((act) => act.name);
+
+      return (
+        <>
+          <Typography variant="h6" gutterBottom>Categorías seleccionadas</Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+            {selectedCategoryNames.map((name, index) => (
+              <Paper key={index} sx={{ p: 1 }}>{name}</Paper>
+            ))}
+          </Box>
+
+          <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>Actividades seleccionadas</Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+            {selectedActivityNames.map((name, index) => (
+              <Paper key={index} sx={{ p: 1 }}>{name}</Paper>
+            ))}
+          </Box>
+        </>
+      );
     }
   };
 
