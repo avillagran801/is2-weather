@@ -29,14 +29,14 @@ export default function WeatherChart() {
     },
     yAxis: [
       {
-        title: { text: "Values", style: { color: "#333" } },
+        title: { text: "°C", style: { color: "#333" } },
         labels: { style: { color: "#333" } },
         gridLineColor: "#444"
       },
       {
-        title: { text: "UV Index", style: { color: "#333" } },
+        title: { text: "mm", style: { color: "#333" } },
         labels: { style: { color: "#333" } },
-        opposite: true
+        // opposite: true
       }
     ],
     legend: {
@@ -44,65 +44,29 @@ export default function WeatherChart() {
     },
     series: [
       {
-        name: "Temperature (°C)",
-        type: "line",
-        data: temperatureData,
-        color: "#00BFFF",
-        yAxis: 0
-      },
-      {
-        name: "UV Index",
-        type: "line",
-        data: uvIndexData,
-        color: "#00FF7F",
-        yAxis: 1
-      },
-      {
-        name: "Humidity (%)",
+        name: "Temperature",
         type: "line",
         data: humidityData,
         color: "#FFA500",
         yAxis: 0
       },
       {
-        name: "Wind Speed (km/h)",
-        type: "line",
-        data: windSpeedData,
-        color: "#FF69B4",
-        yAxis: 0
+        name: "Precipitación",
+        type: "area",
+        data: temperatureData,
+        color: "#00BFFF",
+        fillOpacity: 0.2,
+        yAxis: 1
       }
     ],
-    credits: { enabled: false },
-    responsive: {
-      rules: [{
-        condition: { maxWidth: 600 },
-        chartOptions: { legend: { layout: 'horizontal', align: 'center', verticalAlign: 'bottom' } }
-      }]
-    }
+    credits: { enabled: false }
   };
 
   return (
-    <Card
-      sx={{
-        backgroundColor: "#dad7cd",
-        width: "100%",
-        maxWidth: 700,
-        margin: "0 auto",
-        marginBottom: 4,
-        boxShadow: 3,
-      }}
-    >
-      <CardContent
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <HighchartsReact highcharts={Highcharts} options={options} />
-        </div>
-      </CardContent>
-    </Card>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options}
+      containerProps={{ style: { width: "100%", height: "100%" } }}
+    />
   );
 }

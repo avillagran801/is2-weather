@@ -117,12 +117,13 @@ export default function Clima() {
             </Typography>
           </Box>
 
+          {/* Weather Graph */}
           {graphData ? (
             <>
               <Typography variant="h6" gutterBottom>
                 Pronóstico
               </Typography>
-              <Box sx={{ display: "flex", justifyContent: "center", marginBottom: 4 }}>
+              <Box sx={{ marginBottom: 4 }}>
                 <WeatherChart />
               </Box>
 
