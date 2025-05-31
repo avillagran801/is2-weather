@@ -1,12 +1,20 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import Loading from "@/components/layout/Loading";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { ActivityWithCategories } from "./api/activity/readByUser";
+import GenericActivityCard from "@/components/activities/GenericActivityCard";
+
+type ScoredActivity = ActivityWithCategories & {
+  score: number;
+};
 
 export default function Clima() {
   const [loading, setLoading] = React.useState(true);
   const [weather, setWeather] = React.useState<any>(null);
   const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
+  const [recommendedActivities, setRecommendedActivities] = React.useState<ScoredActivity[]>([]);
+
 
   const weatherCodeDescriptions: { [key: number]: string } = {
     0: "Cielo despejado",
@@ -37,6 +45,102 @@ export default function Clima() {
     95: "Tormenta eléctrica (leve o moderada)",
     96: "Tormenta eléctrica con granizo ligero",
     99: "Tormenta eléctrica con granizo intenso",
+  };
+
+  const calculateActivityScores = async (currentWeather: any) => {
+    try {
+      const response = await fetch("/api/activity/readByUser?user_id=2");
+      const activities: ActivityWithCategories[] = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch activities");
+      }
+      
+      const scoredActivities = activities.map(activity => {
+        console.log("de nuevo")
+        let score = 0;
+
+        // Check temperature (2 points)
+        if (currentWeather.current.temperature_2m >= activity.minTemp && 
+            currentWeather.current.temperature_2m <= activity.maxTemp) {
+          score += 2;
+          console.log(1);
+        }
+
+        // Check rain condition (2 point)
+        const isRaining = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(currentWeather.current.weather_code);
+        if (!isRaining || (isRaining && activity.rain)) {
+          score += 2;
+          console.log(2);
+        }
+
+        // Rain amount check (1 point)
+        if (activity.maxRain !== null ) {
+          if (activity.maxRain >= currentWeather.current.rain) {
+            score += 1;
+            console.log(3);
+          }
+        }
+
+        // Check humidity
+        if (activity.humidity !== null) {
+          if (activity.humidity >= currentWeather.current.relative_humidity_2m) {
+            score += 1;
+            console.log(4);
+          }
+        }
+        
+        // Check UV index
+        if (activity.uv_index !== null) {
+          if (activity.uv_index >= currentWeather.current.uv_index) {
+            score += 1;
+            console.log(5);
+          }
+        }
+
+        // Snow presence check (1 point)
+        const isSnowing = [71, 73, 75, 77, 85, 86].includes(currentWeather?.weather_code);
+        if (activity.snow !== null && (!isSnowing || (isSnowing && activity.snow))) {
+          score += 1;
+          console.log(6);
+        }
+
+        // Snow amount check (1 point)
+        if (activity.maxSnow !== null) {
+          if (activity.maxSnow >= currentWeather.current.snowfall) {
+            score += 1;
+            console.log(7);
+          }
+        }
+
+        // Check wind speed
+        if (activity.wind_speed !== null) {
+          if (activity.wind_speed >= currentWeather.current.wind_speed_10m) {
+            score += 1;
+            console.log(8);
+          }
+        }
+
+        // Check visibility
+        if (activity.visibility !== null) {
+          if (activity.visibility <= currentWeather.current.visibility) {
+            score += 1;
+            console.log(9);
+          }
+        }
+
+
+        return { ...activity, score };
+      });
+      // Sort by score and get top 3
+      const topActivities = scoredActivities
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+
+      setRecommendedActivities(topActivities);
+    } catch(error){
+      console.error("Error calculating recommendations:", error);
+    }
   };
 
   React.useEffect(() => {
@@ -80,6 +184,7 @@ export default function Clima() {
         }
 
         setWeather(data);
+        await calculateActivityScores(data);
       } catch (error) {
         console.error("Error al obtener el clima: ", error);
         alert("Error al obtener el clima o la ubicación");
@@ -124,7 +229,32 @@ export default function Clima() {
               Condición Actual: {currentWeatherDescription}
             </Typography>
           </Box>
-
+          <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 2 }}>
+            Actividades Recomendadas
+          </Typography>
+          <Grid container spacing={2} sx={{ mb: 4 }}>
+            {recommendedActivities.map((activity) => (
+              <Grid  size={{ xs: 12, sm: 6, md: 4}} key={activity.id}>
+                <Box sx={{ position: 'relative' }}>
+                  <GenericActivityCard activity={activity} />
+                  <Typography
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      bgcolor: 'primary.main',
+                      color: 'white',
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1,
+                    }}
+                  >
+                    Score: {activity.score}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
           {graphData ? (
             <>
               {/* Temperature Graph */}

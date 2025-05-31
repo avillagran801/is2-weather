@@ -2,7 +2,7 @@ import React from "react";
 import ActivityCard from "@/components/activities/ActivityCard";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import CreateActivityDialog from "@/components/activities/CreateActivityDialog";
-import Loading from "@/components/layout/loading"
+import Loading from "@/components/layout/Loading";
 import EditActivityDialog from "@/components/activities/EditActivityDialog";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import { PlainCategory } from "../api/category/readByUser";
