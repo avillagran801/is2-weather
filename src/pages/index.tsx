@@ -1,43 +1,14 @@
 import React from "react";
 import { Box, Typography, Card, CardContent } from "@mui/material";
 import Loading from "@/components/layout/loading";
-import WeatherChart from "@/components/WeatherChart";
+import WeatherChart from "@/components/weather/WeatherChart";
+// import weatherCodeDescriptions from "@/utils/weatherCodeDescriptions";
+import { time } from "console";
 
 export default function Clima() {
   const [loading, setLoading] = React.useState(true);
   const [weather, setWeather] = React.useState<any>(null);
   const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
-
-  const weatherCodeDescriptions: { [key: number]: string } = {
-    0: "Cielo despejado",
-    1: "Principalmente despejado",
-    2: "Parcialmente nublado",
-    3: "Nublado",
-    45: "Niebla",
-    48: "Niebla con escarcha",
-    51: "Llovizna ligera",
-    53: "Llovizna moderada",
-    55: "Llovizna intensa",
-    56: "Llovizna helada ligera",
-    57: "Llovizna helada intensa",
-    61: "Lluvia ligera",
-    63: "Lluvia moderada",
-    65: "Lluvia intensa",
-    66: "Lluvia helada ligera",
-    67: "Lluvia helada intensa",
-    71: "Nevada ligera",
-    73: "Nevada moderada",
-    75: "Nevada intensa",
-    77: "Granos de nieve",
-    80: "Chubascos de lluvia ligeros",
-    81: "Chubascos de lluvia moderados",
-    82: "Chubascos de lluvia violentos",
-    85: "Chubascos de nieve ligeros",
-    86: "Chubascos de nieve intensos",
-    95: "Tormenta eléctrica (leve o moderada)",
-    96: "Tormenta eléctrica con granizo ligero",
-    99: "Tormenta eléctrica con granizo intenso",
-  };
 
   React.useEffect(() => {
     const fetchWeather = async () => {
@@ -84,19 +55,15 @@ export default function Clima() {
 
 
   // Prepare data for visualization
-  const graphData = weather?.hourly?.time?.map((hour: string, index: number) => ({
-    hour: hour.split("T")[1], // Extract the time part
-    day: hour.split("T")[0], // Extract the date part
-    temperature: weather?.hourly?.temperature_2m?.[index] || 0,
-    wind_speed: weather?.hourly?.wind_speed_10m?.[index] || 0,
-    precipitation: weather?.hourly?.precipitation_probability?.[index] || 0,
-    relative_humidity: weather?.hourly?.relative_humidity_2m?.[index] || 0,
-    uv_index: weather?.hourly?.uv_index?.[index] || 0,
-    weatherCode: weatherCodeDescriptions[weather?.hourly?.weather_code?.[index]] || "Desconocido",
-  }));
+  const timeData = weather?.hourly?.time || [];
+  const minutes = String(new Date().getMinutes()).padStart(2, "0")
+  const currentTimeData = weather?.current?.time.slice(0, -2).concat(minutes) || []; // adjusted minutes to be more precise
+  const temperatureData = weather?.hourly?.temperature_2m || [];
+  const precipitationData = weather?.hourly?.precipitation || [];
+  const weatherCodeData = weather?.hourly?.weather_code || [];
 
   // Get current weather description
-  const currentWeatherDescription = weatherCodeDescriptions[weather?.current?.weather_code] || "Desconocido";
+  // const currentWeatherDescription = weatherCodeDescriptions[weather?.current?.weather_code][weather?.current?.is_day] || "Desconocido";
 
   return (
     <>
@@ -113,18 +80,23 @@ export default function Clima() {
               Temperatura Actual: {weather?.current?.temperature_2m || "Desconocida"} °C
             </Typography>
             <Typography variant="h6">
-              Condición Actual: {currentWeatherDescription}
+              {/* Condición Actual: {currentWeatherDescription} */}
             </Typography>
           </Box>
 
           {/* Weather Graph */}
-          {graphData ? (
+          {timeData ? (
             <>
               <Typography variant="h6" gutterBottom>
-                Pronóstico
+                Pronóstico del Clima
               </Typography>
-              <Box sx={{ marginBottom: 4 }}>
-                <WeatherChart />
+              <Box sx={{ marginBottom: 4, width: "80%", alignContent: "center", margin: "0 auto" }}>
+                <WeatherChart
+                  time={timeData}
+                  currentTime={currentTimeData}
+                  temperature={temperatureData}
+                  precipitation={precipitationData}
+                  weatherCode={weatherCodeData} />
               </Box>
 
             </>
