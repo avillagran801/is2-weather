@@ -51,25 +51,31 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
         })
         .filter((v): v is number => v !== undefined);
 
+    ///// Icon array
+    const weatherCodeIcons = weatherCode.map((code: number, index: number) => getWeatherCodeIcon(code, isDay[index]));
+    const iconTickPosition = [-1, 0];
+    for (let index = 1; index < weatherCodeIcons.length - 1; index++)
+        if (weatherCodeIcons[index] !== weatherCodeIcons[index - 1] || weatherCodeIcons[index] !== weatherCodeIcons[index + 1])
+            iconTickPosition[index] = index;
+
+
     ///// Insert icons into precipitation data
-    let formattedPrecipitation: Array<any>;
-    formattedPrecipitation = precipitation;
-    for (let index = 0, priorCode = -1; index < precipitation.length; index++) {
-        if (priorCode !== weatherCode[index]) {
-            priorCode = weatherCode[index];
-            formattedPrecipitation[index] = {
-                y: precipitation[index],
-                marker: {
-                    symbol: 'url(' + getWeatherCodeIcon(priorCode, isDay[index]) + ')',
-                    width: 60,
-                    height: 60
-                },
-
-            }
-        }
-    }
-
-    console.log(formattedPrecipitation);
+    // let formattedPrecipitation: Array<any>;
+    // formattedPrecipitation = precipitation;
+    // for (let index = 0, priorIcon = "_"; index < precipitation.length; index++) {
+    //     const icon = getWeatherCodeIcon(weatherCode[index], isDay[index]);
+    //     if (priorIcon !== icon || true) {
+    //         priorIcon = icon;
+    //         formattedPrecipitation[index] = {
+    //             y: precipitation[index],
+    //             marker: {
+    //                 symbol: 'url(' + icon + ')',
+    //                 width: 60,
+    //                 height: 60
+    //             },
+    //         }
+    //     }
+    // }
 
     const options: Highcharts.Options = {
         chart: {
@@ -78,7 +84,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
             style: { fontFamily: "inherit", fontSize: "1.2rem", fontWeight: "bold", color: "#333" }
         },
         title: { text: undefined },
-        xAxis: {
+        xAxis: [{
             categories: formattedTime,
             tickPositions: tickPositions,
             plotLines: currentIndex >= 0 ? [
@@ -91,14 +97,25 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
                     }
                 }
             ] : []
-        },
+        }, {
+            categories: weatherCodeIcons,
+            labels: {
+                format: '<img src="{text}" style="width: 50px; margin-bottom: -15px; margin-top: -10px">',
+                useHTML: true,
+                rotation: 0,
+                allowOverlap: false
+            },
+            // tickPositions: iconTickPosition,
+            opposite: true
+        }],
         yAxis: [
             {
-                title: { text: "°C" },
+                title: { text: "Temperature" },
+                labels: { format: '{value}°C' },
             },
             {
-                title: { text: "mm" },
-                labels: { format: '{value}°' },
+                title: { text: "Precipitación" },
+                labels: { format: '{value} mm' },
                 gridLineColor: "#777777",
                 opposite: true
             }
@@ -115,11 +132,12 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
             {
                 name: "Precipitación",
                 type: "areaspline",
-                data: formattedPrecipitation,
+                data: precipitation,
                 color: "#00BFFF",
                 fillOpacity: 0.2,
                 marker: { symbol: 'square' },
-                yAxis: 1
+                yAxis: 1,
+                xAxis: 1
             }
         ],
         credits: { enabled: false }
