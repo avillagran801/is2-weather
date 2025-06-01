@@ -61,6 +61,7 @@ export default function Clima() {
   const temperatureData = weather?.hourly?.temperature_2m || [];
   const precipitationData = weather?.hourly?.precipitation || [];
   const weatherCodeData = weather?.hourly?.weather_code || [];
+  const isDayData = weather?.hourly?.is_day || [];
 
   // Get current weather description
   // const currentWeatherDescription = weatherCodeDescriptions[weather?.current?.weather_code][weather?.current?.is_day] || "Desconocido";
@@ -96,7 +97,8 @@ export default function Clima() {
                   currentTime={currentTimeData}
                   temperature={temperatureData}
                   precipitation={precipitationData}
-                  weatherCode={weatherCodeData} />
+                  weatherCode={weatherCodeData}
+                  isDay={isDayData} />
               </Box>
 
             </>

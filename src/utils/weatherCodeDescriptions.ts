@@ -1,282 +1,530 @@
-export const weatherCodeDescriptions = {
-    "0": {
-        "1": {
-            "description": "Soleado",
-            "image": "http://openweathermap.org/img/wn/01d@2x.png"
-        },
-        "0": {
-            "description": "Despejado",
-            "image": "http://openweathermap.org/img/wn/01n@2x.png"
+export function getWeatherCodeDescriptions(weatheCode: number, isDay: number): string {
+
+    let description = "";
+
+    if (isDay) {
+        switch (weatheCode) {
+            case 0: {
+                description = "Soleado";
+                break;
+            }
+            case 1: {
+                description = "Mayormente soleado";
+                break;
+            }
+            case 2: {
+                description = "Parcialmente nublado";
+                break;
+            }
+            case 3: {
+                description = "Nublado";
+                break;
+            }
+            case 45: {
+                description = "Neblina";
+                break;
+            }
+            case 48: {
+                description = "Neblina con escarcha";
+                break;
+            }
+            case 51: {
+                description = "Llovizna ligera";
+                break;
+            }
+            case 53: {
+                description = "Llovizna";
+                break;
+            }
+            case 55: {
+                description = "Llovizna intensa";
+                break;
+            }
+            case 56: {
+                description = "Llovizna helada ligera";
+                break;
+            }
+            case 57: {
+                description = "Llovizna helada";
+                break;
+            }
+            case 61: {
+                description = "Lluvia ligera";
+                break;
+            }
+            case 63: {
+                description = "Lluvia";
+                break;
+            }
+            case 65: {
+                description = "Lluvia intensa";
+                break;
+            }
+            case 66: {
+                description = "Lluvia helada ligera";
+                break;
+            }
+            case 67: {
+                description = "Lluvia helada";
+                break;
+            }
+            case 71: {
+                description = "Nieve ligera";
+                break;
+            }
+            case 73: {
+                description = "Nieve";
+                break;
+            }
+            case 75: {
+                description = "Nieve intensa";
+                break;
+            }
+            case 77: {
+                description = "Granos de nieve";
+                break;
+            }
+            case 80: {
+                description = "Chubascos ligeros";
+                break;
+            }
+            case 81: {
+                description = "Chubascos";
+                break;
+            }
+            case 82: {
+                description = "Chubascos intensos";
+                break;
+            }
+            case 85: {
+                description = "Chubascos de nieve ligera";
+                break;
+            }
+            case 86: {
+                description = "Chubascos de nieve";
+                break;
+            }
+            case 95: {
+                description = "Tormenta eléctrica";
+                break;
+            }
+            case 96: {
+                description = "Tormenta eléctrica ligera con granizo";
+                break;
+            }
+            case 99: {
+                description = "Tormenta eléctrica con granizo";
+                break;
+            }
         }
-    },
-    "1": {
-        "1": {
-            "description": "Mayormente soleado",
-            "image": "http://openweathermap.org/img/wn/01d@2x.png"
-        },
-        "0": {
-            "description": "Mayormente despejado",
-            "image": "http://openweathermap.org/img/wn/01n@2x.png"
-        }
-    },
-    "2": {
-        "1": {
-            "description": "Parcialmente nublado",
-            "image": "http://openweathermap.org/img/wn/02d@2x.png"
-        },
-        "0": {
-            "description": "Parcialmente nublado",
-            "image": "http://openweathermap.org/img/wn/02n@2x.png"
-        }
-    },
-    "3": {
-        "1": {
-            "description": "Nublado",
-            "image": "http://openweathermap.org/img/wn/03d@2x.png"
-        },
-        "0": {
-            "description": "Nublado",
-            "image": "http://openweathermap.org/img/wn/03n@2x.png"
-        }
-    },
-    "45": {
-        "1": {
-            "description": "Neblina",
-            "image": "http://openweathermap.org/img/wn/50d@2x.png"
-        },
-        "0": {
-            "description": "Neblina",
-            "image": "http://openweathermap.org/img/wn/50n@2x.png"
-        }
-    },
-    "48": {
-        "1": {
-            "description": "Neblina con escarcha",
-            "image": "http://openweathermap.org/img/wn/50d@2x.png"
-        },
-        "0": {
-            "description": "Neblina con escarcha",
-            "image": "http://openweathermap.org/img/wn/50n@2x.png"
-        }
-    },
-    "51": {
-        "1": {
-            "description": "Llovizna ligera",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Llovizna ligera",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "53": {
-        "1": {
-            "description": "Llovizna",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Llovizna",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "55": {
-        "1": {
-            "description": "Llovizna intensa",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Llovizna intensa",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "56": {
-        "1": {
-            "description": "Llovizna helada ligera",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Llovizna helada ligera",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "57": {
-        "1": {
-            "description": "Llovizna helada",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Llovizna helada",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "61": {
-        "1": {
-            "description": "Lluvia ligera",
-            "image": "http://openweathermap.org/img/wn/10d@2x.png"
-        },
-        "0": {
-            "description": "Lluvia ligera",
-            "image": "http://openweathermap.org/img/wn/10n@2x.png"
-        }
-    },
-    "63": {
-        "1": {
-            "description": "Lluvia",
-            "image": "http://openweathermap.org/img/wn/10d@2x.png"
-        },
-        "0": {
-            "description": "Lluvia",
-            "image": "http://openweathermap.org/img/wn/10n@2x.png"
-        }
-    },
-    "65": {
-        "1": {
-            "description": "Lluvia intensa",
-            "image": "http://openweathermap.org/img/wn/10d@2x.png"
-        },
-        "0": {
-            "description": "Lluvia intensa",
-            "image": "http://openweathermap.org/img/wn/10n@2x.png"
-        }
-    },
-    "66": {
-        "1": {
-            "description": "Lluvia helada ligera",
-            "image": "http://openweathermap.org/img/wn/10d@2x.png"
-        },
-        "0": {
-            "description": "Lluvia helada ligera",
-            "image": "http://openweathermap.org/img/wn/10n@2x.png"
-        }
-    },
-    "67": {
-        "1": {
-            "description": "Lluvia helada",
-            "image": "http://openweathermap.org/img/wn/10d@2x.png"
-        },
-        "0": {
-            "description": "Lluvia helada",
-            "image": "http://openweathermap.org/img/wn/10n@2x.png"
-        }
-    },
-    "71": {
-        "1": {
-            "description": "Nieve ligera",
-            "image": "http://openweathermap.org/img/wn/13d@2x.png"
-        },
-        "0": {
-            "description": "Nieve ligera",
-            "image": "http://openweathermap.org/img/wn/13n@2x.png"
-        }
-    },
-    "73": {
-        "1": {
-            "description": "Nieve",
-            "image": "http://openweathermap.org/img/wn/13d@2x.png"
-        },
-        "0": {
-            "description": "Nieve",
-            "image": "http://openweathermap.org/img/wn/13n@2x.png"
-        }
-    },
-    "75": {
-        "1": {
-            "description": "Nieve intensa",
-            "image": "http://openweathermap.org/img/wn/13d@2x.png"
-        },
-        "0": {
-            "description": "Nieve intensa",
-            "image": "http://openweathermap.org/img/wn/13n@2x.png"
-        }
-    },
-    "77": {
-        "1": {
-            "description": "Granos de nieve",
-            "image": "http://openweathermap.org/img/wn/13d@2x.png"
-        },
-        "0": {
-            "description": "Granos de nieve",
-            "image": "http://openweathermap.org/img/wn/13n@2x.png"
-        }
-    },
-    "80": {
-        "1": {
-            "description": "Chubascos ligeros",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Chubascos ligeros",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "81": {
-        "1": {
-            "description": "Chubascos",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Chubascos",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "82": {
-        "1": {
-            "description": "Chubascos intensos",
-            "image": "http://openweathermap.org/img/wn/09d@2x.png"
-        },
-        "0": {
-            "description": "Chubascos intensos",
-            "image": "http://openweathermap.org/img/wn/09n@2x.png"
-        }
-    },
-    "85": {
-        "1": {
-            "description": "Chubascos de nieve ligera",
-            "image": "http://openweathermap.org/img/wn/13d@2x.png"
-        },
-        "0": {
-            "description": "Chubascos de nieve ligera",
-            "image": "http://openweathermap.org/img/wn/13n@2x.png"
-        }
-    },
-    "86": {
-        "1": {
-            "description": "Chubascos de nieve",
-            "image": "http://openweathermap.org/img/wn/13d@2x.png"
-        },
-        "0": {
-            "description": "Chubascos de nieve",
-            "image": "http://openweathermap.org/img/wn/13n@2x.png"
-        }
-    },
-    "95": {
-        "1": {
-            "description": "Tormenta eléctrica",
-            "image": "http://openweathermap.org/img/wn/11d@2x.png"
-        },
-        "0": {
-            "description": "Tormenta eléctrica",
-            "image": "http://openweathermap.org/img/wn/11n@2x.png"
-        }
-    },
-    "96": {
-        "1": {
-            "description": "Tormenta eléctrica ligera con granizo",
-            "image": "http://openweathermap.org/img/wn/11d@2x.png"
-        },
-        "0": {
-            "description": "Tormenta eléctrica ligera con granizo",
-            "image": "http://openweathermap.org/img/wn/11n@2x.png"
-        }
-    },
-    "99": {
-        "1": {
-            "description": "Tormenta eléctrica con granizo",
-            "image": "http://openweathermap.org/img/wn/11d@2x.png"
-        },
-        "0": {
-            "description": "Tormenta eléctrica con granizo",
-            "image": "http://openweathermap.org/img/wn/11n@2x.png"
+    } else if (isDay === 0) {
+        switch (weatheCode) {
+
+            case 0: {
+                description = "Despejado";
+                break;
+            }
+
+            case 1: {
+                description = "Mayormente despejado";
+                break;
+            }
+
+            case 2: {
+                description = "Parcialmente nublado";
+                break;
+            }
+
+            case 3: {
+                description = "Nublado";
+                break;
+            }
+
+            case 45: {
+                description = "Neblina";
+                break;
+            }
+
+            case 48: {
+                description = "Neblina con escarcha";
+                break;
+            }
+
+            case 51: {
+                description = "Llovizna ligera";
+                break;
+            }
+
+            case 53: {
+                description = "Llovizna";
+                break;
+            }
+
+            case 55: {
+                description = "Llovizna intensa";
+                break;
+            }
+
+            case 56: {
+                description = "Llovizna helada ligera";
+                break;
+            }
+
+            case 57: {
+                description = "Llovizna helada";
+                break;
+            }
+
+            case 61: {
+                description = "Lluvia ligera";
+                break;
+            }
+
+            case 63: {
+                description = "Lluvia";
+                break;
+            }
+
+            case 65: {
+                description = "Lluvia intensa";
+                break;
+            }
+
+            case 66: {
+                description = "Lluvia helada ligera";
+                break;
+            }
+
+            case 67: {
+                description = "Lluvia helada";
+                break;
+            }
+
+            case 71: {
+                description = "Nieve ligera";
+                break;
+            }
+
+            case 73: {
+                description = "Nieve";
+                break;
+            }
+
+            case 75: {
+                description = "Nieve intensa";
+                break;
+            }
+
+            case 77: {
+                description = "Granos de nieve";
+                break;
+            }
+
+            case 80: {
+                description = "Chubascos ligeros";
+                break;
+            }
+
+            case 81: {
+                description = "Chubascos";
+                break;
+            }
+
+            case 82: {
+                description = "Chubascos intensos";
+                break;
+            }
+
+            case 85: {
+                description = "Chubascos de nieve ligera";
+                break;
+            }
+
+            case 86: {
+                description = "Chubascos de nieve";
+                break;
+            }
+
+            case 95: {
+                description = "Tormenta eléctrica";
+                break;
+            }
+
+            case 96: {
+                description = "Tormenta eléctrica ligera con granizo";
+                break;
+            }
+
+            case 99: {
+                description = "Tormenta eléctrica con granizo";
+                break;
+            }
         }
     }
+
+    return description;
+}
+
+export function getWeatherCodeIcon(weatheCode: number, isDay: number) {
+    let icon = "";
+    if (isDay === 1) {
+        switch (weatheCode) {
+            case 0: {
+                icon = "http://openweathermap.org/img/wn/01d@2x.png";
+                break;
+            }
+
+            case 1: {
+                icon = "http://openweathermap.org/img/wn/01d@2x.png";
+                break;
+            }
+
+            case 2: {
+                icon = "http://openweathermap.org/img/wn/02d@2x.png";
+                break;
+            }
+
+            case 3: {
+                icon = "http://openweathermap.org/img/wn/03d@2x.png";
+                break;
+            }
+
+            case 45: {
+                icon = "http://openweathermap.org/img/wn/50d@2x.png";
+                break;
+            }
+
+            case 48: {
+                icon = "http://openweathermap.org/img/wn/50d@2x.png";
+                break;
+            }
+
+            case 51: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 53: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 55: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 56: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 57: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 61: {
+                icon = "http://openweathermap.org/img/wn/10d@2x.png";
+                break;
+            }
+
+            case 63: {
+                icon = "http://openweathermap.org/img/wn/10d@2x.png";
+                break;
+            }
+
+            case 65: {
+                icon = "http://openweathermap.org/img/wn/10d@2x.png";
+                break;
+            }
+
+            case 66: {
+                icon = "http://openweathermap.org/img/wn/10d@2x.png";
+                break;
+            }
+
+            case 67: {
+                icon = "http://openweathermap.org/img/wn/10d@2x.png";
+                break;
+            }
+
+            case 71: {
+                icon = "http://openweathermap.org/img/wn/13d@2x.png";
+                break;
+            }
+
+            case 73: {
+                icon = "http://openweathermap.org/img/wn/13d@2x.png";
+                break;
+            }
+
+            case 75: {
+                icon = "http://openweathermap.org/img/wn/13d@2x.png";
+                break;
+            }
+
+            case 77: {
+                icon = "http://openweathermap.org/img/wn/13d@2x.png";
+                break;
+            }
+
+            case 80: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 81: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 82: {
+                icon = "http://openweathermap.org/img/wn/09d@2x.png";
+                break;
+            }
+
+            case 85: {
+                icon = "http://openweathermap.org/img/wn/13d@2x.png";
+                break;
+            }
+
+            case 86: {
+                icon = "http://openweathermap.org/img/wn/13d@2x.png";
+                break;
+            }
+
+            case 95: {
+                icon = "http://openweathermap.org/img/wn/11d@2x.png";
+                break;
+            }
+
+            case 96: {
+                icon = "http://openweathermap.org/img/wn/11d@2x.png";
+                break;
+            }
+
+            case 99: {
+                icon = "http://openweathermap.org/img/wn/11d@2x.png";
+                break;
+            }
+        }
+    } else if (isDay === 0) {
+        switch (weatheCode) {
+            case 0: {
+                icon = "http://openweathermap.org/img/wn/01n@2x.png";
+                break;
+            }
+            case 1: {
+                icon = "http://openweathermap.org/img/wn/01n@2x.png";
+                break;
+            }
+            case 2: {
+                icon = "http://openweathermap.org/img/wn/02n@2x.png";
+                break;
+            }
+            case 3: {
+                icon = "http://openweathermap.org/img/wn/03n@2x.png";
+                break;
+            }
+            case 45: {
+                icon = "http://openweathermap.org/img/wn/50n@2x.png";
+                break;
+            }
+            case 48: {
+                icon = "http://openweathermap.org/img/wn/50n@2x.png";
+                break;
+            }
+            case 51: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 53: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 55: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 56: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 57: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 61: {
+                icon = "http://openweathermap.org/img/wn/10n@2x.png";
+                break;
+            }
+            case 63: {
+                icon = "http://openweathermap.org/img/wn/10n@2x.png";
+                break;
+            }
+            case 65: {
+                icon = "http://openweathermap.org/img/wn/10n@2x.png";
+                break;
+            }
+            case 66: {
+                icon = "http://openweathermap.org/img/wn/10n@2x.png";
+                break;
+            }
+            case 67: {
+                icon = "http://openweathermap.org/img/wn/10n@2x.png";
+                break;
+            }
+            case 71: {
+                icon = "http://openweathermap.org/img/wn/13n@2x.png";
+                break;
+            }
+            case 73: {
+                icon = "http://openweathermap.org/img/wn/13n@2x.png";
+                break;
+            }
+            case 75: {
+                icon = "http://openweathermap.org/img/wn/13n@2x.png";
+                break;
+            }
+            case 77: {
+                icon = "http://openweathermap.org/img/wn/13n@2x.png";
+                break;
+            }
+            case 80: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 81: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 82: {
+                icon = "http://openweathermap.org/img/wn/09n@2x.png";
+                break;
+            }
+            case 85: {
+                icon = "http://openweathermap.org/img/wn/13n@2x.png";
+                break;
+            }
+            case 86: {
+                icon = "http://openweathermap.org/img/wn/13n@2x.png";
+                break;
+            }
+            case 95: {
+                icon = "http://openweathermap.org/img/wn/11n@2x.png";
+                break;
+            }
+            case 96: {
+                icon = "http://openweathermap.org/img/wn/11n@2x.png";
+                break;
+            }
+            case 99: {
+                icon = "http://openweathermap.org/img/wn/11n@2x.png";
+                break;
+            }
+        }
+    }
+
+    return icon;
 }
