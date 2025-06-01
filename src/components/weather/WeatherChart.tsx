@@ -1,10 +1,8 @@
 import React from "react";
-import { Card, CardContent } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { getHourLabel, getTimeLabel } from "@/utils/reformatTime";
-import { getWeatherCodeDescriptions, getWeatherCodeIcon } from "@/utils/weatherCodeDescriptions";
-import { X } from "@mui/icons-material";
+import { getWeatherCodeIcon } from "@/utils/weatherCodeDescriptions";
 
 
 type WeatherChartProps = {
@@ -27,17 +25,18 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
     let currentIndex = time.indexOf(currentTime.slice(0, -2).concat("00"));
     currentIndex += Number(currentTime.slice(-2)) / 60;
 
-    ///// Crop how many pasta hours are shown
-    const pastHours = 1; // Number of past hours to show
-    if (currentIndex > pastHours) {
-        time = time.slice(currentIndex - pastHours);
-        formattedTime = formattedTime.slice(currentIndex - pastHours);
-        temperature = temperature.slice(currentIndex - pastHours);
-        precipitation = precipitation.slice(currentIndex - pastHours);
-        weatherCode = weatherCode.slice(currentIndex - pastHours);
-        isDay = isDay.slice(currentIndex - pastHours);
-        currentIndex -= currentIndex - currentIndex % 1 - pastHours;
-    }
+    ///// Crop arrays
+    const graphLenght = 48;
+    let pastHours = 1; // Number of past hours to show
+    if (currentIndex > pastHours)
+        pastHours = 0;
+    time = time.slice(currentIndex - pastHours, graphLenght + currentIndex);
+    formattedTime = formattedTime.slice(currentIndex - pastHours, graphLenght + currentIndex);
+    temperature = temperature.slice(currentIndex - pastHours, graphLenght + currentIndex);
+    precipitation = precipitation.slice(currentIndex - pastHours, graphLenght + currentIndex);
+    weatherCode = weatherCode.slice(currentIndex - pastHours, graphLenght + currentIndex);
+    isDay = isDay.slice(currentIndex - pastHours, graphLenght + currentIndex);
+    currentIndex -= currentIndex - currentIndex % 1 - pastHours;
 
     ///// Filtering labels to skip
     const XAxisStep = 4; // Number of labels to skip on the x-axis
@@ -53,29 +52,9 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
 
     ///// Icon array
     const weatherCodeIcons = weatherCode.map((code: number, index: number) => getWeatherCodeIcon(code, isDay[index]));
-    const iconTickPosition = [-1, 0];
-    for (let index = 1; index < weatherCodeIcons.length - 1; index++)
-        if (weatherCodeIcons[index] !== weatherCodeIcons[index - 1] || weatherCodeIcons[index] !== weatherCodeIcons[index + 1])
-            iconTickPosition[index] = index;
 
-
-    ///// Insert icons into precipitation data
-    // let formattedPrecipitation: Array<any>;
-    // formattedPrecipitation = precipitation;
-    // for (let index = 0, priorIcon = "_"; index < precipitation.length; index++) {
-    //     const icon = getWeatherCodeIcon(weatherCode[index], isDay[index]);
-    //     if (priorIcon !== icon || true) {
-    //         priorIcon = icon;
-    //         formattedPrecipitation[index] = {
-    //             y: precipitation[index],
-    //             marker: {
-    //                 symbol: 'url(' + icon + ')',
-    //                 width: 60,
-    //                 height: 60
-    //             },
-    //         }
-    //     }
-    // }
+    console.log(weatherCode)
+    console.log(weatherCodeIcons)
 
     const options: Highcharts.Options = {
         chart: {
@@ -100,22 +79,26 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
         }, {
             categories: weatherCodeIcons,
             labels: {
-                format: '<img src="{text}" style="width: 50px; margin-bottom: -15px; margin-top: -10px">',
+                format: '<img src="{text}" style="width: 60px; margin-bottom: -20px">',
                 useHTML: true,
                 rotation: 0,
-                allowOverlap: false
+                // allowOverlap: true,
+                enabled: true,
             },
-            // tickPositions: iconTickPosition,
-            opposite: true
+            tickInterval: 2,
+            opposite: true,
+            linkedTo: 0 // doesn't render without this
         }],
         yAxis: [
             {
                 title: { text: "Temperature" },
                 labels: { format: '{value}°C' },
+                softMax: 20
             },
             {
                 title: { text: "Precipitación" },
                 labels: { format: '{value} mm' },
+                softMax: 6,
                 gridLineColor: "#777777",
                 opposite: true
             }
@@ -135,9 +118,8 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
                 data: precipitation,
                 color: "#00BFFF",
                 fillOpacity: 0.2,
-                marker: { symbol: 'square' },
                 yAxis: 1,
-                xAxis: 1
+                xAxis: 0
             }
         ],
         credits: { enabled: false }

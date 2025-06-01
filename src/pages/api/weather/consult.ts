@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { latitude, longitude } = req.body;
   const url = "https://api.open-meteo.com/v1/forecast";
   let queries = "&hourly=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers,precipitation,is_day" // hourly
-  queries += "&forecast_days=2" // forecast days
+  queries += "&forecast_days=3" // forecast days
   queries += "&current=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers,precipitation,is_day"; // current
   queries += "&timezone=auto"; // timezone
 
