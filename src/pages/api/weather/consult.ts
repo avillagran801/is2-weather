@@ -7,9 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { latitude, longitude } = req.body;
   const url = "https://api.open-meteo.com/v1/forecast";
-  let queries = "&hourly=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers" // hourly
-  queries += "&forecast_days=2" // forecast days
-  queries += "&current=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers"; // current
+  let queries = "&hourly=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers,precipitation,is_day" // hourly
+  queries += "&forecast_days=3" // forecast days
+  queries += "&current=temperature_2m,weather_code,uv_index,relative_humidity_2m,visibility,wind_speed_10m,snowfall,rain,showers,precipitation,is_day"; // current
   queries += "&timezone=auto"; // timezone
 
   try {
@@ -18,7 +18,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const response = await fetch(`${url}?latitude=${latitude}&longitude=${longitude}${queries}`);
-    const data = await response.json();
+    let data = await response.json();
+    
+    // add showers to rain and delete showers
+    if (data.hourly && data.hourly.rain) {
+      data.hourly.rain = data.hourly.rain.map((value: number, index: number) => {
+        return value + (data.hourly.showers ? data.hourly.showers[index] : 0);
+      });
+      delete data.hourly.showers;
+    }
+    if (data.current && data.current.rain) {
+      data.current.rain = data.current.rain + (data.current.showers || 0);
+      delete data.current.showers;
+    }
 
     return res.status(200).json(data);
   } catch (error) {

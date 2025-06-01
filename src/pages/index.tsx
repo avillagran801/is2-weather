@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
 import Loading from "@/components/layout/Loading";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import WeatherChart from "@/components/weather/WeatherChart";
 import { ActivityWithCategories } from "./api/activity/readByUser";
 import GenericActivityCard from "@/components/activities/GenericActivityCard";
 
@@ -14,38 +14,6 @@ export default function Clima() {
   const [weather, setWeather] = React.useState<any>(null);
   const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
   const [recommendedActivities, setRecommendedActivities] = React.useState<ScoredActivity[]>([]);
-
-
-  const weatherCodeDescriptions: { [key: number]: string } = {
-    0: "Cielo despejado",
-    1: "Principalmente despejado",
-    2: "Parcialmente nublado",
-    3: "Nublado",
-    45: "Niebla",
-    48: "Niebla con escarcha",
-    51: "Llovizna ligera",
-    53: "Llovizna moderada",
-    55: "Llovizna intensa",
-    56: "Llovizna helada ligera",
-    57: "Llovizna helada intensa",
-    61: "Lluvia ligera",
-    63: "Lluvia moderada",
-    65: "Lluvia intensa",
-    66: "Lluvia helada ligera",
-    67: "Lluvia helada intensa",
-    71: "Nevada ligera",
-    73: "Nevada moderada",
-    75: "Nevada intensa",
-    77: "Granos de nieve",
-    80: "Chubascos de lluvia ligeros",
-    81: "Chubascos de lluvia moderados",
-    82: "Chubascos de lluvia violentos",
-    85: "Chubascos de nieve ligeros",
-    86: "Chubascos de nieve intensos",
-    95: "Tormenta eléctrica (leve o moderada)",
-    96: "Tormenta eléctrica con granizo ligero",
-    99: "Tormenta eléctrica con granizo intenso",
-  };
 
   const calculateActivityScores = async (currentWeather: any) => {
     try {
@@ -195,21 +163,18 @@ export default function Clima() {
     fetchWeather();
   }, []);
 
-  // Prepare data for visualization
-  const graphData = weather?.hourly?.time?.map((hour: string, index: number) => ({
-    hour: hour,
-    temperature: weather?.hourly?.temperature_2m?.[index] || 0,
-    wind_speed: weather?.hourly?.wind_speed_10m?.[index] || 0,
-    precipitation_probability: weather?.hourly?.precipitation_probability?.[index] || 0,
-    relative_humidity: weather?.hourly?.relative_humidity_2m?.[index] || 0,
-    uv_index: weather?.hourly?.uv_index?.[index] || 0,
-    weatherCode: weatherCodeDescriptions[weather?.hourly?.weather_code?.[index]] || "Desconocido",
-  }));
 
-  // Extract current weather data
-  const currentTemperature = weather?.current?.temperature_2m;
-  const currentWeatherCode = weather?.current?.weather_code;
-  const currentWeatherDescription = weatherCodeDescriptions[currentWeatherCode] || "Desconocido";
+  // Prepare data for visualization
+  const timeData = weather?.hourly?.time || [];
+  const minutes = String(new Date().getMinutes()).padStart(2, "0")
+  const currentTimeData = weather?.current?.time.slice(0, -2).concat(minutes) || []; // adjusted minutes to be more precise
+  const temperatureData = weather?.hourly?.temperature_2m || [];
+  const precipitationData = weather?.hourly?.precipitation || [];
+  const weatherCodeData = weather?.hourly?.weather_code || [];
+  const isDayData = weather?.hourly?.is_day || [];
+
+  // Get current weather description
+  // const currentWeatherDescription = weatherCodeDescriptions[weather?.current?.weather_code][weather?.current?.is_day] || "Desconocido";
 
   return (
     <>
@@ -223,10 +188,10 @@ export default function Clima() {
           </Typography>
           <Box sx={{ marginBottom: 4 }}>
             <Typography variant="h6">
-              Temperatura Actual: {currentTemperature} °C
+              Temperatura Actual: {weather?.current?.temperature_2m || "Desconocida"} °C
             </Typography>
             <Typography variant="h6">
-              Condición Actual: {currentWeatherDescription}
+              {/* Condición Actual: {currentWeatherDescription} */}
             </Typography>
           </Box>
           <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 2 }}>
@@ -255,31 +220,26 @@ export default function Clima() {
               </Grid>
             ))}
           </Grid>
-          {graphData ? (
+          {/* Weather Graph */}
+          {timeData ? (
             <>
-              {/* Temperature Graph */}
               <Typography variant="h6" gutterBottom>
-                Temperatura
+                Pronóstico del Clima
               </Typography>
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={graphData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="hour" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="temperature" stroke="#8884d8" activeDot={{ r: 8 }} />
-                </LineChart>
-              </ResponsiveContainer>
-
-              {/* Raw response */}
-              <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
-                Respuesta formato json de open-meteo
-              </Typography>
-              <pre>{JSON.stringify(weather, null, 2)}</pre>
+              <Box sx={{ marginBottom: 4, width: "85%", alignContent: "center", margin: "0 auto" }}>
+                <WeatherChart
+                  time={timeData}
+                  currentTime={currentTimeData}
+                  temperature={temperatureData}
+                  precipitation={precipitationData}
+                  weatherCode={weatherCodeData}
+                  isDay={isDayData} />
+              </Box>
             </>
           ) : (
             <Typography variant="body1">No se encontraron datos de clima.</Typography>
           )}
+
         </Box>
       )}
     </>
