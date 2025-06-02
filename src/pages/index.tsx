@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
-import Loading from "@/components/layout/Loading";
+import Loading from "@/components/layout/loading";
 import WeatherChart from "@/components/weather/WeatherChart";
 import { ActivityWithCategories } from "./api/activity/readByUser";
 import GenericActivityCard from "@/components/activities/GenericActivityCard";
+import { getWeatherCodeDescriptions } from "@/utils/weatherCodeDescriptions";
 
 type ScoredActivity = ActivityWithCategories & {
   score: number;
@@ -23,14 +24,14 @@ export default function Clima() {
       if (!response.ok) {
         throw new Error("Failed to fetch activities");
       }
-      
+
       const scoredActivities = activities.map(activity => {
         console.log("de nuevo")
         let score = 0;
 
         // Check temperature (2 points)
-        if (currentWeather.current.temperature_2m >= activity.minTemp && 
-            currentWeather.current.temperature_2m <= activity.maxTemp) {
+        if (currentWeather.current.temperature_2m >= activity.minTemp &&
+          currentWeather.current.temperature_2m <= activity.maxTemp) {
           score += 2;
           console.log(1);
         }
@@ -43,7 +44,7 @@ export default function Clima() {
         }
 
         // Rain amount check (1 point)
-        if (activity.maxRain !== null ) {
+        if (activity.maxRain !== null) {
           if (activity.maxRain >= currentWeather.current.rain) {
             score += 1;
             console.log(3);
@@ -57,7 +58,7 @@ export default function Clima() {
             console.log(4);
           }
         }
-        
+
         // Check UV index
         if (activity.uv_index !== null) {
           if (activity.uv_index >= currentWeather.current.uv_index) {
@@ -106,7 +107,7 @@ export default function Clima() {
         .slice(0, 3);
 
       setRecommendedActivities(topActivities);
-    } catch(error){
+    } catch (error) {
       console.error("Error calculating recommendations:", error);
     }
   };
@@ -116,12 +117,12 @@ export default function Clima() {
       try {
         const shouldAutoUpdate = localStorage.getItem("rememberLocationUpdate") === "true";
 
-        if(shouldAutoUpdate) {
+        if (shouldAutoUpdate) {
           await fetch('/api/location/autoupdate', {
             method: "POST",
           });
         }
-        
+
         // CHANGE USER_ID LATER
         const locationRes = await fetch("/api/location/read?user_id=2"); // <--- CHANGE THIS
         const locationData = await locationRes.json();
@@ -174,7 +175,7 @@ export default function Clima() {
   const isDayData = weather?.hourly?.is_day || [];
 
   // Get current weather description
-  // const currentWeatherDescription = weatherCodeDescriptions[weather?.current?.weather_code][weather?.current?.is_day] || "Desconocido";
+  const currentWeatherDescription = getWeatherCodeDescriptions(weather?.current?.weather_code, weather?.current?.is_day);
 
   return (
     <>
@@ -191,7 +192,7 @@ export default function Clima() {
               Temperatura Actual: {weather?.current?.temperature_2m || "Desconocida"} °C
             </Typography>
             <Typography variant="h6">
-              {/* Condición Actual: {currentWeatherDescription} */}
+              Condición Actual: {currentWeatherDescription}
             </Typography>
           </Box>
           <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 2 }}>
@@ -199,7 +200,7 @@ export default function Clima() {
           </Typography>
           <Grid container spacing={2} sx={{ mb: 4 }}>
             {recommendedActivities.map((activity) => (
-              <Grid  size={{ xs: 12, sm: 6, md: 4}} key={activity.id}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={activity.id}>
                 <Box sx={{ position: 'relative' }}>
                   <GenericActivityCard activity={activity} />
                   <Typography

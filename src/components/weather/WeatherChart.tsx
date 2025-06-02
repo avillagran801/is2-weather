@@ -26,7 +26,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
     currentIndex += Number(currentTime.slice(-2)) / 60;
 
     ///// Crop arrays
-    const graphLenght = 48;
+    const graphLenght = 20;
     let pastHours = 1; // Number of past hours to show
     if (currentIndex <= pastHours)
         pastHours = 0;
@@ -39,7 +39,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
     currentIndex -= currentIndex - currentIndex % 1 - pastHours;
 
     ///// Filtering labels to skip
-    const XAxisStep = 4; // Number of labels to skip on the x-axis
+    const XAxisStep = 3; // Number of labels to skip on the x-axis
     const tickPositions = formattedTime
         .map((t: string, index: number) => {
             if (t.includes(" "))
@@ -52,9 +52,6 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
 
     ///// Icon array
     const weatherCodeIcons = weatherCode.map((code: number, index: number) => getWeatherCodeIcon(code, isDay[index]));
-
-    console.log(weatherCode)
-    console.log(weatherCodeIcons)
 
     const options: Highcharts.Options = {
         chart: {
@@ -79,12 +76,18 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
         }, {
             categories: weatherCodeIcons,
             labels: {
-                format: '<img src="{text}" style="width: 60px; margin-bottom: -15px">',
                 useHTML: true,
                 rotation: 0,
                 enabled: true,
+                formatter: function () {
+                    // adding darkening filter to the fog icon for better visibility
+                    if (this.value === "https://raw.githubusercontent.com/Makin-Things/weather-icons/master/animated/fog.svg")
+                        return `<img src="${this.value}" style="height:60px;vertical-align:center;horizontal-align:center;display:block;margin:0 auto;margin-bottom:-15px;filter:brightness(0.8);">`;
+                    // else
+                    return `<img src="${this.value}" style="height:60px;vertical-align:center;horizontal-align:center;display:block;margin:0 auto;margin-bottom:-15px;">`;
+                }
             },
-            tickInterval: 2,
+            // tickInterval: 2,
             opposite: true,
             linkedTo: 0 // doesn't render without this
         }],
@@ -108,7 +111,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
                 type: "areaspline",
                 data: temperature,
                 color: "#FFA500",
-                fillOpacity: 0.1,
+                fillOpacity: 0.3,
                 yAxis: 0
             },
             {
@@ -116,7 +119,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
                 type: "areaspline",
                 data: precipitation,
                 color: "#00BFFF",
-                fillOpacity: 0.2,
+                fillOpacity: 0.4,
                 yAxis: 1,
                 xAxis: 0
             }
