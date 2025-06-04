@@ -11,9 +11,11 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import AirIcon from '@mui/icons-material/Air';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import LinearProgress from "@mui/material/LinearProgress";
 
 type ScoredActivity = ActivityWithCategories & {
   score: number;
+  maxScore: number;
 };
 
 export default function Clima() {
@@ -34,6 +36,7 @@ export default function Clima() {
       const scoredActivities = activities.map(activity => {
         console.log("de nuevo")
         let score = 0;
+        let maxScore = 4; // + 1 for each optional condition that is defined
 
         // Check temperature (2 points)
         if (currentWeather.current.temperature_2m >= activity.minTemp &&
@@ -51,6 +54,7 @@ export default function Clima() {
 
         // Rain amount check (1 point)
         if (activity.maxRain !== null) {
+          maxScore += 1;
           if (activity.maxRain >= currentWeather.current.rain) {
             score += 1;
             console.log(3);
@@ -59,6 +63,7 @@ export default function Clima() {
 
         // Check humidity
         if (activity.humidity !== null) {
+          maxScore += 1;
           if (activity.humidity >= currentWeather.current.relative_humidity_2m) {
             score += 1;
             console.log(4);
@@ -67,6 +72,7 @@ export default function Clima() {
 
         // Check UV index
         if (activity.uv_index !== null) {
+          maxScore += 1;
           if (activity.uv_index >= currentWeather.current.uv_index) {
             score += 1;
             console.log(5);
@@ -75,13 +81,17 @@ export default function Clima() {
 
         // Snow presence check (1 point)
         const isSnowing = [71, 73, 75, 77, 85, 86].includes(currentWeather?.weather_code);
-        if (activity.snow !== null && (!isSnowing || (isSnowing && activity.snow))) {
-          score += 1;
-          console.log(6);
+        if (activity.snow !== null) {
+          maxScore += 1;
+          if (!isSnowing || (isSnowing && activity.snow)) {
+            score += 1;
+            console.log(6);
+          }
         }
 
         // Snow amount check (1 point)
         if (activity.maxSnow !== null) {
+          maxScore += 1;
           if (activity.maxSnow >= currentWeather.current.snowfall) {
             score += 1;
             console.log(7);
@@ -90,6 +100,7 @@ export default function Clima() {
 
         // Check wind speed
         if (activity.wind_speed !== null) {
+          maxScore += 1;
           if (activity.wind_speed >= currentWeather.current.wind_speed_10m) {
             score += 1;
             console.log(8);
@@ -98,6 +109,7 @@ export default function Clima() {
 
         // Check visibility
         if (activity.visibility !== null) {
+          maxScore += 1;
           if (activity.visibility <= currentWeather.current.visibility) {
             score += 1;
             console.log(9);
@@ -105,7 +117,7 @@ export default function Clima() {
         }
 
 
-        return { ...activity, score };
+        return { ...activity, score, maxScore };
       });
       // Sort by score and get top 3
       const topActivities = scoredActivities
@@ -277,8 +289,25 @@ export default function Clima() {
                       borderRadius: 1,
                     }}
                   >
-                    Score: {activity.score}
+                    Puntaje: {activity.score} / {activity.maxScore}
                   </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={activity.maxScore > 0 ? (activity.score / activity.maxScore) * 100 : 0}
+                    sx={{
+                      height: 10,
+                      borderRadius: 5,
+                      backgroundColor: "#f8f8f8",
+                      '& .MuiLinearProgress-bar': {
+                        backgroundColor: 'primary.main',
+                      },
+                      mt: 1,
+                      width: '120px',
+                      position: "absolute",
+                      top: 40,
+                      right: 8,
+                    }}
+                  />
                 </Box>
               </Grid>
             ))}
@@ -315,8 +344,9 @@ export default function Clima() {
             <Typography variant="body1">No se encontraron datos de clima.</Typography>
           )}
 
-        </Box>
-      )}
+        </Box >
+      )
+      }
     </>
   );
 }
