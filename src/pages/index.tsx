@@ -5,6 +5,12 @@ import WeatherChart from "@/components/weather/WeatherChart";
 import { ActivityWithCategories } from "./api/activity/readByUser";
 import GenericActivityCard from "@/components/activities/GenericActivityCard";
 import { getWeatherCodeDescriptions } from "@/utils/weatherCodeDescriptions";
+import ThermostatIcon from '@mui/icons-material/Thermostat';
+import OpacityIcon from '@mui/icons-material/Opacity';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import AirIcon from '@mui/icons-material/Air';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 type ScoredActivity = ActivityWithCategories & {
   score: number;
@@ -187,13 +193,69 @@ export default function Clima() {
           <Typography variant="h4" gutterBottom>
             Clima Actual en {location?.city}, {location?.country}
           </Typography>
-          <Box sx={{ marginBottom: 4 }}>
-            <Typography variant="h6">
-              Temperatura Actual: {weather?.current?.temperature_2m || "Desconocida"} °C
-            </Typography>
-            <Typography variant="h6">
-              Condición Actual: {currentWeatherDescription}
-            </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+              flexWrap: "wrap",
+              mb: 4,
+              bgcolor: "#dad7cd",
+              borderRadius: 2,
+              px: 3,
+              py: 2,
+              boxShadow: 1,
+              justifyContent: "space-between"
+            }}
+          >
+            {/* Descripción del clima */}
+            <Box>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {currentWeatherDescription}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {weather?.current?.time?.replace("T", " ")}
+              </Typography>
+            </Box>
+            {/* Condiciones actuales */}
+            <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <ThermostatIcon color="primary" />
+                <Typography variant="body1">
+                  {weather?.current?.temperature_2m ?? "--"}°C
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <WaterDropIcon color="primary" />
+                <Typography variant="body1">
+                  {weather?.current?.precipitation ?? "--"} mm
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <OpacityIcon color="primary" />
+                <Typography variant="body1">
+                  {weather?.current?.relative_humidity_2m ?? "--"}%
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <WbSunnyIcon color="primary" />
+                <Typography variant="body1">
+                  UV {weather?.current?.uv_index ?? "--"}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <AirIcon color="primary" />
+                <Typography variant="body1">
+                  {weather?.current?.wind_speed_10m ?? "--"} km/h
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <VisibilityIcon color="primary" />
+                <Typography variant="body1">
+                  {weather?.current?.visibility ?? "--"} m
+                </Typography>
+              </Box>
+            </Box>
           </Box>
           <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 2 }}>
             Actividades Recomendadas
@@ -227,14 +289,26 @@ export default function Clima() {
               <Typography variant="h6" gutterBottom>
                 Pronóstico del Clima
               </Typography>
-              <Box sx={{ marginBottom: 4, width: "85%", alignContent: "center", margin: "0 auto" }}>
+              <Box
+                sx={{
+                  marginBottom: 4,
+                  width: "85%",
+                  alignContent: "center",
+                  margin: "0 auto",
+                  bgcolor: "#dad7cd",
+                  borderRadius: 2,
+                  boxShadow: 1,
+                  p: 2
+                }}
+              >
                 <WeatherChart
                   time={timeData}
                   currentTime={currentTimeData}
                   temperature={temperatureData}
                   precipitation={precipitationData}
                   weatherCode={weatherCodeData}
-                  isDay={isDayData} />
+                  isDay={isDayData}
+                />
               </Box>
             </>
           ) : (

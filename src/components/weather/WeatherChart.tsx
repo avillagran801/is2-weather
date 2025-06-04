@@ -111,7 +111,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
                 type: "areaspline",
                 data: temperature,
                 color: "#FFA500",
-                fillOpacity: 0.3,
+                fillOpacity: 0.15,
                 yAxis: 0
             },
             {
@@ -119,7 +119,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
                 type: "areaspline",
                 data: precipitation,
                 color: "#00BFFF",
-                fillOpacity: 0.4,
+                fillOpacity: 0.25,
                 yAxis: 1,
                 xAxis: 0
             }
