@@ -212,7 +212,7 @@ export default function Clima() {
               gap: 4,
               flexWrap: "wrap",
               mb: 4,
-              bgcolor: "#dad7cd",
+              bgcolor: "#edebe4",
               borderRadius: 2,
               px: 3,
               py: 2,
@@ -324,7 +324,7 @@ export default function Clima() {
                   width: "85%",
                   alignContent: "center",
                   margin: "0 auto",
-                  bgcolor: "#dad7cd",
+                  bgcolor: "#edebe4",
                   borderRadius: 2,
                   boxShadow: 1,
                   p: 2

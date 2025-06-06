@@ -56,7 +56,7 @@ const WeatherChart = ({ time, currentTime, temperature, precipitation, weatherCo
     const options: Highcharts.Options = {
         chart: {
             type: "line",
-            backgroundColor: "#dad7cd",
+            backgroundColor: "#edebe4",
             style: { fontFamily: "inherit", fontSize: "1.2rem", fontWeight: "bold", color: "#333" }
         },
         title: { text: undefined },

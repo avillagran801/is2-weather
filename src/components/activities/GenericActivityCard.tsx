@@ -11,7 +11,7 @@ export default function GenericActivityCard({ activity }: GenericActivityCardPro
   return (
     <Card sx={{
       height: "100%",
-      backgroundColor: "#dad7cd",
+      backgroundColor: "#edebe4",
     }}>
       <CardContent sx={{
         display: "flex",
