@@ -7,7 +7,7 @@ type GenericActivityCardProps = {
   activity: Activity;
 };
 
-export default function GenericActivityCard({ activity }: GenericActivityCardProps) {
+export default function GenericActivityCard({ activity, children }: GenericActivityCardProps & { children?: React.ReactNode }) {
   return (
     <Card sx={{
       height: "100%",
@@ -49,6 +49,7 @@ export default function GenericActivityCard({ activity }: GenericActivityCardPro
           </Typography>
         </Box>
       </CardContent>
+      {children}
     </Card>
   );
 }
