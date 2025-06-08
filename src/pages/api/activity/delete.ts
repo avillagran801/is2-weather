@@ -7,9 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  const { id } = req.body;
-
   try {
+    const { id } = req.body;
+
     if (!id || isNaN(id)) {
       return res.status(400).json({ error: "El campo 'id' es obligatorio y debe ser un número válido" });
     }

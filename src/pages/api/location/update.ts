@@ -19,10 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  const { city, country } = req.body;
+  const { city, country, user_id } = req.body;
 
-  if (!city || !country) {
-    return res.status(400).json({ error: "Faltan ciudad o país" });
+  if (!city || !country || !user_id) {
+    return res.status(400).json({ error: "Falta un parámetro obligatorio" });
   }
 
   const coords = await getCoordinates(city, country);
@@ -32,40 +32,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const locationName = `${city}, ${country}`;
-
-    const location = await prisma.location.upsert({
-      where: { name: locationName },
-      update: {
+    const user = prisma.user.update({
+      where: {
+        id: Number(user_id)
+      },
+      data: {
         latitude: coords.lat,
         longitude: coords.lng,
-      },
-      create: {
-        name: locationName,
-        latitude: coords.lat,
-        longitude: coords.lng,
-      },
+        city_name: `${city}, ${country}`,
+      }
     });
 
-    // índice por defecto para un usuario de momento
-    const userId = 1;
-
-    await prisma.user.upsert({
-      where: { id: userId },
-      update: {
-        location_id: location.id,
-      },
-      create: {
-        id: userId,
-        name: "Default User",
-        location_id: location.id,
-      },
-    });
-
-    return res.status(200).json({
-      latitude: coords.lat,
-      longitude: coords.lng,
-      name: locationName,
+    return res.status(201).json({
+      latitude: (await user).latitude,
+      longitude: (await user).longitude,
+      city_name: (await user).city_name,
     });
   } catch (error) {
     console.error(error);

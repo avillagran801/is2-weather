@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/generated/prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -7,11 +6,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Método no permitido" });    
   }
 
-  const { name, minTemp, maxTemp, rain, category_id } = req.body;
+  const {
+    user_id,
+    name,
+    minTemp,
+    maxTemp,
+    rain,
+    maxRain,
+    snow,
+    maxSnow,
+    humidity,
+    uv_index,
+    wind_speed,
+    visibility,
+    categories_id,
+  } = req.body;
 
   try {
-    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !category_id ) {
+    if( !name || isNaN(minTemp) || isNaN(maxTemp) || rain === undefined || !categories_id || !user_id ) {
       return res.status(400).json({ error: "Falta al menos un campo obligatorio "});
+    }
+
+    if (!Array.isArray(categories_id)) {
+      return res.status(400).json({ error: "categories_id debe ser un arreglo" });
     }
 
     const activity = await prisma.activity.create({
@@ -20,20 +37,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         minTemp: parseInt(minTemp),
         maxTemp: parseInt(maxTemp),
         rain: rain === "true" || rain === true,
-        category_id: parseInt(category_id)
+        maxRain: maxRain != null? parseInt(maxRain) : null,
+        snow: (snow === "null" || snow === null)? null : (snow === "true" || snow === true),
+        maxSnow: parseInt(maxSnow),
+        humidity: parseInt(humidity),
+        uv_index: parseInt(uv_index),
+        wind_speed: parseInt(wind_speed),
+        visibility: parseInt(visibility),
+        
+        // Connect activity to existing user
+        User: {
+          connect: {
+            id: parseInt(user_id),
+          }
+        },
+
+        // Create relationship between the activity and existing categories
+        ActivityCategory: {
+          createMany: {
+            data: categories_id.map((id: string) => ({ category_id: Number(id) })),
+          }
+        }
       }
     });
 
     return res.status(201).json(activity);
   }
   catch (error) {
-    if(error instanceof Prisma.PrismaClientKnownRequestError){
-      if(error.code === "P2002"){
-        return res.status(422).json({ error: "Ya existe una entrada con este nombre" });
-      }
-    }
-    else {
-      return res.status(500).json({ error: "Error al crear actividad" });
-    }
+    return res.status(500).json({ error: {error} });
   }
 }

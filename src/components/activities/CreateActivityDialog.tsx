@@ -1,68 +1,24 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import Slider from '@mui/material/Slider';
-import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent } from '@mui/material';
-import { Activity, Category } from '@/generated/prisma/client';
-import { temperatureMarks, temperatureMinDistance } from '@/lib/activities_utils/temperature';
+import { PlainCategory } from '@/pages/api/category/readByUser';
+import { ActivityCreatePayload, defaultNewActivity } from '@/lib/activities_utils/defaultNewActivity';
+import BaseActivityForm from './BaseActivityForm';
 
 type CreateActivityDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit: (activity: Omit<Activity, "id">) => void;
-  categories: Category[];
+  onSubmit: (activity: ActivityCreatePayload) => void;
+  userCategories: PlainCategory[];
 }
 
-const defaultFormValues = {
-  name: "",
-  temperature: [15, 24] as [number, number],
-  rain: false,
-  category_id: 0,
-}
-
-export default function CreateActivityDialog({open, setOpen, onSubmit, categories}: CreateActivityDialogProps) {
-  const [formData, setFormData] = React.useState(defaultFormValues);
-  
-  // Maneja cambios en textfields y radio buttons
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Maneja cambios en selector
-  const handleSelectChange = (e: SelectChangeEvent<number>) => {
-    const value = Number(e.target.value as string);
-    setFormData({...formData, category_id: value})
-  }
-
-  const handleTemperatureChange = (event: Event, newValue: number[], activeThumb: number) => {
-    if(!Array.isArray(newValue)){
-      return;
-    }
-    
-    if (activeThumb === 0) {
-      setFormData({
-        ...formData,
-        temperature: [Math.min(newValue[0], formData.temperature[1] - temperatureMinDistance), formData.temperature[1]]
-      });
-    } else {
-      setFormData({
-        ...formData,
-        temperature: [formData.temperature[0], Math.max(newValue[1], formData.temperature[0] + temperatureMinDistance)]
-      });
-    }
-  };
+export default function CreateActivityDialog({open, setOpen, onSubmit, userCategories}: CreateActivityDialogProps) {
+  const [formData, setFormData] = React.useState(defaultNewActivity);
+  const [optionalSettings, setOptionalSettings] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
 
     // Limpia valores cada vez que se cierra
-    setFormData(defaultFormValues);
+    setFormData(defaultNewActivity);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -70,10 +26,17 @@ export default function CreateActivityDialog({open, setOpen, onSubmit, categorie
 
     onSubmit({
       name: formData.name,
-      minTemp: formData.temperature[0],
-      maxTemp: formData.temperature[1],
+      minTemp: formData.minTemp,
+      maxTemp: formData.maxTemp,
       rain: formData.rain,
-      category_id: formData.category_id,
+      maxRain: optionalSettings? formData.maxRain : null,
+      snow: optionalSettings? formData.snow : null,
+      maxSnow: optionalSettings? formData.maxSnow : null,
+      humidity:optionalSettings? formData.humidity : null,
+      uv_index: optionalSettings? formData.uv_index : null,
+      wind_speed: optionalSettings? formData.wind_speed : null,
+      visibility: optionalSettings? formData.visibility : null,
+      categories_id: formData.categories_id.map(Number),
     });
 
     handleClose();
@@ -81,114 +44,18 @@ export default function CreateActivityDialog({open, setOpen, onSubmit, categorie
 
   return (
     <>
-      <Dialog
+      <BaseActivityForm
+        formTitle="Crear nueva actividad"
+        formSubmitText="Crear"
+        formData={formData}
+        setFormData={setFormData}
+        optionalSettings={optionalSettings}
+        setOptionalSettings={setOptionalSettings}
         open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>
-          Crear nueva actividad
-        </DialogTitle>
-
-        <form onSubmit={handleSubmit}>
-          <DialogContent>
-            <DialogContentText>
-            Para crear una nueva actividad por favor rellene los campos a continuación.
-            </DialogContentText>
-
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              rowGap: "2rem"
-            }}>
-
-              {/* Textfield para nombre de la actividad */}
-              <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="activity-name"
-                name="name"
-                label="Nombre actividad"
-                fullWidth
-                variant="standard"
-                value={formData.name}
-                onChange={handleInputChange}
-              />
-
-              {/* Selector de categoría ya existente para la actividad */}
-              <FormControl>
-                <InputLabel>
-                  Categoría
-                </InputLabel>
-                <Select<number>
-                  labelId="select-label"
-                  id="category"
-                  value={formData.category_id}
-                  label="Categoría"
-                  onChange={handleSelectChange}
-                  required
-                >
-                  {categories && categories.map((category) => (
-                    <MenuItem key={category.id} value={category.id}>
-                      {category.name}
-                    </MenuItem>
-                  ))}                  
-                </Select>
-              </FormControl>
-
-              {/* Slider para temperatura mínima y máxima de preferencia */}
-              <FormControl fullWidth>
-                <FormLabel id="temperature-slider-label" required>
-                Rango de temperatura
-                </FormLabel>
-
-                <Box sx={{
-                  px: 2,
-                  pt: 1
-                }}>
-                  <Slider
-                    getAriaLabel={() => 'Rango de temperatura'}
-                    value={formData.temperature}
-                    onChange={handleTemperatureChange}
-                    valueLabelDisplay="auto"
-                    getAriaValueText={(value) => `${value}°C`}
-                    marks={temperatureMarks}
-                    min={-30}
-                    max={40}
-                    disableSwap
-                  />
-                </Box>
-              </FormControl>
-
-              {/* Radio buttons para preferencia de lluvia */}
-              <FormControl component="fieldset">
-                <FormLabel component="legend" required>
-                ¿Se puede realizar con lluvia?
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-label="rain-preference"
-                  name="rain"
-                  value={formData.rain}
-                  onChange={handleInputChange}
-                >
-                  <FormControlLabel value={true} control={<Radio />} label="Sí" />
-                  <FormControlLabel value={false} control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button type="submit">
-              Crear
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        userCategories={userCategories}
+      />
     </>
   );
 }

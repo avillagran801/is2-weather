@@ -1,16 +1,14 @@
-import { Box, Card, CardActionArea, CardContent, Typography, IconButton } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { ActivityWithCategory } from "@/pages/api/activity/readAll";
+import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 
 type CardProps = {
-  activity: ActivityWithCategory;
+  activity: ActivityWithCategories;
   onClick: () => void;
-  onDelete: () => void; // Add a prop for the delete action
 }
 
-export default function ActivityCard({ activity, onClick, onDelete }: CardProps) {
+export default function ActivityCard({ activity, onClick }: CardProps) {
   return (
     <>
       <Card sx={{
@@ -18,73 +16,49 @@ export default function ActivityCard({ activity, onClick, onDelete }: CardProps)
         backgroundColor: "#dad7cd",
         position: "relative", // Enable positioning for the delete button
       }}>
-        <CardActionArea onClick={onClick}>
-          <CardContent sx={{
+        <CardContent sx={{
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "0.5rem"
+        }}>
+          <Typography
+            noWrap = {true}
+            sx={{
+              fontSize: "1.2rem"
+            }}
+          >
+            <b>{activity.name}</b>
+          </Typography>
+
+          <Box sx={{
             display: "flex",
-            flexDirection: "column",
-            rowGap: "0.5rem"
+            alignItems: "center",
+            gap: "0.8rem"
           }}>
-            <Typography
-              noWrap = {true}
-              sx={{
-                fontSize: "1.2rem"
-              }}
-            >
-              <b>{activity.name}</b>
-            </Typography>
-
-            <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.8rem"
-            }}>
-              <ThermostatIcon />
-              <Typography sx={{ fontSize: "1rem"}}>
+            <ThermostatIcon />
+            <Typography sx={{ fontSize: "1rem"}}>
                 Min: {activity.minTemp}°C - Max: {activity.maxTemp}°C
-              </Typography>
-            </Box>
+            </Typography>
+          </Box>
 
-            <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.8rem"
-            }}>
-              <WbSunnyIcon />
-              <Typography sx={{ fontSize: "1rem"}}>
+          <Box sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.8rem"
+          }}>
+            <WbSunnyIcon />
+            <Typography sx={{ fontSize: "1rem"}}>
                 Lluvia: {activity.rain? "Sí" : "No"}
-              </Typography>
-            </Box>
-
-            <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.8rem"
-            }}>
-              <WbSunnyIcon />
-              <Typography sx={{ fontSize: "1rem"}}>
-                Categoría: {activity.category.name}
-              </Typography>
-            </Box>
-          </CardContent>
-        </CardActionArea>
-
-        <IconButton // Delete button
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering the card's onClick
-            onDelete();
-          }}
-          sx={{
-            position: "absolute",
-            bottom: "0.5rem",
-            right: "0.5rem",
-            backgroundColor: "#f8d7da",
-            "&:hover": {
-              backgroundColor: "#f5c6cb",
-            },
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>
+            </Typography>
+          </Box>
+        </CardContent>
+        <CardActions>
+          <Button
+            onClick={onClick}
+          >
+              Ver más
+          </Button>
+        </CardActions>
       </Card>
     </>
   );
