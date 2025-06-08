@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import Loading from "@/components/layout/loading";
 import WeatherChart from "@/components/weather/WeatherChart";
 import { ActivityWithCategories } from "./api/activity/readByUser";

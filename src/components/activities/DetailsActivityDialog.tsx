@@ -90,12 +90,12 @@ export default function DetailsActivityDialog({ open, setOpen, setOpenEditDialog
           <Item
             icon={WaterDropIcon}
             title="Lluvia"
-            value={selectedActivity.rain? selectedActivity.maxRain + "mm" : "No aplica"}
+            value={selectedActivity.rain? (selectedActivity.maxRain? selectedActivity.maxRain + "mm" : "Permitida") : "No aplica"}
           />
           <Item
             icon={AcUnitIcon}
             title="Nieve"
-            value={selectedActivity.snow? selectedActivity.maxSnow + "mm" : "No aplica"}
+            value={selectedActivity.snow?(selectedActivity.maxSnow? selectedActivity.maxSnow + "mm" : "Permitida")  : "No aplica"}
           />
           <Item
             icon={OpacityIcon}
