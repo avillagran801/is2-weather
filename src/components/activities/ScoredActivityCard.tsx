@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import GenericActivityCard from "./GenericActivityCard";
 import LinearProgress from "@mui/material/LinearProgress";
 import { ScoredActivity } from "@/utils/calculateActivityScores";

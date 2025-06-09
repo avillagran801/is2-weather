@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import Loading from "@/components/layout/loading";
+import Loading from "@/components/layout/Loading";
 // import GenericActivityCard from "@/components/activities/GenericActivityCard";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import CreateCategoryDialog from "@/components/categories/CreateCategoryDialog";

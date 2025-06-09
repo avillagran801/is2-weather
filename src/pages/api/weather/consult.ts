@@ -86,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const response = await fetch(`${url}?latitude=${latitude}&longitude=${longitude}${queries}`);
-    let data = await response.json();
+    const data = await response.json();
     
     // add showers to rain and delete showers
     if (data.hourly && data.hourly.rain) {
