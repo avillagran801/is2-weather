@@ -1,5 +1,73 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+export type WeatherData = {
+  latitude: number;
+  longitude: number;
+  generationtime_ms: number;
+  utc_offset_seconds: number;
+  timezone: string;
+  timezone_abbreviation: string;
+  elevation: number;
+  current_units: {
+    time: string;
+    interval: string;
+    temperature_2m: string;
+    weather_code: string;
+    uv_index: string;
+    relative_humidity_2m: string;
+    visibility: string;
+    wind_speed_10m: string;
+    snowfall: string;
+    rain: string;
+    showers: string;
+    precipitation: string;
+    is_day: string;
+  };
+  current: {
+    time: string;
+    interval: number;
+    temperature_2m: number;
+    weather_code: number;
+    uv_index: number;
+    relative_humidity_2m: number;
+    visibility: number;
+    wind_speed_10m: number;
+    snowfall: number;
+    rain: number;
+    showers: number;
+    precipitation: number;
+    is_day: number;
+  };
+  hourly_units: {
+    time: string;
+    temperature_2m: string;
+    weather_code: string;
+    uv_index: string;
+    relative_humidity_2m: string;
+    visibility: string;
+    wind_speed_10m: string;
+    snowfall: string;
+    rain: string;
+    showers: string;
+    precipitation: string;
+    is_day: string;
+  };
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    weather_code: number[];
+    uv_index: number[];
+    relative_humidity_2m: number[];
+    visibility: number[];
+    wind_speed_10m: number[];
+    snowfall: number[];
+    rain: number[];
+    showers: number[];
+    precipitation: number[];
+    is_day: number[];
+  };
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido" });
@@ -18,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const response = await fetch(`${url}?latitude=${latitude}&longitude=${longitude}${queries}`);
-    let data = await response.json();
+    const data = await response.json();
     
     // add showers to rain and delete showers
     if (data.hourly && data.hourly.rain) {

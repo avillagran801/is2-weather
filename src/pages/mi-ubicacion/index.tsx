@@ -8,13 +8,12 @@ import {
   FormControlLabel,
   CircularProgress,
   Alert,
-  Paper,
-  Snackbar,
 } from "@mui/material";
 
 const MiUbicacion: React.FC = () => {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [rememberChoice, setRemeberChoice] = useState(false);
