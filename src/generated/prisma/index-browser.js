@@ -126,14 +126,14 @@ exports.Prisma.ActivityScalarFieldEnum = {
   minTemp: 'minTemp',
   maxTemp: 'maxTemp',
   rain: 'rain',
-  maxRain: 'maxRain',
-  snow: 'snow',
-  maxSnow: 'maxSnow',
+  user_id: 'user_id',
   humidity: 'humidity',
   uv_index: 'uv_index',
-  wind_speed: 'wind_speed',
   visibility: 'visibility',
-  user_id: 'user_id'
+  wind_speed: 'wind_speed',
+  maxRain: 'maxRain',
+  maxSnow: 'maxSnow',
+  snow: 'snow'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -149,7 +149,7 @@ exports.Prisma.ActivityCategoryScalarFieldEnum = {
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  username: 'username',
   password: 'password',
   latitude: 'latitude',
   longitude: 'longitude',

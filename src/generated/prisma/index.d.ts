@@ -1259,26 +1259,26 @@ export namespace Prisma {
     id: number | null
     minTemp: number | null
     maxTemp: number | null
-    maxRain: number | null
-    maxSnow: number | null
+    user_id: number | null
     humidity: number | null
     uv_index: number | null
-    wind_speed: number | null
     visibility: number | null
-    user_id: number | null
+    wind_speed: number | null
+    maxRain: number | null
+    maxSnow: number | null
   }
 
   export type ActivitySumAggregateOutputType = {
     id: number | null
     minTemp: number | null
     maxTemp: number | null
-    maxRain: number | null
-    maxSnow: number | null
+    user_id: number | null
     humidity: number | null
     uv_index: number | null
-    wind_speed: number | null
     visibility: number | null
-    user_id: number | null
+    wind_speed: number | null
+    maxRain: number | null
+    maxSnow: number | null
   }
 
   export type ActivityMinAggregateOutputType = {
@@ -1287,14 +1287,14 @@ export namespace Prisma {
     minTemp: number | null
     maxTemp: number | null
     rain: boolean | null
-    maxRain: number | null
-    snow: boolean | null
-    maxSnow: number | null
+    user_id: number | null
     humidity: number | null
     uv_index: number | null
-    wind_speed: number | null
     visibility: number | null
-    user_id: number | null
+    wind_speed: number | null
+    maxRain: number | null
+    maxSnow: number | null
+    snow: boolean | null
   }
 
   export type ActivityMaxAggregateOutputType = {
@@ -1303,14 +1303,14 @@ export namespace Prisma {
     minTemp: number | null
     maxTemp: number | null
     rain: boolean | null
-    maxRain: number | null
-    snow: boolean | null
-    maxSnow: number | null
+    user_id: number | null
     humidity: number | null
     uv_index: number | null
-    wind_speed: number | null
     visibility: number | null
-    user_id: number | null
+    wind_speed: number | null
+    maxRain: number | null
+    maxSnow: number | null
+    snow: boolean | null
   }
 
   export type ActivityCountAggregateOutputType = {
@@ -1319,14 +1319,14 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: number
-    maxRain: number
-    snow: number
-    maxSnow: number
+    user_id: number
     humidity: number
     uv_index: number
-    wind_speed: number
     visibility: number
-    user_id: number
+    wind_speed: number
+    maxRain: number
+    maxSnow: number
+    snow: number
     _all: number
   }
 
@@ -1335,26 +1335,26 @@ export namespace Prisma {
     id?: true
     minTemp?: true
     maxTemp?: true
-    maxRain?: true
-    maxSnow?: true
+    user_id?: true
     humidity?: true
     uv_index?: true
-    wind_speed?: true
     visibility?: true
-    user_id?: true
+    wind_speed?: true
+    maxRain?: true
+    maxSnow?: true
   }
 
   export type ActivitySumAggregateInputType = {
     id?: true
     minTemp?: true
     maxTemp?: true
-    maxRain?: true
-    maxSnow?: true
+    user_id?: true
     humidity?: true
     uv_index?: true
-    wind_speed?: true
     visibility?: true
-    user_id?: true
+    wind_speed?: true
+    maxRain?: true
+    maxSnow?: true
   }
 
   export type ActivityMinAggregateInputType = {
@@ -1363,14 +1363,14 @@ export namespace Prisma {
     minTemp?: true
     maxTemp?: true
     rain?: true
-    maxRain?: true
-    snow?: true
-    maxSnow?: true
+    user_id?: true
     humidity?: true
     uv_index?: true
-    wind_speed?: true
     visibility?: true
-    user_id?: true
+    wind_speed?: true
+    maxRain?: true
+    maxSnow?: true
+    snow?: true
   }
 
   export type ActivityMaxAggregateInputType = {
@@ -1379,14 +1379,14 @@ export namespace Prisma {
     minTemp?: true
     maxTemp?: true
     rain?: true
-    maxRain?: true
-    snow?: true
-    maxSnow?: true
+    user_id?: true
     humidity?: true
     uv_index?: true
-    wind_speed?: true
     visibility?: true
-    user_id?: true
+    wind_speed?: true
+    maxRain?: true
+    maxSnow?: true
+    snow?: true
   }
 
   export type ActivityCountAggregateInputType = {
@@ -1395,14 +1395,14 @@ export namespace Prisma {
     minTemp?: true
     maxTemp?: true
     rain?: true
-    maxRain?: true
-    snow?: true
-    maxSnow?: true
+    user_id?: true
     humidity?: true
     uv_index?: true
-    wind_speed?: true
     visibility?: true
-    user_id?: true
+    wind_speed?: true
+    maxRain?: true
+    maxSnow?: true
+    snow?: true
     _all?: true
   }
 
@@ -1498,14 +1498,14 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain: number | null
-    snow: boolean | null
-    maxSnow: number | null
+    user_id: number
     humidity: number | null
     uv_index: number | null
-    wind_speed: number | null
     visibility: number | null
-    user_id: number
+    wind_speed: number | null
+    maxRain: number | null
+    maxSnow: number | null
+    snow: boolean | null
     _count: ActivityCountAggregateOutputType | null
     _avg: ActivityAvgAggregateOutputType | null
     _sum: ActivitySumAggregateOutputType | null
@@ -1533,14 +1533,14 @@ export namespace Prisma {
     minTemp?: boolean
     maxTemp?: boolean
     rain?: boolean
-    maxRain?: boolean
-    snow?: boolean
-    maxSnow?: boolean
+    user_id?: boolean
     humidity?: boolean
     uv_index?: boolean
-    wind_speed?: boolean
     visibility?: boolean
-    user_id?: boolean
+    wind_speed?: boolean
+    maxRain?: boolean
+    maxSnow?: boolean
+    snow?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
     ActivityCategory?: boolean | Activity$ActivityCategoryArgs<ExtArgs>
     _count?: boolean | ActivityCountOutputTypeDefaultArgs<ExtArgs>
@@ -1552,14 +1552,14 @@ export namespace Prisma {
     minTemp?: boolean
     maxTemp?: boolean
     rain?: boolean
-    maxRain?: boolean
-    snow?: boolean
-    maxSnow?: boolean
+    user_id?: boolean
     humidity?: boolean
     uv_index?: boolean
-    wind_speed?: boolean
     visibility?: boolean
-    user_id?: boolean
+    wind_speed?: boolean
+    maxRain?: boolean
+    maxSnow?: boolean
+    snow?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -1569,14 +1569,14 @@ export namespace Prisma {
     minTemp?: boolean
     maxTemp?: boolean
     rain?: boolean
-    maxRain?: boolean
-    snow?: boolean
-    maxSnow?: boolean
+    user_id?: boolean
     humidity?: boolean
     uv_index?: boolean
-    wind_speed?: boolean
     visibility?: boolean
-    user_id?: boolean
+    wind_speed?: boolean
+    maxRain?: boolean
+    maxSnow?: boolean
+    snow?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -1586,17 +1586,17 @@ export namespace Prisma {
     minTemp?: boolean
     maxTemp?: boolean
     rain?: boolean
-    maxRain?: boolean
-    snow?: boolean
-    maxSnow?: boolean
+    user_id?: boolean
     humidity?: boolean
     uv_index?: boolean
-    wind_speed?: boolean
     visibility?: boolean
-    user_id?: boolean
+    wind_speed?: boolean
+    maxRain?: boolean
+    maxSnow?: boolean
+    snow?: boolean
   }
 
-  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "minTemp" | "maxTemp" | "rain" | "maxRain" | "snow" | "maxSnow" | "humidity" | "uv_index" | "wind_speed" | "visibility" | "user_id", ExtArgs["result"]["activity"]>
+  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "minTemp" | "maxTemp" | "rain" | "user_id" | "humidity" | "uv_index" | "visibility" | "wind_speed" | "maxRain" | "maxSnow" | "snow", ExtArgs["result"]["activity"]>
   export type ActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
     ActivityCategory?: boolean | Activity$ActivityCategoryArgs<ExtArgs>
@@ -1621,14 +1621,14 @@ export namespace Prisma {
       minTemp: number
       maxTemp: number
       rain: boolean
-      maxRain: number | null
-      snow: boolean | null
-      maxSnow: number | null
+      user_id: number
       humidity: number | null
       uv_index: number | null
-      wind_speed: number | null
       visibility: number | null
-      user_id: number
+      wind_speed: number | null
+      maxRain: number | null
+      maxSnow: number | null
+      snow: boolean | null
     }, ExtArgs["result"]["activity"]>
     composites: {}
   }
@@ -2059,14 +2059,14 @@ export namespace Prisma {
     readonly minTemp: FieldRef<"Activity", 'Int'>
     readonly maxTemp: FieldRef<"Activity", 'Int'>
     readonly rain: FieldRef<"Activity", 'Boolean'>
-    readonly maxRain: FieldRef<"Activity", 'Int'>
-    readonly snow: FieldRef<"Activity", 'Boolean'>
-    readonly maxSnow: FieldRef<"Activity", 'Int'>
+    readonly user_id: FieldRef<"Activity", 'Int'>
     readonly humidity: FieldRef<"Activity", 'Int'>
     readonly uv_index: FieldRef<"Activity", 'Int'>
-    readonly wind_speed: FieldRef<"Activity", 'Int'>
     readonly visibility: FieldRef<"Activity", 'Int'>
-    readonly user_id: FieldRef<"Activity", 'Int'>
+    readonly wind_speed: FieldRef<"Activity", 'Int'>
+    readonly maxRain: FieldRef<"Activity", 'Int'>
+    readonly maxSnow: FieldRef<"Activity", 'Int'>
+    readonly snow: FieldRef<"Activity", 'Boolean'>
   }
     
 
@@ -2691,8 +2691,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     user_id?: boolean
-    User?: boolean | UserDefaultArgs<ExtArgs>
     ActivityCategory?: boolean | Category$ActivityCategoryArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -2718,8 +2718,8 @@ export namespace Prisma {
 
   export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "user_id", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | UserDefaultArgs<ExtArgs>
     ActivityCategory?: boolean | Category$ActivityCategoryArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2732,8 +2732,8 @@ export namespace Prisma {
   export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Category"
     objects: {
-      User: Prisma.$UserPayload<ExtArgs>
       ActivityCategory: Prisma.$ActivityCategoryPayload<ExtArgs>[]
+      User: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3133,8 +3133,8 @@ export namespace Prisma {
    */
   export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ActivityCategory<T extends Category$ActivityCategoryArgs<ExtArgs> = {}>(args?: Subset<T, Category$ActivityCategoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4696,7 +4696,7 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: number | null
-    name: string | null
+    username: string | null
     password: string | null
     latitude: number | null
     longitude: number | null
@@ -4705,7 +4705,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateOutputType = {
     id: number | null
-    name: string | null
+    username: string | null
     password: string | null
     latitude: number | null
     longitude: number | null
@@ -4714,7 +4714,7 @@ export namespace Prisma {
 
   export type UserCountAggregateOutputType = {
     id: number
-    name: number
+    username: number
     password: number
     latitude: number
     longitude: number
@@ -4737,7 +4737,7 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
-    name?: true
+    username?: true
     password?: true
     latitude?: true
     longitude?: true
@@ -4746,7 +4746,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateInputType = {
     id?: true
-    name?: true
+    username?: true
     password?: true
     latitude?: true
     longitude?: true
@@ -4755,7 +4755,7 @@ export namespace Prisma {
 
   export type UserCountAggregateInputType = {
     id?: true
-    name?: true
+    username?: true
     password?: true
     latitude?: true
     longitude?: true
@@ -4851,7 +4851,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: number
-    name: string
+    username: string
     password: string
     latitude: number
     longitude: number
@@ -4879,7 +4879,7 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    username?: boolean
     password?: boolean
     latitude?: boolean
     longitude?: boolean
@@ -4891,7 +4891,7 @@ export namespace Prisma {
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    username?: boolean
     password?: boolean
     latitude?: boolean
     longitude?: boolean
@@ -4900,7 +4900,7 @@ export namespace Prisma {
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    username?: boolean
     password?: boolean
     latitude?: boolean
     longitude?: boolean
@@ -4909,14 +4909,14 @@ export namespace Prisma {
 
   export type UserSelectScalar = {
     id?: boolean
-    name?: boolean
+    username?: boolean
     password?: boolean
     latitude?: boolean
     longitude?: boolean
     city_name?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "latitude" | "longitude" | "city_name", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "latitude" | "longitude" | "city_name", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Activity?: boolean | User$ActivityArgs<ExtArgs>
     Category?: boolean | User$CategoryArgs<ExtArgs>
@@ -4933,7 +4933,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      name: string
+      username: string
       password: string
       latitude: number
       longitude: number
@@ -5364,7 +5364,7 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'Int'>
-    readonly name: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly latitude: FieldRef<"User", 'Float'>
     readonly longitude: FieldRef<"User", 'Float'>
@@ -5843,14 +5843,14 @@ export namespace Prisma {
     minTemp: 'minTemp',
     maxTemp: 'maxTemp',
     rain: 'rain',
-    maxRain: 'maxRain',
-    snow: 'snow',
-    maxSnow: 'maxSnow',
+    user_id: 'user_id',
     humidity: 'humidity',
     uv_index: 'uv_index',
-    wind_speed: 'wind_speed',
     visibility: 'visibility',
-    user_id: 'user_id'
+    wind_speed: 'wind_speed',
+    maxRain: 'maxRain',
+    maxSnow: 'maxSnow',
+    snow: 'snow'
   };
 
   export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
@@ -5875,7 +5875,7 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    username: 'username',
     password: 'password',
     latitude: 'latitude',
     longitude: 'longitude',
@@ -5975,14 +5975,14 @@ export namespace Prisma {
     minTemp?: IntFilter<"Activity"> | number
     maxTemp?: IntFilter<"Activity"> | number
     rain?: BoolFilter<"Activity"> | boolean
-    maxRain?: IntNullableFilter<"Activity"> | number | null
-    snow?: BoolNullableFilter<"Activity"> | boolean | null
-    maxSnow?: IntNullableFilter<"Activity"> | number | null
+    user_id?: IntFilter<"Activity"> | number
     humidity?: IntNullableFilter<"Activity"> | number | null
     uv_index?: IntNullableFilter<"Activity"> | number | null
-    wind_speed?: IntNullableFilter<"Activity"> | number | null
     visibility?: IntNullableFilter<"Activity"> | number | null
-    user_id?: IntFilter<"Activity"> | number
+    wind_speed?: IntNullableFilter<"Activity"> | number | null
+    maxRain?: IntNullableFilter<"Activity"> | number | null
+    maxSnow?: IntNullableFilter<"Activity"> | number | null
+    snow?: BoolNullableFilter<"Activity"> | boolean | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     ActivityCategory?: ActivityCategoryListRelationFilter
   }
@@ -5993,14 +5993,14 @@ export namespace Prisma {
     minTemp?: SortOrder
     maxTemp?: SortOrder
     rain?: SortOrder
-    maxRain?: SortOrderInput | SortOrder
-    snow?: SortOrderInput | SortOrder
-    maxSnow?: SortOrderInput | SortOrder
+    user_id?: SortOrder
     humidity?: SortOrderInput | SortOrder
     uv_index?: SortOrderInput | SortOrder
-    wind_speed?: SortOrderInput | SortOrder
     visibility?: SortOrderInput | SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrderInput | SortOrder
+    maxRain?: SortOrderInput | SortOrder
+    maxSnow?: SortOrderInput | SortOrder
+    snow?: SortOrderInput | SortOrder
     User?: UserOrderByWithRelationInput
     ActivityCategory?: ActivityCategoryOrderByRelationAggregateInput
   }
@@ -6014,14 +6014,14 @@ export namespace Prisma {
     minTemp?: IntFilter<"Activity"> | number
     maxTemp?: IntFilter<"Activity"> | number
     rain?: BoolFilter<"Activity"> | boolean
-    maxRain?: IntNullableFilter<"Activity"> | number | null
-    snow?: BoolNullableFilter<"Activity"> | boolean | null
-    maxSnow?: IntNullableFilter<"Activity"> | number | null
+    user_id?: IntFilter<"Activity"> | number
     humidity?: IntNullableFilter<"Activity"> | number | null
     uv_index?: IntNullableFilter<"Activity"> | number | null
-    wind_speed?: IntNullableFilter<"Activity"> | number | null
     visibility?: IntNullableFilter<"Activity"> | number | null
-    user_id?: IntFilter<"Activity"> | number
+    wind_speed?: IntNullableFilter<"Activity"> | number | null
+    maxRain?: IntNullableFilter<"Activity"> | number | null
+    maxSnow?: IntNullableFilter<"Activity"> | number | null
+    snow?: BoolNullableFilter<"Activity"> | boolean | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     ActivityCategory?: ActivityCategoryListRelationFilter
   }, "id">
@@ -6032,14 +6032,14 @@ export namespace Prisma {
     minTemp?: SortOrder
     maxTemp?: SortOrder
     rain?: SortOrder
-    maxRain?: SortOrderInput | SortOrder
-    snow?: SortOrderInput | SortOrder
-    maxSnow?: SortOrderInput | SortOrder
+    user_id?: SortOrder
     humidity?: SortOrderInput | SortOrder
     uv_index?: SortOrderInput | SortOrder
-    wind_speed?: SortOrderInput | SortOrder
     visibility?: SortOrderInput | SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrderInput | SortOrder
+    maxRain?: SortOrderInput | SortOrder
+    maxSnow?: SortOrderInput | SortOrder
+    snow?: SortOrderInput | SortOrder
     _count?: ActivityCountOrderByAggregateInput
     _avg?: ActivityAvgOrderByAggregateInput
     _max?: ActivityMaxOrderByAggregateInput
@@ -6056,14 +6056,14 @@ export namespace Prisma {
     minTemp?: IntWithAggregatesFilter<"Activity"> | number
     maxTemp?: IntWithAggregatesFilter<"Activity"> | number
     rain?: BoolWithAggregatesFilter<"Activity"> | boolean
-    maxRain?: IntNullableWithAggregatesFilter<"Activity"> | number | null
-    snow?: BoolNullableWithAggregatesFilter<"Activity"> | boolean | null
-    maxSnow?: IntNullableWithAggregatesFilter<"Activity"> | number | null
+    user_id?: IntWithAggregatesFilter<"Activity"> | number
     humidity?: IntNullableWithAggregatesFilter<"Activity"> | number | null
     uv_index?: IntNullableWithAggregatesFilter<"Activity"> | number | null
-    wind_speed?: IntNullableWithAggregatesFilter<"Activity"> | number | null
     visibility?: IntNullableWithAggregatesFilter<"Activity"> | number | null
-    user_id?: IntWithAggregatesFilter<"Activity"> | number
+    wind_speed?: IntNullableWithAggregatesFilter<"Activity"> | number | null
+    maxRain?: IntNullableWithAggregatesFilter<"Activity"> | number | null
+    maxSnow?: IntNullableWithAggregatesFilter<"Activity"> | number | null
+    snow?: BoolNullableWithAggregatesFilter<"Activity"> | boolean | null
   }
 
   export type CategoryWhereInput = {
@@ -6073,16 +6073,16 @@ export namespace Prisma {
     id?: IntFilter<"Category"> | number
     name?: StringFilter<"Category"> | string
     user_id?: IntFilter<"Category"> | number
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
     ActivityCategory?: ActivityCategoryListRelationFilter
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     user_id?: SortOrder
-    User?: UserOrderByWithRelationInput
     ActivityCategory?: ActivityCategoryOrderByRelationAggregateInput
+    User?: UserOrderByWithRelationInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -6092,8 +6092,8 @@ export namespace Prisma {
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     name?: StringFilter<"Category"> | string
     user_id?: IntFilter<"Category"> | number
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
     ActivityCategory?: ActivityCategoryListRelationFilter
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type CategoryOrderByWithAggregationInput = {
@@ -6167,7 +6167,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: IntFilter<"User"> | number
-    name?: StringFilter<"User"> | string
+    username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     latitude?: FloatFilter<"User"> | number
     longitude?: FloatFilter<"User"> | number
@@ -6178,7 +6178,7 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -6189,21 +6189,21 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    username?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     latitude?: FloatFilter<"User"> | number
     longitude?: FloatFilter<"User"> | number
     city_name?: StringFilter<"User"> | string
     Activity?: ActivityListRelationFilter
     Category?: CategoryListRelationFilter
-  }, "id">
+  }, "id" | "username">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -6220,7 +6220,7 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"User"> | number
-    name?: StringWithAggregatesFilter<"User"> | string
+    username?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     latitude?: FloatWithAggregatesFilter<"User"> | number
     longitude?: FloatWithAggregatesFilter<"User"> | number
@@ -6232,13 +6232,13 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
     User: UserCreateNestedOneWithoutActivityInput
     ActivityCategory?: ActivityCategoryCreateNestedManyWithoutActivityInput
   }
@@ -6249,14 +6249,14 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
+    user_id: number
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
-    user_id: number
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
     ActivityCategory?: ActivityCategoryUncheckedCreateNestedManyWithoutActivityInput
   }
 
@@ -6265,13 +6265,13 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
     User?: UserUpdateOneRequiredWithoutActivityNestedInput
     ActivityCategory?: ActivityCategoryUpdateManyWithoutActivityNestedInput
   }
@@ -6282,14 +6282,14 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    user_id?: IntFieldUpdateOperationsInput | number
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
-    user_id?: IntFieldUpdateOperationsInput | number
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
     ActivityCategory?: ActivityCategoryUncheckedUpdateManyWithoutActivityNestedInput
   }
 
@@ -6299,14 +6299,14 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
+    user_id: number
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
-    user_id: number
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
   }
 
   export type ActivityUpdateManyMutationInput = {
@@ -6314,13 +6314,13 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ActivityUncheckedUpdateManyInput = {
@@ -6329,20 +6329,20 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    user_id?: IntFieldUpdateOperationsInput | number
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
-    user_id?: IntFieldUpdateOperationsInput | number
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type CategoryCreateInput = {
     name: string
-    User: UserCreateNestedOneWithoutCategoryInput
     ActivityCategory?: ActivityCategoryCreateNestedManyWithoutCategoryInput
+    User: UserCreateNestedOneWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
@@ -6354,8 +6354,8 @@ export namespace Prisma {
 
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    User?: UserUpdateOneRequiredWithoutCategoryNestedInput
     ActivityCategory?: ActivityCategoryUpdateManyWithoutCategoryNestedInput
+    User?: UserUpdateOneRequiredWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
@@ -6416,7 +6416,7 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
-    name: string
+    username: string
     password: string
     latitude: number
     longitude: number
@@ -6427,7 +6427,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: number
-    name: string
+    username: string
     password: string
     latitude: number
     longitude: number
@@ -6437,7 +6437,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -6448,7 +6448,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -6459,7 +6459,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: number
-    name: string
+    username: string
     password: string
     latitude: number
     longitude: number
@@ -6467,7 +6467,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -6476,7 +6476,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -6556,27 +6556,27 @@ export namespace Prisma {
     minTemp?: SortOrder
     maxTemp?: SortOrder
     rain?: SortOrder
-    maxRain?: SortOrder
-    snow?: SortOrder
-    maxSnow?: SortOrder
+    user_id?: SortOrder
     humidity?: SortOrder
     uv_index?: SortOrder
-    wind_speed?: SortOrder
     visibility?: SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrder
+    maxRain?: SortOrder
+    maxSnow?: SortOrder
+    snow?: SortOrder
   }
 
   export type ActivityAvgOrderByAggregateInput = {
     id?: SortOrder
     minTemp?: SortOrder
     maxTemp?: SortOrder
-    maxRain?: SortOrder
-    maxSnow?: SortOrder
+    user_id?: SortOrder
     humidity?: SortOrder
     uv_index?: SortOrder
-    wind_speed?: SortOrder
     visibility?: SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrder
+    maxRain?: SortOrder
+    maxSnow?: SortOrder
   }
 
   export type ActivityMaxOrderByAggregateInput = {
@@ -6585,14 +6585,14 @@ export namespace Prisma {
     minTemp?: SortOrder
     maxTemp?: SortOrder
     rain?: SortOrder
-    maxRain?: SortOrder
-    snow?: SortOrder
-    maxSnow?: SortOrder
+    user_id?: SortOrder
     humidity?: SortOrder
     uv_index?: SortOrder
-    wind_speed?: SortOrder
     visibility?: SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrder
+    maxRain?: SortOrder
+    maxSnow?: SortOrder
+    snow?: SortOrder
   }
 
   export type ActivityMinOrderByAggregateInput = {
@@ -6601,27 +6601,27 @@ export namespace Prisma {
     minTemp?: SortOrder
     maxTemp?: SortOrder
     rain?: SortOrder
-    maxRain?: SortOrder
-    snow?: SortOrder
-    maxSnow?: SortOrder
+    user_id?: SortOrder
     humidity?: SortOrder
     uv_index?: SortOrder
-    wind_speed?: SortOrder
     visibility?: SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrder
+    maxRain?: SortOrder
+    maxSnow?: SortOrder
+    snow?: SortOrder
   }
 
   export type ActivitySumOrderByAggregateInput = {
     id?: SortOrder
     minTemp?: SortOrder
     maxTemp?: SortOrder
-    maxRain?: SortOrder
-    maxSnow?: SortOrder
+    user_id?: SortOrder
     humidity?: SortOrder
     uv_index?: SortOrder
-    wind_speed?: SortOrder
     visibility?: SortOrder
-    user_id?: SortOrder
+    wind_speed?: SortOrder
+    maxRain?: SortOrder
+    maxSnow?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -6791,7 +6791,7 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -6806,7 +6806,7 @@ export namespace Prisma {
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -6815,7 +6815,7 @@ export namespace Prisma {
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -6928,12 +6928,6 @@ export namespace Prisma {
     deleteMany?: ActivityCategoryScalarWhereInput | ActivityCategoryScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutCategoryInput = {
-    create?: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCategoryInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type ActivityCategoryCreateNestedManyWithoutCategoryInput = {
     create?: XOR<ActivityCategoryCreateWithoutCategoryInput, ActivityCategoryUncheckedCreateWithoutCategoryInput> | ActivityCategoryCreateWithoutCategoryInput[] | ActivityCategoryUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: ActivityCategoryCreateOrConnectWithoutCategoryInput | ActivityCategoryCreateOrConnectWithoutCategoryInput[]
@@ -6941,19 +6935,17 @@ export namespace Prisma {
     connect?: ActivityCategoryWhereUniqueInput | ActivityCategoryWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutCategoryInput = {
+    create?: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCategoryInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type ActivityCategoryUncheckedCreateNestedManyWithoutCategoryInput = {
     create?: XOR<ActivityCategoryCreateWithoutCategoryInput, ActivityCategoryUncheckedCreateWithoutCategoryInput> | ActivityCategoryCreateWithoutCategoryInput[] | ActivityCategoryUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: ActivityCategoryCreateOrConnectWithoutCategoryInput | ActivityCategoryCreateOrConnectWithoutCategoryInput[]
     createMany?: ActivityCategoryCreateManyCategoryInputEnvelope
     connect?: ActivityCategoryWhereUniqueInput | ActivityCategoryWhereUniqueInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutCategoryNestedInput = {
-    create?: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCategoryInput
-    upsert?: UserUpsertWithoutCategoryInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCategoryInput, UserUpdateWithoutCategoryInput>, UserUncheckedUpdateWithoutCategoryInput>
   }
 
   export type ActivityCategoryUpdateManyWithoutCategoryNestedInput = {
@@ -6968,6 +6960,14 @@ export namespace Prisma {
     update?: ActivityCategoryUpdateWithWhereUniqueWithoutCategoryInput | ActivityCategoryUpdateWithWhereUniqueWithoutCategoryInput[]
     updateMany?: ActivityCategoryUpdateManyWithWhereWithoutCategoryInput | ActivityCategoryUpdateManyWithWhereWithoutCategoryInput[]
     deleteMany?: ActivityCategoryScalarWhereInput | ActivityCategoryScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutCategoryNestedInput = {
+    create?: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCategoryInput
+    upsert?: UserUpsertWithoutCategoryInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCategoryInput, UserUpdateWithoutCategoryInput>, UserUncheckedUpdateWithoutCategoryInput>
   }
 
   export type ActivityCategoryUncheckedUpdateManyWithoutCategoryNestedInput = {
@@ -7254,7 +7254,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutActivityInput = {
-    name: string
+    username: string
     password: string
     latitude: number
     longitude: number
@@ -7264,7 +7264,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutActivityInput = {
     id?: number
-    name: string
+    username: string
     password: string
     latitude: number
     longitude: number
@@ -7307,7 +7307,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutActivityInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -7317,7 +7317,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutActivityInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -7349,30 +7349,6 @@ export namespace Prisma {
     category_id?: IntFilter<"ActivityCategory"> | number
   }
 
-  export type UserCreateWithoutCategoryInput = {
-    name: string
-    password: string
-    latitude: number
-    longitude: number
-    city_name: string
-    Activity?: ActivityCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutCategoryInput = {
-    id?: number
-    name: string
-    password: string
-    latitude: number
-    longitude: number
-    city_name: string
-    Activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutCategoryInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
-  }
-
   export type ActivityCategoryCreateWithoutCategoryInput = {
     Activity: ActivityCreateNestedOneWithoutActivityCategoryInput
   }
@@ -7391,34 +7367,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutCategoryInput = {
-    update: XOR<UserUpdateWithoutCategoryInput, UserUncheckedUpdateWithoutCategoryInput>
+  export type UserCreateWithoutCategoryInput = {
+    username: string
+    password: string
+    latitude: number
+    longitude: number
+    city_name: string
+    Activity?: ActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    username: string
+    password: string
+    latitude: number
+    longitude: number
+    city_name: string
+    Activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCategoryInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutCategoryInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutCategoryInput, UserUncheckedUpdateWithoutCategoryInput>
-  }
-
-  export type UserUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
-    city_name?: StringFieldUpdateOperationsInput | string
-    Activity?: ActivityUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutCategoryInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
-    city_name?: StringFieldUpdateOperationsInput | string
-    Activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ActivityCategoryUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -7437,18 +7407,48 @@ export namespace Prisma {
     data: XOR<ActivityCategoryUpdateManyMutationInput, ActivityCategoryUncheckedUpdateManyWithoutCategoryInput>
   }
 
+  export type UserUpsertWithoutCategoryInput = {
+    update: XOR<UserUpdateWithoutCategoryInput, UserUncheckedUpdateWithoutCategoryInput>
+    create: XOR<UserCreateWithoutCategoryInput, UserUncheckedCreateWithoutCategoryInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCategoryInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCategoryInput, UserUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type UserUpdateWithoutCategoryInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    city_name?: StringFieldUpdateOperationsInput | string
+    Activity?: ActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    city_name?: StringFieldUpdateOperationsInput | string
+    Activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type ActivityCreateWithoutActivityCategoryInput = {
     name: string
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
     User: UserCreateNestedOneWithoutActivityInput
   }
 
@@ -7458,14 +7458,14 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
+    user_id: number
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
-    user_id: number
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
   }
 
   export type ActivityCreateOrConnectWithoutActivityCategoryInput = {
@@ -7505,13 +7505,13 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
     User?: UserUpdateOneRequiredWithoutActivityNestedInput
   }
 
@@ -7521,14 +7521,14 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    user_id?: IntFieldUpdateOperationsInput | number
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
-    user_id?: IntFieldUpdateOperationsInput | number
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type CategoryUpsertWithoutActivityCategoryInput = {
@@ -7558,13 +7558,13 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
     ActivityCategory?: ActivityCategoryCreateNestedManyWithoutActivityInput
   }
 
@@ -7574,13 +7574,13 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
     ActivityCategory?: ActivityCategoryUncheckedCreateNestedManyWithoutActivityInput
   }
 
@@ -7640,14 +7640,14 @@ export namespace Prisma {
     minTemp?: IntFilter<"Activity"> | number
     maxTemp?: IntFilter<"Activity"> | number
     rain?: BoolFilter<"Activity"> | boolean
-    maxRain?: IntNullableFilter<"Activity"> | number | null
-    snow?: BoolNullableFilter<"Activity"> | boolean | null
-    maxSnow?: IntNullableFilter<"Activity"> | number | null
+    user_id?: IntFilter<"Activity"> | number
     humidity?: IntNullableFilter<"Activity"> | number | null
     uv_index?: IntNullableFilter<"Activity"> | number | null
-    wind_speed?: IntNullableFilter<"Activity"> | number | null
     visibility?: IntNullableFilter<"Activity"> | number | null
-    user_id?: IntFilter<"Activity"> | number
+    wind_speed?: IntNullableFilter<"Activity"> | number | null
+    maxRain?: IntNullableFilter<"Activity"> | number | null
+    maxSnow?: IntNullableFilter<"Activity"> | number | null
+    snow?: BoolNullableFilter<"Activity"> | boolean | null
   }
 
   export type CategoryUpsertWithWhereUniqueWithoutUserInput = {
@@ -7713,13 +7713,13 @@ export namespace Prisma {
     minTemp: number
     maxTemp: number
     rain: boolean
-    maxRain?: number | null
-    snow?: boolean | null
-    maxSnow?: number | null
     humidity?: number | null
     uv_index?: number | null
-    wind_speed?: number | null
     visibility?: number | null
+    wind_speed?: number | null
+    maxRain?: number | null
+    maxSnow?: number | null
+    snow?: boolean | null
   }
 
   export type CategoryCreateManyUserInput = {
@@ -7732,13 +7732,13 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
     ActivityCategory?: ActivityCategoryUpdateManyWithoutActivityNestedInput
   }
 
@@ -7748,13 +7748,13 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
     ActivityCategory?: ActivityCategoryUncheckedUpdateManyWithoutActivityNestedInput
   }
 
@@ -7764,13 +7764,13 @@ export namespace Prisma {
     minTemp?: IntFieldUpdateOperationsInput | number
     maxTemp?: IntFieldUpdateOperationsInput | number
     rain?: BoolFieldUpdateOperationsInput | boolean
-    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
-    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     humidity?: NullableIntFieldUpdateOperationsInput | number | null
     uv_index?: NullableIntFieldUpdateOperationsInput | number | null
-    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
     visibility?: NullableIntFieldUpdateOperationsInput | number | null
+    wind_speed?: NullableIntFieldUpdateOperationsInput | number | null
+    maxRain?: NullableIntFieldUpdateOperationsInput | number | null
+    maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
+    snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type CategoryUpdateWithoutUserInput = {

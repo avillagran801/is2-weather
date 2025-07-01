@@ -9,48 +9,47 @@ datasource db {
 }
 
 model Activity {
-  id      Int     @id @default(autoincrement())
-  name    String
-  minTemp Int
-  maxTemp Int
-  rain    Boolean
-
-  user_id Int
-  User    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
+  id               Int                @id @default(autoincrement())
+  name             String
+  minTemp          Int
+  maxTemp          Int
+  rain             Boolean
+  user_id          Int
+  humidity         Int?
+  uv_index         Int?
+  visibility       Int?
+  wind_speed       Int?
+  maxRain          Int?
+  maxSnow          Int?
+  snow             Boolean?
+  User             User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
   ActivityCategory ActivityCategory[]
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  user_id Int
-  User    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
+  id               Int                @id @default(autoincrement())
+  name             String
+  user_id          Int
   ActivityCategory ActivityCategory[]
+  User             User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
-// One activity can have more than one category
 model ActivityCategory {
   activity_id Int
   category_id Int
-
-  Activity Activity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
-  Category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  Activity    Activity @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  Category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
   @@id([activity_id, category_id])
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  password String
-
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  password  String
   latitude  Float
   longitude Float
   city_name String
-
-  Activity Activity[]
-  Category Category[]
+  Activity  Activity[]
+  Category  Category[]
 }
