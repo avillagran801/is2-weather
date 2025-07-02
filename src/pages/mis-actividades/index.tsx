@@ -12,8 +12,21 @@ import DetailsActivityDialog from "@/components/activities/DetailsActivityDialog
 import DeleteActivityDialog from "@/components/activities/DeleteActivityDialog";
 import { useRouter } from "next/router";
 import SearchAndCreateBar from "@/components/layout/SearchAndCreateBar";
+import { useSession } from "next-auth/react";
 
 export default function MisActividades() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if(status === "loading"){
+      return;
+    }
+    if(!session){
+      router.push("/iniciar-sesion");
+    }
+  }, [status, session, router]);
+
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
   const [categories, setCategories] = React.useState<PlainCategory[]>([]);
 
@@ -29,14 +42,15 @@ export default function MisActividades() {
 
   const [selectedActivity, setSelectedActivity] = React.useState<ActivityWithCategories>(defaultActivity);
 
-  const router = useRouter();
-
   // Fetch all activities associated with the user
   React.useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+    
     const fetchActivities = async() => {
       try {
-        // CHANGE USER_ID LATER
-        const response = await fetch("/api/activity/readByUser?user_id=2"); // <--- CHANGE THIS
+        const response = await fetch(`/api/activity/readByUser?user_id=${session?.user.id}`);
         const data = await response.json();
 
         if(!response.ok){
@@ -54,14 +68,17 @@ export default function MisActividades() {
     };
 
     fetchActivities();
-  }, [refreshActivities]);
+  }, [refreshActivities, session?.user.id, status]);
 
   // Fetch all categories associated with the user
   React.useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+
     const fetchCategories = async() => {
       try {
-        // CHANGE USER_ID LATER
-        const response = await fetch("/api/category/readByUser?user_id=2");
+        const response = await fetch(`/api/category/readByUser?user_id=${session?.user.id}`);
         const data = await response.json();
 
         if(!response.ok){
@@ -77,7 +94,7 @@ export default function MisActividades() {
     }
 
     fetchCategories();
-  }, []);
+  }, [session?.user.id, status]);
 
   const handleAddActivity = async (newActivity: ActivityCreatePayload) => {
     try {
@@ -89,7 +106,6 @@ export default function MisActividades() {
         throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");        
       }
 
-      // CHANGE USER_ID LATER
       const response = await fetch("/api/activity/create", {
         method: "POST",
         headers: {
@@ -97,7 +113,7 @@ export default function MisActividades() {
         },
         body: JSON.stringify({         
           ...newActivity,
-          user_id: 2, // <--- CHANGE THIS 
+          user_id: session?.user.id,
           categories_id: newActivity.categories_id,
         })
       });
@@ -197,7 +213,7 @@ export default function MisActividades() {
           color="secondary"
           onClick={() => router.push("/setup")}
         >
-              Seleccionar actividades predeterminadas
+          Seleccionar actividades predeterminadas
         </Button>
       </Box>
       <Box sx={{

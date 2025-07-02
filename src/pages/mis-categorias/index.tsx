@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import Loading from "@/components/layout/Loading";
-// import GenericActivityCard from "@/components/activities/GenericActivityCard";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import CreateCategoryDialog from "@/components/categories/CreateCategoryDialog";
 import { CategoryCreatePayload, CategoryEditPayload } from "@/lib/categories_utils/defaultNewCategory";
@@ -11,8 +10,22 @@ import CategoryAccordion from "@/components/categories/CategoryAccordion";
 import { defaultCategory } from "@/lib/categories_utils/defaultCategory";
 import EditCategoryDialog from "@/components/categories/EditCategoryDialog";
 import DeleteCategoryDialog from "@/components/categories/DeleteCategoryDialog";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Categorias() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if(status === "loading"){
+      return;
+    }
+    if(!session){
+      router.push("/iniciar-sesion");
+    }
+  }, [status, session, router]);
+
   const [categories, setCategories] = React.useState<CategoryWithActivities[]>([]);
   const [activities, setActivities] = React.useState<ActivityWithCategories[]>([]);
 
@@ -28,12 +41,15 @@ export default function Categorias() {
   const [searchTerm, setSearchTerm] = React.useState<string>("");
 
   React.useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+
     const fetchData = async () => {
       try {
-        // CHANGE USER_ID LATER
         const [catResponse, actResponse] = await Promise.all([
-          fetch("/api/category/readWithActivitiesByUser?user_id=2"), // <--- CHANGE THIS
-          fetch("/api/activity/readByUser?user_id=2") // <--- CHANGE THIS
+          fetch(`/api/category/readWithActivitiesByUser?user_id=${session?.user.id}`),
+          fetch(`/api/activity/readByUser?user_id=${session?.user.id}`)
         ]);
 
         const [catData, actData] = await Promise.all([
@@ -56,7 +72,7 @@ export default function Categorias() {
     };
 
     fetchData();
-  }, [refreshCategories]);
+  }, [refreshCategories, session?.user.id, status]);
 
   const handleAddCategory = async (newCategory: CategoryCreatePayload) => {
     try {
@@ -64,7 +80,6 @@ export default function Categorias() {
         throw new Error("La categoría necesita un nombre");
       }
 
-      // CHANGE USER_ID LATER
       const response = await fetch("/api/category/create", {
         method: "POST",
         headers: {
@@ -72,7 +87,7 @@ export default function Categorias() {
         },
         body: JSON.stringify({
           ...newCategory,
-          user_id: 2, // <--- CHANGE THIS 
+          user_id: session?.user.id,
           activities_id: newCategory.activities_id,
         })
       });
@@ -97,7 +112,6 @@ export default function Categorias() {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
-      // CHANGE USER_ID LATER
       const response = await fetch("/api/category/update", {
         method: "PATCH",
         headers: {
@@ -159,15 +173,11 @@ export default function Categorias() {
     setSearchTerm(newSearch);
   };
 
-
   if(loading) {
     return(
       <Loading />
     )
   }
-
-  console.log("refreshCategories" , refreshCategories)
-  console.log("loading", loading)
 
   return (
     <>

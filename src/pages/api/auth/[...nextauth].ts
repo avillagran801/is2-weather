@@ -21,7 +21,7 @@ export default NextAuth({
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) return null;
 
-        return { id: String(user.id), name: user.username };
+        return { id: String(user.id), username: user.username };
       },
     }),
   ],
@@ -29,6 +29,24 @@ export default NextAuth({
     strategy: "jwt",
   },
   pages: {
-    signIn: "/iniciar-sesion", // use your existing page
+    signIn: "/iniciar-sesion",
+  },
+  callbacks: {
+    // Add the user ID to the token
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+      }
+      return token;
+    },
+    // Add the user ID from the token into the session
+    async session({ session, token }) {
+      session.user = {
+        id: token.id as string,
+        username: token.username as string, // or use `username` key if preferred
+      };
+      return session;
+    },
   },
 });

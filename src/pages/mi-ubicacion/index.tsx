@@ -9,8 +9,22 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const MiUbicacion: React.FC = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if(status === "loading"){
+      return;
+    }
+    if(!session){
+      router.push("/iniciar-sesion");
+    }
+  }, [status, session, router]);
+
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,14 +34,17 @@ const MiUbicacion: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // CHANGE USER_ID LATER
   useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+
     const savedPreference = localStorage.getItem("rememberLocationUpdate");
     setRemeberChoice(savedPreference === "true");
 
     const fetchUserLocation = async () => {
       try {
-        const res = await fetch('/api/location/read?user_id=2'); // <--- CHANGE THIS
+        const res = await fetch(`/api/location/read?user_id=${session?.user.id}`);
         const data = await res.json();
 
         if(!res.ok){
@@ -44,9 +61,8 @@ const MiUbicacion: React.FC = () => {
     };
 
     fetchUserLocation();
-  }, []);
+  }, [session?.user.id, status]);
 
-  // CHANGE USER_ID LATER
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
@@ -59,7 +75,7 @@ const MiUbicacion: React.FC = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          user_id: 2, // <--- CHANGE THIS
+          user_id: session?.user.id,
           city,
           country
         }),
@@ -97,7 +113,11 @@ const MiUbicacion: React.FC = () => {
         const res = await fetch('api/location/autoupdate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json'},
-          body: JSON.stringify({ user_id: 2, latitude, longitude}),
+          body: JSON.stringify({
+            user_id: session?.user.id,
+            latitude,
+            longitude
+          }),
         });
 
         const data = await res.json();

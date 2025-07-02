@@ -7,15 +7,33 @@ import ScoredActivityCard from "@/components/activities/ScoredActivityCard";
 import { getWeatherCodeDescriptions } from "@/utils/weatherCodeDescriptions";
 import { ScoredActivity, calculateActivityScores } from "@/utils/calculateActivityScores";
 import { WeatherData } from "./api/weather/consult";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
 
 export default function MainPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if(status === "loading"){
+      return;
+    }
+    if(!session){
+      router.push("/iniciar-sesion");
+    }
+  }, [status, session, router]);
+
   const [loading, setLoading] = React.useState(true);
   const [weather, setWeather] = React.useState<WeatherData | null>(null);
   const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
   const [recommendedActivities, setRecommendedActivities] = React.useState<ScoredActivity[]>([]);
 
-
   React.useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+
     const fetchWeather = async () => {
       try {
         const shouldAutoUpdate = localStorage.getItem("rememberLocationUpdate") === "true";
@@ -26,8 +44,7 @@ export default function MainPage() {
           });
         }
 
-        // CHANGE USER_ID LATER
-        const locationRes = await fetch("/api/location/read?user_id=2"); // <--- CHANGE THIS
+        const locationRes = await fetch(`/api/location/read?user_id=${session?.user.id}`);
         const locationData = await locationRes.json();
 
         if (!locationRes.ok) {
@@ -64,15 +81,18 @@ export default function MainPage() {
       }
     };
     fetchWeather();
-  }, []);
+  }, [session?.user.id, status]);
 
   React.useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+
     if (!weather) return; // Solo ejecuta si weather está disponible
 
     const fetchActivities = async () => {
       try {
-        // CHANGE USER_ID LATER
-        const response = await fetch("/api/activity/readByUser?user_id=2"); // <--- CHANGE THIS
+        const response = await fetch(`/api/activity/readByUser?user_id=${session?.user.id}`);
         const data = await response.json();
 
         if (!response.ok) {
@@ -90,7 +110,7 @@ export default function MainPage() {
       }
     }
     fetchActivities();
-  }, [weather]);
+  }, [session?.user.id, status, weather]);
 
 
   // Prepare data for visualization
@@ -163,7 +183,6 @@ export default function MainPage() {
           ) : (
             <Typography variant="body1">No se encontraron datos de clima.</Typography>
           )}
-
         </Box >
       )
       }

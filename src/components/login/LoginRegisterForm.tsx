@@ -36,15 +36,25 @@ export default function LoginRegisterForm({ isLogin, setIsLogin, username, setUs
   }
   
   return(
-    <>
+    <Box sx={{
+      display: "flex",
+      flex: "1",
+      backgroundColor: "#edebe4"
+    }}>
       <Box sx={{
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignContent: "center",
-        padding: "5rem"
+        padding: "5rem",
       }}>
         <Paper sx={{
-          width: "35rem",
+          maxWidth: "35rem",
+          display: "flex",
+          flex: "1",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignContent: "center",
           padding: "2rem"
         }}>
           <Typography variant="h5" align="center" >
@@ -123,6 +133,6 @@ export default function LoginRegisterForm({ isLogin, setIsLogin, username, setUs
 
         </Paper>
       </Box>
-    </>
+    </Box>
   );
 }
