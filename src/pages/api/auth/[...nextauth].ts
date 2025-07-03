@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 
 export default NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
