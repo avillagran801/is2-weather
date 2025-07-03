@@ -11,7 +11,9 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import HomeIcon from '@mui/icons-material/Home';
 import InterestsIcon from '@mui/icons-material/Interests';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Link from 'next/link';
+import { signOut } from "next-auth/react";
 
 type TemporaryDrawerProps = {
   open: boolean;
@@ -46,6 +48,12 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       icon: <CardGiftcardIcon/>
     },
   ];
+
+  const handleLogOut = () => {
+    signOut({
+      callbackUrl: "/iniciar-sesion"
+    })
+  }
   
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={handleClose}>
@@ -62,6 +70,14 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
             </ListItem>
           </Link>
         ))}
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleLogOut}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Cerrar sesión" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
