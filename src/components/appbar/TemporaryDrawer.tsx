@@ -11,6 +11,7 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import HomeIcon from '@mui/icons-material/Home';
 import InterestsIcon from '@mui/icons-material/Interests';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'; // For ranking
 import Link from 'next/link';
 
 type TemporaryDrawerProps = {
@@ -39,6 +40,11 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       name: "Mi ubicación",
       url: "/mi-ubicacion",
       icon: <LocationCityIcon/>
+    },
+    {
+      name: "Ranking actividades",
+      url: "/activity-rank",
+      icon: <EmojiEventsIcon/>
     },
     {
       name: "Gift",

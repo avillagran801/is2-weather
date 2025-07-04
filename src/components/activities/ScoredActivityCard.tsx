@@ -1,13 +1,13 @@
-import { Box, Button, Card, CardActions, CardContent, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import GenericActivityCard from "./GenericActivityCard";
-import LinearProgress from "@mui/material/LinearProgress";
 import { ScoredActivity } from "@/utils/calculateActivityScores";
 
 type CardProps = {
   activity: ScoredActivity;
-}
+  onVerMas?: () => void;
+};
 
-export default function ScoredActivityCard({ activity }: CardProps) {
+export default function ScoredActivityCard({ activity, onVerMas }: CardProps) {
   return (
     <GenericActivityCard activity={activity}>
       <Typography
@@ -22,26 +22,21 @@ export default function ScoredActivityCard({ activity }: CardProps) {
           borderRadius: 1,
         }}
       >
-        Puntaje: {activity.score} / {activity.maxScore}
+        #{activity.rank}
       </Typography>
-      <LinearProgress
-        variant="determinate"
-        value={activity.maxScore > 0 ? (activity.score / activity.maxScore) * 100 : 0}
-        sx={{
-          height: 10,
-          borderRadius: 5,
-          backgroundColor: "#ffffff",
-          border: '1px solid #ccc',
-          '& .MuiLinearProgress-bar': {
-            backgroundColor: 'primary.main',
-          },
-          mt: 1,
-          width: '120px',
-          position: "absolute",
-          top: 40,
-          right: 8,
-        }}
-      />
+      {onVerMas && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1, mr: 1 }}>
+          <Button
+            variant="text"
+            color="primary"
+            size="small"
+            onClick={onVerMas}
+            sx={{ textTransform: "none", fontWeight: 500, px: 0.5, minWidth: 0 }}
+          >
+            Más Información
+          </Button>
+        </Box>
+      )}
     </GenericActivityCard>
   );
 }

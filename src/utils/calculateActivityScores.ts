@@ -1,13 +1,15 @@
 import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
+import { WeatherData } from "@/pages/api/weather/consult";
 
 export type ScoredActivity = ActivityWithCategories & {
     score: number;
     maxScore: number;
+    rank: number;
 };
 
-export function calculateActivityScores(activities: ActivityWithCategories[], weather: any): ScoredActivity[] {
+export function calculateActivityScores(activities: ActivityWithCategories[], weather: WeatherData): ScoredActivity[] {
 
-    const scoredActivities = activities.map(activity => {
+    let scoredActivities = activities.map(activity => {
         let score = 0;
         let maxScore = 4; // + 1 for each optional condition that is defined
 
@@ -48,7 +50,7 @@ export function calculateActivityScores(activities: ActivityWithCategories[], we
         }
 
         // Snow presence check (1 point)
-        const isSnowing = [71, 73, 75, 77, 85, 86].includes(weather?.weather_code);
+        const isSnowing = [71, 73, 75, 77, 85, 86].includes(weather.current.weather_code);
         if (activity.snow !== null) {
             maxScore += 1;
             if (!isSnowing || (isSnowing && activity.snow)) {
@@ -81,10 +83,16 @@ export function calculateActivityScores(activities: ActivityWithCategories[], we
         }
 
 
-        return { ...activity, score, maxScore };
+        return { ...activity, score, maxScore, rank: 0 };
+    });
+
+    // Sort activities by score in descending order
+    scoredActivities.sort((a, b) => b.score - a.score);
+
+    // Assign ranks based on score
+    scoredActivities.forEach((activity, index) => {
+        activity.rank = index + 1; // Rank starts from 1
     });
 
     return scoredActivities;
-
-
 };
