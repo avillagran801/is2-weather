@@ -23,20 +23,6 @@ export default function ScoredActivityCard({ activity }: CardProps) {
 
   return (
     <GenericActivityCard activity={activity}>
-      <Typography
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          bgcolor: 'primary.main',
-          color: 'white',
-          px: 1,
-          py: 0.5,
-          borderRadius: 1,
-        }}
-      >
-        Puntaje: {activity.score} / {activity.maxScore}
-      </Typography>
       <LinearProgress
         variant="determinate"
         value={activity.maxScore > 0 ? (activity.score / activity.maxScore) * 100 : 0}
