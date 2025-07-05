@@ -22,6 +22,7 @@ model Activity {
   maxRain          Int?
   maxSnow          Int?
   snow             Boolean?
+  rating           Int?
   User             User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
   ActivityCategory ActivityCategory[]
 }
