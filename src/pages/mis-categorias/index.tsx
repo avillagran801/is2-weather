@@ -80,6 +80,10 @@ export default function Categorias() {
         throw new Error("La categoría necesita un nombre");
       }
 
+      if (!session?.user?.id) {
+        throw new Error("No se encontró el ID del usuario. ¿Estás autenticado?");
+      }
+
       const response = await fetch("/api/category/create", {
         method: "POST",
         headers: {
@@ -87,24 +91,39 @@ export default function Categorias() {
         },
         body: JSON.stringify({
           ...newCategory,
-          user_id: session?.user.id,
+          user_id: session.user.id,
           activities_id: newCategory.activities_id,
         })
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Solicitud fallida");
+        let errorMessage = "Solicitud fallida";
+        try {
+          const errorData = await response.json();
+          if (typeof errorData.error === "string") {
+            errorMessage = errorData.error;
+          } else {
+            console.warn("Respuesta de error inesperada:", errorData);
+          }
+        } catch (jsonError) {
+          console.warn("Error al parsear JSON:", jsonError);
+        }
+        throw new Error(errorMessage);
       }
 
       setRefreshCategories(true);
       setLoading(true);
     }
     catch (error) {
-      console.log(error);
-      alert("Error al crear la categoría")
+      if (error instanceof Error) {
+        console.error("Error: ", error.message);
+      } else {
+        console.error("Unknown error: ", JSON.stringify(error, null, 2));
+      }
+      alert("Error al crear la categoría");
     }
-  }
+  };
+
 
   const handleEditCategory = async (editedCategory: CategoryEditPayload) => {
     try{

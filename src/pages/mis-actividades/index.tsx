@@ -96,41 +96,64 @@ export default function MisActividades() {
     fetchCategories();
   }, [session?.user.id, status]);
 
+  
   const handleAddActivity = async (newActivity: ActivityCreatePayload) => {
     try {
-      if( !newActivity.name ) {
+      if (!newActivity.name) {
         throw new Error("La actividad necesita un nombre");
       }
 
-      if(newActivity.minTemp > newActivity.maxTemp) {
-        throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");        
+      if (newActivity.minTemp > newActivity.maxTemp) {
+        throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");
       }
+
+      if (!session?.user?.id) {
+        throw new Error("No se encontró el ID del usuario. ¿Estás autenticado?");
+      }
+
+      // 🧹 Remove `id` if it exists (avoid Prisma unique constraint error)
+      const { id, ...activityDataWithoutId } = newActivity;
 
       const response = await fetch("/api/activity/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({         
-          ...newActivity,
-          user_id: session?.user.id,
+        body: JSON.stringify({
+          ...activityDataWithoutId,
+          user_id: session.user.id,
           categories_id: newActivity.categories_id,
-        })
+        }),
       });
 
-      if(!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Solicitud fallida");
+      if (!response.ok) {
+        let errorMessage = "Solicitud fallida";
+        try {
+          const errorData = await response.json();
+          if (typeof errorData.error === "string") {
+            errorMessage = errorData.error;
+          } else {
+            console.warn("Respuesta de error inesperada:", errorData);
+          }
+        } catch (jsonErr) {
+          console.warn("Error al parsear JSON de error:", jsonErr);
+        }
+        throw new Error(errorMessage);
       }
 
       setRefreshActivities(true);
       setLoading(true);
-    }
-    catch (error) {
-      console.log(error);
-      alert("Error al crear la actividad")
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error: ", error.message);
+      } else {
+        console.error("Unknown error: ", JSON.stringify(error, null, 2));
+      }
+      alert("Error al crear la actividad");
     }
   };
+
+
 
   const handleEditActivity = async (editedActivity: ActivityEditPayload) => {
     try {
