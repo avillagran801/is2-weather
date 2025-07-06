@@ -4718,6 +4718,7 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     city_name: string | null
+    is_account_new: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -4727,6 +4728,7 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     city_name: string | null
+    is_account_new: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -4736,6 +4738,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: number
+    is_account_new: number
     _all: number
   }
 
@@ -4759,6 +4762,7 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     city_name?: true
+    is_account_new?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -4768,6 +4772,7 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     city_name?: true
+    is_account_new?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -4777,6 +4782,7 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     city_name?: true
+    is_account_new?: true
     _all?: true
   }
 
@@ -4873,6 +4879,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new: boolean | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -4901,6 +4908,7 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     city_name?: boolean
+    is_account_new?: boolean
     Activity?: boolean | User$ActivityArgs<ExtArgs>
     Category?: boolean | User$CategoryArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -4913,6 +4921,7 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     city_name?: boolean
+    is_account_new?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4922,6 +4931,7 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     city_name?: boolean
+    is_account_new?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -4931,9 +4941,10 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     city_name?: boolean
+    is_account_new?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "latitude" | "longitude" | "city_name", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "latitude" | "longitude" | "city_name" | "is_account_new", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Activity?: boolean | User$ActivityArgs<ExtArgs>
     Category?: boolean | User$CategoryArgs<ExtArgs>
@@ -4955,6 +4966,7 @@ export namespace Prisma {
       latitude: number
       longitude: number
       city_name: string
+      is_account_new: boolean | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -5386,6 +5398,7 @@ export namespace Prisma {
     readonly latitude: FieldRef<"User", 'Float'>
     readonly longitude: FieldRef<"User", 'Float'>
     readonly city_name: FieldRef<"User", 'String'>
+    readonly is_account_new: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -5897,7 +5910,8 @@ export namespace Prisma {
     password: 'password',
     latitude: 'latitude',
     longitude: 'longitude',
-    city_name: 'city_name'
+    city_name: 'city_name',
+    is_account_new: 'is_account_new'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6195,6 +6209,7 @@ export namespace Prisma {
     latitude?: FloatFilter<"User"> | number
     longitude?: FloatFilter<"User"> | number
     city_name?: StringFilter<"User"> | string
+    is_account_new?: BoolNullableFilter<"User"> | boolean | null
     Activity?: ActivityListRelationFilter
     Category?: CategoryListRelationFilter
   }
@@ -6206,6 +6221,7 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     city_name?: SortOrder
+    is_account_new?: SortOrderInput | SortOrder
     Activity?: ActivityOrderByRelationAggregateInput
     Category?: CategoryOrderByRelationAggregateInput
   }
@@ -6220,6 +6236,7 @@ export namespace Prisma {
     latitude?: FloatFilter<"User"> | number
     longitude?: FloatFilter<"User"> | number
     city_name?: StringFilter<"User"> | string
+    is_account_new?: BoolNullableFilter<"User"> | boolean | null
     Activity?: ActivityListRelationFilter
     Category?: CategoryListRelationFilter
   }, "id" | "username">
@@ -6231,6 +6248,7 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     city_name?: SortOrder
+    is_account_new?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6248,6 +6266,7 @@ export namespace Prisma {
     latitude?: FloatWithAggregatesFilter<"User"> | number
     longitude?: FloatWithAggregatesFilter<"User"> | number
     city_name?: StringWithAggregatesFilter<"User"> | string
+    is_account_new?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
   }
 
   export type ActivityCreateInput = {
@@ -6451,6 +6470,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
     Activity?: ActivityCreateNestedManyWithoutUserInput
     Category?: CategoryCreateNestedManyWithoutUserInput
   }
@@ -6462,6 +6482,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
     Activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
     Category?: CategoryUncheckedCreateNestedManyWithoutUserInput
   }
@@ -6472,6 +6493,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
     Activity?: ActivityUpdateManyWithoutUserNestedInput
     Category?: CategoryUpdateManyWithoutUserNestedInput
   }
@@ -6483,6 +6505,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
     Activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
     Category?: CategoryUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -6494,6 +6517,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -6502,6 +6526,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -6511,6 +6536,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -6831,6 +6857,7 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     city_name?: SortOrder
+    is_account_new?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -6846,6 +6873,7 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     city_name?: SortOrder
+    is_account_new?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -6855,6 +6883,7 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     city_name?: SortOrder
+    is_account_new?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -7294,6 +7323,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
     Category?: CategoryCreateNestedManyWithoutUserInput
   }
 
@@ -7304,6 +7334,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
     Category?: CategoryUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7347,6 +7378,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
     Category?: CategoryUpdateManyWithoutUserNestedInput
   }
 
@@ -7357,6 +7389,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
     Category?: CategoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7408,6 +7441,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
     Activity?: ActivityCreateNestedManyWithoutUserInput
   }
 
@@ -7418,6 +7452,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     city_name: string
+    is_account_new?: boolean | null
     Activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7459,6 +7494,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
     Activity?: ActivityUpdateManyWithoutUserNestedInput
   }
 
@@ -7469,6 +7505,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     city_name?: StringFieldUpdateOperationsInput | string
+    is_account_new?: NullableBoolFieldUpdateOperationsInput | boolean | null
     Activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 

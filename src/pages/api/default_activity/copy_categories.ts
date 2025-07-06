@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { user_id, categoryIds } = req.body;
 
   if(
-    typeof user_id !== "number" ||
+    isNaN(Number(user_id)) ||
     !Array.isArray(categoryIds) ||
     categoryIds.length === 0
   ){
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const adminCategories = await prisma.category.findMany({
       where: {
         id: { in: categoryIds },
-        user_id: 1,
+        user_id: parseInt(user_id as string),
       },
     });
 
@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const newCategory = await prisma.category.create({
         data: {
           name: adminCat.name,
-          user_id,
+          user_id: parseInt(user_id as string),
         },
       });
 

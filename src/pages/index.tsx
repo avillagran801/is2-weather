@@ -34,6 +34,30 @@ export default function MainPage() {
       return;
     }
 
+    const checkUser = async () => {
+      const response = await fetch(`/api/default_activity/read_user_status?user_id=${session?.user.id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      
+      const data = await response.json();
+      
+      if(data.is_account_new){
+        router.push("/setup");    
+      }  
+    }
+    
+    checkUser();
+    
+  }, [router, session?.user.id, status]);
+
+  React.useEffect(() => {
+    if(status !== "authenticated" || !session?.user.id) {
+      return;
+    }
+
     const fetchWeather = async () => {
       try {
         const shouldAutoUpdate = localStorage.getItem("rememberLocationUpdate") === "true";

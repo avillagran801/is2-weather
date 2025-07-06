@@ -9,6 +9,8 @@ import {
   Container,
   Paper
 } from "@mui/material";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const steps = [
   "Seleccionar categorías",
@@ -17,8 +19,21 @@ const steps = [
 ];
 
 export default function Setup(){
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if(status === "loading"){
+      return;
+    }
+    if(!session){
+      router.push("/iniciar-sesion");
+    }
+  }, [status, session, router]);
+
   const [categories, setCategories] = React.useState<{ id: number, name:string }[]>([]);
-  const [activities, setActivities] = React.useState<{id: number, name:string}[]>([]);  const [selectedCategoryIds, setSelectedCategoryIds] = React.useState<number[]>([]);
+  const [activities, setActivities] = React.useState<{id: number, name:string}[]>([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = React.useState<number[]>([]);
   const [selectedActivityIds, setSelectedActivityIds] = React.useState<number[]>([]);
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -62,7 +77,7 @@ export default function Setup(){
   const handleNext = async () => {
     if (activeStep === 2) {
       try {
-        const user_id = 2; // CHANGE THIS
+        const user_id = session?.user.id;
 
         const catRes = await fetch("/api/default_activity/copy_categories", {
           method: "POST",
@@ -84,6 +99,16 @@ export default function Setup(){
         });
 
         if (!actRes.ok) throw new Error("Error al copiar actividades");
+
+        const updateUserStatus = await fetch("/api/default_activity/update_user_status", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: user_id,
+          }),
+        });
+
+        if (!updateUserStatus.ok) throw new Error("Error al actualizar status del usuario (is_new_account)");
 
         setActiveStep((prevStep) => prevStep + 1);
       } catch (error) {

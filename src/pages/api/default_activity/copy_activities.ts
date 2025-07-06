@@ -9,7 +9,7 @@ export default async function hanlder(req: NextApiRequest, res: NextApiResponse)
   const { user_id, activityIds, categoryMapping } = req.body;
 
   if (
-    typeof user_id !== "number" ||
+    isNaN(Number(user_id)) ||
     !Array.isArray(activityIds) ||
     typeof categoryMapping !== "object"
   ) {
@@ -31,6 +31,21 @@ export default async function hanlder(req: NextApiRequest, res: NextApiResponse)
         continue;
       }
 
+      console.log("Final data to insert:", {
+        name: adminActivity.name,
+        minTemp: adminActivity.minTemp,
+        maxTemp: adminActivity.maxTemp,
+        rain: adminActivity.rain,
+        maxRain: adminActivity.maxRain,
+        snow: adminActivity.snow,
+        maxSnow: adminActivity.maxSnow,
+        humidity: adminActivity.humidity,
+        uv_index: adminActivity.uv_index,
+        wind_speed: adminActivity.wind_speed,
+        visibility: adminActivity.visibility,
+        user_id: parseInt(user_id),
+      });
+
       const newActivity = await prisma.activity.create({
         data: {
           name: adminActivity.name,
@@ -46,7 +61,7 @@ export default async function hanlder(req: NextApiRequest, res: NextApiResponse)
           wind_speed: adminActivity.wind_speed,
           visibility: adminActivity.visibility,
 
-          user_id,
+          user_id: parseInt(user_id),
         },
       });
 

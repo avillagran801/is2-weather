@@ -154,7 +154,8 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   latitude: 'latitude',
   longitude: 'longitude',
-  city_name: 'city_name'
+  city_name: 'city_name',
+  is_account_new: 'is_account_new'
 };
 
 exports.Prisma.SortOrder = {

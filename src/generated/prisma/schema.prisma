@@ -45,12 +45,13 @@ model ActivityCategory {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  username  String     @unique
-  password  String
-  latitude  Float
-  longitude Float
-  city_name String
-  Activity  Activity[]
-  Category  Category[]
+  id             Int        @id @default(autoincrement())
+  username       String     @unique
+  password       String
+  latitude       Float
+  longitude      Float
+  city_name      String
+  is_account_new Boolean?
+  Activity       Activity[]
+  Category       Category[]
 }
