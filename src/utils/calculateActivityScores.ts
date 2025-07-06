@@ -1,17 +1,17 @@
 import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
-import { WeatherData } from "@/pages/api/weather/consult";
 
 export type ScoredActivity = ActivityWithCategories & {
     score: number;
     maxScore: number;
-    rank: number;
 };
 
-export function calculateActivityScores(activities: ActivityWithCategories[], weather: WeatherData): ScoredActivity[] {
+// CHANGE LATER (!!!)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function calculateActivityScores(activities: ActivityWithCategories[], weather: any): ScoredActivity[] {
 
-    let scoredActivities = activities.map(activity => {
-        let score = 0;
-        let maxScore = 4; // + 1 for each optional condition that is defined
+  const scoredActivities = activities.map(activity => {
+    let score = 0;
+    let maxScore = 4; // + 1 for each optional condition that is defined
 
     // Check temperature (2 points)
     if (weather.current.temperature_2m >= activity.minTemp &&
@@ -49,14 +49,14 @@ export function calculateActivityScores(activities: ActivityWithCategories[], we
       }
     }
 
-        // Snow presence check (1 point)
-        const isSnowing = [71, 73, 75, 77, 85, 86].includes(weather.current.weather_code);
-        if (activity.snow !== null) {
-            maxScore += 1;
-            if (!isSnowing || (isSnowing && activity.snow)) {
-                score += 1;
-            }
-        }
+    // Snow presence check (1 point)
+    const isSnowing = [71, 73, 75, 77, 85, 86].includes(weather?.weather_code);
+    if (activity.snow !== null) {
+      maxScore += 1;
+      if (!isSnowing || (isSnowing && activity.snow)) {
+        score += 1;
+      }
+    }
 
     // Snow amount check (1 point)
     if (activity.maxSnow !== null) {
@@ -86,16 +86,10 @@ export function calculateActivityScores(activities: ActivityWithCategories[], we
     score += (rating - 3) * 1.2;
 
 
-        return { ...activity, score, maxScore, rank: 0 };
-    });
+    return { ...activity, score, maxScore };
+  });
 
-    // Sort activities by score in descending order
-    scoredActivities.sort((a, b) => b.score - a.score);
+  return scoredActivities;
 
-    // Assign ranks based on score
-    scoredActivities.forEach((activity, index) => {
-        activity.rank = index + 1; // Rank starts from 1
-    });
 
-    return scoredActivities;
 };

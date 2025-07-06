@@ -1,10 +1,9 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
-import Loading from "@/components/layout/loading";
+import Loading from "@/components/layout/Loading";
 import WeatherChart from "@/components/weather/WeatherChart";
 import CurrentWeatherBox from "@/components/weather/CurrentWeatherBox";
 import ScoredActivityCard from "@/components/activities/ScoredActivityCard";
-import ActivityScoreDialog from "@/components/activities/ActivityScoreDialog";
 import { getWeatherCodeDescriptions } from "@/utils/weatherCodeDescriptions";
 import { ScoredActivity, calculateActivityScores } from "@/utils/calculateActivityScores";
 import { WeatherData } from "./api/weather/consult";
@@ -29,8 +28,6 @@ export default function MainPage() {
   const [weather, setWeather] = React.useState<WeatherData | null>(null);
   const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
   const [recommendedActivities, setRecommendedActivities] = React.useState<ScoredActivity[]>([]);
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [selectedActivity, setSelectedActivity] = React.useState<any>(null);
 
   React.useEffect(() => {
     if(status !== "authenticated" || !session?.user.id) {
@@ -146,14 +143,11 @@ export default function MainPage() {
           <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 2 }}>
             Actividades Recomendadas
           </Typography>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 4 }}>
             {recommendedActivities.map((activity) => (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={activity.id}>
-                <Box sx={{ position: 'relative', height: "100%" }}>
-                  <ScoredActivityCard
-                    activity={activity}
-                    onVerMas={() => { setSelectedActivity(activity); setDialogOpen(true); }}
-                  />
+                <Box sx={{ position: 'relative' }}>
+                  <ScoredActivityCard activity={activity} />
                 </Box>
               </Grid>
             ))}
@@ -188,16 +182,6 @@ export default function MainPage() {
             </>
           ) : (
             <Typography variant="body1">No se encontraron datos de clima.</Typography>
-          )}
-
-          {/* Dialog for activity conditions */}
-          {selectedActivity && weather && (
-            <ActivityScoreDialog
-              open={dialogOpen}
-              setOpen={setDialogOpen}
-              selectedActivity={selectedActivity}
-              weather={weather}
-            />
           )}
         </Box >
       )

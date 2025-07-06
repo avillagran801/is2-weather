@@ -12,7 +12,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import InterestsIcon from '@mui/icons-material/Interests';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'; // For ranking
 import Link from 'next/link';
 import { signOut } from "next-auth/react";
 
@@ -42,11 +41,6 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       name: "Mi ubicación",
       url: "/mi-ubicacion",
       icon: <LocationCityIcon/>
-    },
-    {
-      name: "Ranking actividades",
-      url: "/activity-rank",
-      icon: <EmojiEventsIcon/>
     },
     {
       name: "Gift",
