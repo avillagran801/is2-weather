@@ -133,7 +133,8 @@ exports.Prisma.ActivityScalarFieldEnum = {
   wind_speed: 'wind_speed',
   maxRain: 'maxRain',
   maxSnow: 'maxSnow',
-  snow: 'snow'
+  snow: 'snow',
+  rating: 'rating'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {

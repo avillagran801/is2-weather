@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import GenericActivityCard from "./GenericActivityCard";
 import { ScoredActivity } from "@/utils/calculateActivityScores";
+import StarRating from "@/components/rating/StarRating";
 
 type CardProps = {
   activity: ScoredActivity;

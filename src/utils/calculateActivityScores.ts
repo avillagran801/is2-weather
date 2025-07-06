@@ -81,6 +81,9 @@ export function calculateActivityScores(activities: ActivityWithCategories[], we
         score += 1;
       }
     }
+    const rating = activity.rating === null || activity.rating === undefined ? 3 : activity.rating;
+
+    score += (rating - 3) * 1.2;
 
 
         return { ...activity, score, maxScore, rank: 0 };

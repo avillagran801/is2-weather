@@ -1266,6 +1266,7 @@ export namespace Prisma {
     wind_speed: number | null
     maxRain: number | null
     maxSnow: number | null
+    rating: number | null
   }
 
   export type ActivitySumAggregateOutputType = {
@@ -1279,6 +1280,7 @@ export namespace Prisma {
     wind_speed: number | null
     maxRain: number | null
     maxSnow: number | null
+    rating: number | null
   }
 
   export type ActivityMinAggregateOutputType = {
@@ -1295,6 +1297,7 @@ export namespace Prisma {
     maxRain: number | null
     maxSnow: number | null
     snow: boolean | null
+    rating: number | null
   }
 
   export type ActivityMaxAggregateOutputType = {
@@ -1311,6 +1314,7 @@ export namespace Prisma {
     maxRain: number | null
     maxSnow: number | null
     snow: boolean | null
+    rating: number | null
   }
 
   export type ActivityCountAggregateOutputType = {
@@ -1327,6 +1331,7 @@ export namespace Prisma {
     maxRain: number
     maxSnow: number
     snow: number
+    rating: number
     _all: number
   }
 
@@ -1342,6 +1347,7 @@ export namespace Prisma {
     wind_speed?: true
     maxRain?: true
     maxSnow?: true
+    rating?: true
   }
 
   export type ActivitySumAggregateInputType = {
@@ -1355,6 +1361,7 @@ export namespace Prisma {
     wind_speed?: true
     maxRain?: true
     maxSnow?: true
+    rating?: true
   }
 
   export type ActivityMinAggregateInputType = {
@@ -1371,6 +1378,7 @@ export namespace Prisma {
     maxRain?: true
     maxSnow?: true
     snow?: true
+    rating?: true
   }
 
   export type ActivityMaxAggregateInputType = {
@@ -1387,6 +1395,7 @@ export namespace Prisma {
     maxRain?: true
     maxSnow?: true
     snow?: true
+    rating?: true
   }
 
   export type ActivityCountAggregateInputType = {
@@ -1403,6 +1412,7 @@ export namespace Prisma {
     maxRain?: true
     maxSnow?: true
     snow?: true
+    rating?: true
     _all?: true
   }
 
@@ -1506,6 +1516,7 @@ export namespace Prisma {
     maxRain: number | null
     maxSnow: number | null
     snow: boolean | null
+    rating: number | null
     _count: ActivityCountAggregateOutputType | null
     _avg: ActivityAvgAggregateOutputType | null
     _sum: ActivitySumAggregateOutputType | null
@@ -1541,6 +1552,7 @@ export namespace Prisma {
     maxRain?: boolean
     maxSnow?: boolean
     snow?: boolean
+    rating?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
     ActivityCategory?: boolean | Activity$ActivityCategoryArgs<ExtArgs>
     _count?: boolean | ActivityCountOutputTypeDefaultArgs<ExtArgs>
@@ -1560,6 +1572,7 @@ export namespace Prisma {
     maxRain?: boolean
     maxSnow?: boolean
     snow?: boolean
+    rating?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -1577,6 +1590,7 @@ export namespace Prisma {
     maxRain?: boolean
     maxSnow?: boolean
     snow?: boolean
+    rating?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -1594,9 +1608,10 @@ export namespace Prisma {
     maxRain?: boolean
     maxSnow?: boolean
     snow?: boolean
+    rating?: boolean
   }
 
-  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "minTemp" | "maxTemp" | "rain" | "user_id" | "humidity" | "uv_index" | "visibility" | "wind_speed" | "maxRain" | "maxSnow" | "snow", ExtArgs["result"]["activity"]>
+  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "minTemp" | "maxTemp" | "rain" | "user_id" | "humidity" | "uv_index" | "visibility" | "wind_speed" | "maxRain" | "maxSnow" | "snow" | "rating", ExtArgs["result"]["activity"]>
   export type ActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
     ActivityCategory?: boolean | Activity$ActivityCategoryArgs<ExtArgs>
@@ -1629,6 +1644,7 @@ export namespace Prisma {
       maxRain: number | null
       maxSnow: number | null
       snow: boolean | null
+      rating: number | null
     }, ExtArgs["result"]["activity"]>
     composites: {}
   }
@@ -2067,6 +2083,7 @@ export namespace Prisma {
     readonly maxRain: FieldRef<"Activity", 'Int'>
     readonly maxSnow: FieldRef<"Activity", 'Int'>
     readonly snow: FieldRef<"Activity", 'Boolean'>
+    readonly rating: FieldRef<"Activity", 'Int'>
   }
     
 
@@ -5850,7 +5867,8 @@ export namespace Prisma {
     wind_speed: 'wind_speed',
     maxRain: 'maxRain',
     maxSnow: 'maxSnow',
-    snow: 'snow'
+    snow: 'snow',
+    rating: 'rating'
   };
 
   export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
@@ -5983,6 +6001,7 @@ export namespace Prisma {
     maxRain?: IntNullableFilter<"Activity"> | number | null
     maxSnow?: IntNullableFilter<"Activity"> | number | null
     snow?: BoolNullableFilter<"Activity"> | boolean | null
+    rating?: IntNullableFilter<"Activity"> | number | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     ActivityCategory?: ActivityCategoryListRelationFilter
   }
@@ -6001,6 +6020,7 @@ export namespace Prisma {
     maxRain?: SortOrderInput | SortOrder
     maxSnow?: SortOrderInput | SortOrder
     snow?: SortOrderInput | SortOrder
+    rating?: SortOrderInput | SortOrder
     User?: UserOrderByWithRelationInput
     ActivityCategory?: ActivityCategoryOrderByRelationAggregateInput
   }
@@ -6022,6 +6042,7 @@ export namespace Prisma {
     maxRain?: IntNullableFilter<"Activity"> | number | null
     maxSnow?: IntNullableFilter<"Activity"> | number | null
     snow?: BoolNullableFilter<"Activity"> | boolean | null
+    rating?: IntNullableFilter<"Activity"> | number | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     ActivityCategory?: ActivityCategoryListRelationFilter
   }, "id">
@@ -6040,6 +6061,7 @@ export namespace Prisma {
     maxRain?: SortOrderInput | SortOrder
     maxSnow?: SortOrderInput | SortOrder
     snow?: SortOrderInput | SortOrder
+    rating?: SortOrderInput | SortOrder
     _count?: ActivityCountOrderByAggregateInput
     _avg?: ActivityAvgOrderByAggregateInput
     _max?: ActivityMaxOrderByAggregateInput
@@ -6064,6 +6086,7 @@ export namespace Prisma {
     maxRain?: IntNullableWithAggregatesFilter<"Activity"> | number | null
     maxSnow?: IntNullableWithAggregatesFilter<"Activity"> | number | null
     snow?: BoolNullableWithAggregatesFilter<"Activity"> | boolean | null
+    rating?: IntNullableWithAggregatesFilter<"Activity"> | number | null
   }
 
   export type CategoryWhereInput = {
@@ -6239,6 +6262,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
     User: UserCreateNestedOneWithoutActivityInput
     ActivityCategory?: ActivityCategoryCreateNestedManyWithoutActivityInput
   }
@@ -6257,6 +6281,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
     ActivityCategory?: ActivityCategoryUncheckedCreateNestedManyWithoutActivityInput
   }
 
@@ -6272,6 +6297,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
     User?: UserUpdateOneRequiredWithoutActivityNestedInput
     ActivityCategory?: ActivityCategoryUpdateManyWithoutActivityNestedInput
   }
@@ -6290,6 +6316,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
     ActivityCategory?: ActivityCategoryUncheckedUpdateManyWithoutActivityNestedInput
   }
 
@@ -6307,6 +6334,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
   }
 
   export type ActivityUpdateManyMutationInput = {
@@ -6321,6 +6349,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ActivityUncheckedUpdateManyInput = {
@@ -6337,6 +6366,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CategoryCreateInput = {
@@ -6564,6 +6594,7 @@ export namespace Prisma {
     maxRain?: SortOrder
     maxSnow?: SortOrder
     snow?: SortOrder
+    rating?: SortOrder
   }
 
   export type ActivityAvgOrderByAggregateInput = {
@@ -6577,6 +6608,7 @@ export namespace Prisma {
     wind_speed?: SortOrder
     maxRain?: SortOrder
     maxSnow?: SortOrder
+    rating?: SortOrder
   }
 
   export type ActivityMaxOrderByAggregateInput = {
@@ -6593,6 +6625,7 @@ export namespace Prisma {
     maxRain?: SortOrder
     maxSnow?: SortOrder
     snow?: SortOrder
+    rating?: SortOrder
   }
 
   export type ActivityMinOrderByAggregateInput = {
@@ -6609,6 +6642,7 @@ export namespace Prisma {
     maxRain?: SortOrder
     maxSnow?: SortOrder
     snow?: SortOrder
+    rating?: SortOrder
   }
 
   export type ActivitySumOrderByAggregateInput = {
@@ -6622,6 +6656,7 @@ export namespace Prisma {
     wind_speed?: SortOrder
     maxRain?: SortOrder
     maxSnow?: SortOrder
+    rating?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -7449,6 +7484,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
     User: UserCreateNestedOneWithoutActivityInput
   }
 
@@ -7466,6 +7502,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
   }
 
   export type ActivityCreateOrConnectWithoutActivityCategoryInput = {
@@ -7512,6 +7549,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
     User?: UserUpdateOneRequiredWithoutActivityNestedInput
   }
 
@@ -7529,6 +7567,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CategoryUpsertWithoutActivityCategoryInput = {
@@ -7565,6 +7604,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
     ActivityCategory?: ActivityCategoryCreateNestedManyWithoutActivityInput
   }
 
@@ -7581,6 +7621,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
     ActivityCategory?: ActivityCategoryUncheckedCreateNestedManyWithoutActivityInput
   }
 
@@ -7648,6 +7689,7 @@ export namespace Prisma {
     maxRain?: IntNullableFilter<"Activity"> | number | null
     maxSnow?: IntNullableFilter<"Activity"> | number | null
     snow?: BoolNullableFilter<"Activity"> | boolean | null
+    rating?: IntNullableFilter<"Activity"> | number | null
   }
 
   export type CategoryUpsertWithWhereUniqueWithoutUserInput = {
@@ -7720,6 +7762,7 @@ export namespace Prisma {
     maxRain?: number | null
     maxSnow?: number | null
     snow?: boolean | null
+    rating?: number | null
   }
 
   export type CategoryCreateManyUserInput = {
@@ -7739,6 +7782,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
     ActivityCategory?: ActivityCategoryUpdateManyWithoutActivityNestedInput
   }
 
@@ -7755,6 +7799,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
     ActivityCategory?: ActivityCategoryUncheckedUpdateManyWithoutActivityNestedInput
   }
 
@@ -7771,6 +7816,7 @@ export namespace Prisma {
     maxRain?: NullableIntFieldUpdateOperationsInput | number | null
     maxSnow?: NullableIntFieldUpdateOperationsInput | number | null
     snow?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CategoryUpdateWithoutUserInput = {
