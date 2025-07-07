@@ -15,4 +15,5 @@ export const defaultActivity: ActivityWithCategories = {
   wind_speed: null,
   visibility: null,
   ActivityCategory: [],  
+  rating: null,
 }

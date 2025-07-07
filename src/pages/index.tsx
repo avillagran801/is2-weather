@@ -30,7 +30,7 @@ export default function MainPage() {
   const [location, setLocation] = React.useState<{ city: string; country: string; lat: number; lng: number } | null>(null);
   const [recommendedActivities, setRecommendedActivities] = React.useState<ScoredActivity[]>([]);
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [selectedActivity, setSelectedActivity] = React.useState<any>(null);
+  const [selectedActivity, setSelectedActivity] = React.useState<ScoredActivity | null>(null);
 
   React.useEffect(() => {
     if(status !== "authenticated" || !session?.user.id) {
@@ -128,6 +128,20 @@ export default function MainPage() {
   // Get current weather description
   const currentWeatherDescription = getWeatherCodeDescriptions(weather?.current?.weather_code || -1, weather?.current?.is_day);
 
+  const handleRatingChange = async (id: number, newRating: number) => {
+    setRecommendedActivities(prev =>
+      prev.map(act => act.id === id ? { ...act, rating: newRating } : act)
+    );
+    if (selectedActivity && selectedActivity.id === id) {
+      setSelectedActivity({ ...selectedActivity, rating: newRating });
+    }
+    await fetch(`/api/activity/rate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, rating: newRating }),
+    });
+  };
+
   return (
     <>
       {loading ? (
@@ -153,6 +167,7 @@ export default function MainPage() {
                   <ScoredActivityCard
                     activity={activity}
                     onVerMas={() => { setSelectedActivity(activity); setDialogOpen(true); }}
+                    onRatingChange={handleRatingChange}
                   />
                 </Box>
               </Grid>

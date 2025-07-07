@@ -26,6 +26,7 @@ export const defaultWeatherOptions: WeatherOption[] = [
     uv_index: 12,
     wind_speed: 5,
     visibility: 5000,
+    rating: null,
   },
   {
     name: "cloudy",
@@ -39,7 +40,8 @@ export const defaultWeatherOptions: WeatherOption[] = [
     humidity: 70,
     uv_index: 2,
     wind_speed: 10, 
-    visibility: 8000 
+    visibility: 8000,
+    rating: null,
   },
   {
     name: "rainy",
@@ -53,7 +55,8 @@ export const defaultWeatherOptions: WeatherOption[] = [
     humidity: 90,
     uv_index: 1,
     wind_speed: 15,      
-    visibility: 4000
+    visibility: 4000,
+    rating: null,
   },
   {
     name: "snowy",
@@ -67,6 +70,7 @@ export const defaultWeatherOptions: WeatherOption[] = [
     humidity: 80,
     uv_index: 1,
     wind_speed: 20,      
-    visibility: 3000 
+    visibility: 3000,
+    rating: null,
   }
 ];

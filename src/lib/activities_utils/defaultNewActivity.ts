@@ -26,4 +26,5 @@ export const defaultNewActivity: ActivityCreateForm = {
   wind_speed: null,
   visibility: null,
   categories_id: [],
+  rating: null,
 }

@@ -18,10 +18,10 @@ export default function Categorias() {
   const router = useRouter();
 
   React.useEffect(() => {
-    if(status === "loading"){
+    if (status === "loading") {
       return;
     }
-    if(!session){
+    if (!session) {
       router.push("/iniciar-sesion");
     }
   }, [status, session, router]);
@@ -41,7 +41,7 @@ export default function Categorias() {
   const [searchTerm, setSearchTerm] = React.useState<string>("");
 
   React.useEffect(() => {
-    if(status !== "authenticated" || !session?.user.id) {
+    if (status !== "authenticated" || !session?.user.id) {
       return;
     }
 
@@ -107,8 +107,8 @@ export default function Categorias() {
   }
 
   const handleEditCategory = async (editedCategory: CategoryEditPayload) => {
-    try{
-      if(!editedCategory.name) {
+    try {
+      if (!editedCategory.name) {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
@@ -123,17 +123,17 @@ export default function Categorias() {
         })
       });
 
-      if(!response.ok){
+      if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Solicitud fallida");          
+        throw new Error(errorData.error || "Solicitud fallida");
       }
-  
+
       setRefreshCategories(true);
-      setLoading(true);      
+      setLoading(true);
     }
     catch (error) {
       console.log(error);
-      if(error instanceof Error){
+      if (error instanceof Error) {
         alert(error.message);
       }
     }
@@ -151,9 +151,9 @@ export default function Categorias() {
         })
       });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Solicitud fallida");  
+        throw new Error(errorData.error || "Solicitud fallida");
       }
 
       setRefreshCategories(true);
@@ -161,7 +161,7 @@ export default function Categorias() {
     }
     catch (error) {
       console.log(error);
-      if(error instanceof Error){
+      if (error instanceof Error) {
         alert(error.message);
       }
     }
@@ -173,8 +173,8 @@ export default function Categorias() {
     setSearchTerm(newSearch);
   };
 
-  if(loading) {
-    return(
+  if (loading) {
+    return (
       <Loading />
     )
   }
@@ -194,15 +194,15 @@ export default function Categorias() {
           searchTerm={searchTerm}
           onSearchTermChange={handleSearchTermChange}
           buttonText="Crear categoría"
-          onButtonClick={() => {setOpenCreateDialog(true)}}
+          onButtonClick={() => { setOpenCreateDialog(true) }}
         />
         {categories.map((category, index) => (
           <CategoryAccordion
             key={category.id}
             category={category}
             defaultExpanded={index == 0}
-            onEditClick={() => {setSelectedCategory(category); setOpenEditDialog(true); }}
-            onDeleteClick={() => {setSelectedCategory(category); setOpenDeleteDialog(true);}}
+            onEditClick={() => { setSelectedCategory(category); setOpenEditDialog(true); }}
+            onDeleteClick={() => { setSelectedCategory(category); setOpenDeleteDialog(true); }}
           />
         ))}
       </Box>

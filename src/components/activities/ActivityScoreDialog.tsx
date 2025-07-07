@@ -1,7 +1,6 @@
 import { ActivityWithCategories } from "@/pages/api/activity/readByUser";
 import { WeatherData } from "@/pages/api/weather/consult";
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemIcon, ListItemText, SvgIconProps, Typography } from "@mui/material";
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -35,17 +34,6 @@ export default function ActivityScoreDialog({
   selectedActivity,
   weather,
 }: ActivityScoreDialogProps) {
-  const [rating, setRating] = React.useState(selectedActivity.rating || 0);
-  
-  const handleRatingChange = async (newRating: number) => {
-    setRating(newRating);
-    await fetch(`/api/activity/rate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: selectedActivity.id, rating: newRating }),
-    });
-  };
-
 
   if (!selectedActivity || !weather) return null;
 
@@ -109,12 +97,12 @@ export default function ActivityScoreDialog({
       maxWidth="sm"
     >
       <DialogTitle fontWeight={'fontWeightBold'}>
-        Condiciones para "{selectedActivity.name}"
+        Condiciones para &quot;{selectedActivity.name}&quot;
       </DialogTitle>
       <DialogContent>
         <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
           <Typography fontWeight="bold">Calificación:</Typography>
-          <StarRating value={selectedActivity.rating ?? 0} onChange={handleRatingChange} />
+          <StarRating value={selectedActivity.rating ?? 0} readOnly={true} />
           <Typography variant="body2" color="text.secondary">
             {selectedActivity.rating !== null && selectedActivity.rating !== undefined
               ? selectedActivity.rating.toFixed(1)

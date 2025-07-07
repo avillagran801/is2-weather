@@ -58,6 +58,7 @@ export default function EditActivityDialog({open, setOpen, selectedActivity, onS
       wind_speed: optionalSettings? formData.wind_speed : null,
       visibility: optionalSettings? formData.visibility : null,
       categories_id: formData.categories_id.map(Number),
+      rating: formData.rating ?? null,
     });
 
     handleClose();

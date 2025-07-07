@@ -7,20 +7,10 @@ import StarRating from "@/components/rating/StarRating";
 type CardProps = {
   activity: ScoredActivity;
   onVerMas?: () => void;
+  onRatingChange?: (id: number, newRating: number) => void;
 };
 
-export default function ScoredActivityCard({ activity, onVerMas }: CardProps) {
-  const [rating, setRating] = React.useState(activity.rating || 0);
-
-  const handleRatingChange = async (newRating: number) => {
-    setRating(newRating);
-    await fetch(`/api/activity/rate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: activity.id, rating: newRating }),
-    });
-  };
-
+export default function ScoredActivityCard({ activity, onVerMas, onRatingChange }: CardProps) {
   return (
     <GenericActivityCard activity={activity}>
       <Typography
@@ -49,9 +39,13 @@ export default function ScoredActivityCard({ activity, onVerMas }: CardProps) {
             Más Información
           </Button>
         </Box>
-      )}  
+      )}
       <Box sx={{ position: "absolute", bottom: 8, left: 8 }}>
-        <StarRating value={rating} onChange={handleRatingChange} />
+        <StarRating
+          value={activity.rating ?? 0}
+          onChange={onRatingChange ? (newRating) => onRatingChange(activity.id, newRating) : undefined}
+          readOnly={!onRatingChange}
+        />
       </Box>
     </GenericActivityCard>
   );

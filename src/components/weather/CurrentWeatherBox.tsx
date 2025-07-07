@@ -61,7 +61,7 @@ export default function CurrentWeatherBox({ weather, currentWeatherDescription }
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <WbSunnyIcon color="primary" />
           <Typography variant="body1">
-                        UV {weather?.current?.uv_index ?? "--"}
+            UV {weather?.current?.uv_index ?? "--"}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

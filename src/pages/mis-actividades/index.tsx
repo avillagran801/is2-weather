@@ -19,10 +19,10 @@ export default function MisActividades() {
   const router = useRouter();
 
   React.useEffect(() => {
-    if(status === "loading"){
+    if (status === "loading") {
       return;
     }
-    if(!session){
+    if (!session) {
       router.push("/iniciar-sesion");
     }
   }, [status, session, router]);
@@ -44,16 +44,16 @@ export default function MisActividades() {
 
   // Fetch all activities associated with the user
   React.useEffect(() => {
-    if(status !== "authenticated" || !session?.user.id) {
+    if (status !== "authenticated" || !session?.user.id) {
       return;
     }
-    
-    const fetchActivities = async() => {
+
+    const fetchActivities = async () => {
       try {
         const response = await fetch(`/api/activity/readByUser?user_id=${session?.user.id}`);
         const data = await response.json();
 
-        if(!response.ok){
+        if (!response.ok) {
           throw new Error(data.error);
         }
 
@@ -72,16 +72,16 @@ export default function MisActividades() {
 
   // Fetch all categories associated with the user
   React.useEffect(() => {
-    if(status !== "authenticated" || !session?.user.id) {
+    if (status !== "authenticated" || !session?.user.id) {
       return;
     }
 
-    const fetchCategories = async() => {
+    const fetchCategories = async () => {
       try {
         const response = await fetch(`/api/category/readByUser?user_id=${session?.user.id}`);
         const data = await response.json();
 
-        if(!response.ok){
+        if (!response.ok) {
           throw new Error(data.error);
         }
 
@@ -98,12 +98,12 @@ export default function MisActividades() {
 
   const handleAddActivity = async (newActivity: ActivityCreatePayload) => {
     try {
-      if( !newActivity.name ) {
+      if (!newActivity.name) {
         throw new Error("La actividad necesita un nombre");
       }
 
-      if(newActivity.minTemp > newActivity.maxTemp) {
-        throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");        
+      if (newActivity.minTemp > newActivity.maxTemp) {
+        throw new Error("La temperatura mínima no puede ser mayor que la temperatura máxima");
       }
 
       const response = await fetch("/api/activity/create", {
@@ -111,14 +111,14 @@ export default function MisActividades() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({         
+        body: JSON.stringify({
           ...newActivity,
           user_id: session?.user.id,
           categories_id: newActivity.categories_id,
         })
       });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Solicitud fallida");
       }
@@ -134,7 +134,7 @@ export default function MisActividades() {
 
   const handleEditActivity = async (editedActivity: ActivityEditPayload) => {
     try {
-      if( !editedActivity.name ) {
+      if (!editedActivity.name) {
         throw new Error("Hay al menos un campo obligatorio incompleto");
       }
 
@@ -149,9 +149,9 @@ export default function MisActividades() {
         })
       });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Solicitud fallida");  
+        throw new Error(errorData.error || "Solicitud fallida");
       }
 
       setRefreshActivities(true);
@@ -159,7 +159,7 @@ export default function MisActividades() {
     }
     catch (error) {
       console.log(error);
-      if(error instanceof Error){
+      if (error instanceof Error) {
         alert(error.message);
       }
     }
@@ -177,9 +177,9 @@ export default function MisActividades() {
         })
       });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Solicitud fallida");  
+        throw new Error(errorData.error || "Solicitud fallida");
       }
 
       setRefreshActivities(true);
@@ -187,7 +187,7 @@ export default function MisActividades() {
     }
     catch (error) {
       console.log(error);
-      if(error instanceof Error){
+      if (error instanceof Error) {
         alert(error.message);
       }
     }
@@ -199,15 +199,15 @@ export default function MisActividades() {
     setSearchTerm(newSearch);
   };
 
-  if(loading) {
-    return(
+  if (loading) {
+    return (
       <Loading />
     )
   }
 
-  return(
+  return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", m: 2}}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", m: 2 }}>
         <Button
           variant="contained"
           color="secondary"
@@ -229,7 +229,7 @@ export default function MisActividades() {
           searchTerm={searchTerm}
           onSearchTermChange={handleSearchTermChange}
           buttonText="Crear actividad"
-          onButtonClick={() => {setOpenCreateDialog(true)}}
+          onButtonClick={() => { setOpenCreateDialog(true) }}
         />
 
         <Grid container spacing={2} alignItems="stretch">
@@ -237,11 +237,11 @@ export default function MisActividades() {
             activities.map((activity) => (
               <Grid
                 key={activity.id}
-                size={{ xs: 12, sm: 6, md: 4}}
+                size={{ xs: 12, sm: 6, md: 4 }}
               >
                 <ActivityCard
                   activity={activity}
-                  onClick={() => {setSelectedActivity(activity); setOpenDetailsDialog(true)}}
+                  onClick={() => { setSelectedActivity(activity); setOpenDetailsDialog(true) }}
                 />
               </Grid>
             ))

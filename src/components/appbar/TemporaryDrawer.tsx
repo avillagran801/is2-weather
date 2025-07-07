@@ -21,37 +21,37 @@ type TemporaryDrawerProps = {
   handleClose: () => void;
 }
 
-export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProps) {
+export default function TemporaryDrawer({ open, handleClose }: TemporaryDrawerProps) {
   const pagesList = [
     {
       name: "Inicio",
       url: "/",
-      icon: <HomeIcon/>
+      icon: <HomeIcon />
     },
     {
       name: "Mis actividades",
       url: "/mis-actividades",
-      icon: <DirectionsRunIcon/>
+      icon: <DirectionsRunIcon />
     },
     {
       name: "Mis categorias",
       url: "/mis-categorias",
-      icon: <InterestsIcon/>
+      icon: <InterestsIcon />
     },
     {
       name: "Mi ubicación",
       url: "/mi-ubicacion",
-      icon: <LocationCityIcon/>
+      icon: <LocationCityIcon />
     },
     {
       name: "Ranking actividades",
       url: "/activity-rank",
-      icon: <EmojiEventsIcon/>
+      icon: <EmojiEventsIcon />
     },
     {
       name: "Gift",
       url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      icon: <CardGiftcardIcon/>
+      icon: <CardGiftcardIcon />
     },
   ];
 
@@ -60,7 +60,7 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
       callbackUrl: "/iniciar-sesion"
     })
   }
-  
+
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={handleClose}>
       <List>
@@ -69,7 +69,7 @@ export default function TemporaryDrawer({open, handleClose}: TemporaryDrawerProp
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {page.icon? page.icon : <LocationCityIcon />}
+                  {page.icon ? page.icon : <LocationCityIcon />}
                 </ListItemIcon>
                 <ListItemText primary={page.name} />
               </ListItemButton>
