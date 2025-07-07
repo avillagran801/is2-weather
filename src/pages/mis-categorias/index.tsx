@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import Loading from "@/components/layout/Loading";
+import Loading from "@/components/layout/loading";
 import { ActivityWithCategories } from "../api/activity/readByUser";
 import CreateCategoryDialog from "@/components/categories/CreateCategoryDialog";
 import { CategoryCreatePayload, CategoryEditPayload } from "@/lib/categories_utils/defaultNewCategory";

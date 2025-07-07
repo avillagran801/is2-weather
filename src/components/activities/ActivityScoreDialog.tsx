@@ -11,7 +11,9 @@ import AirIcon from '@mui/icons-material/Air';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { calculateActivityScores } from "@/utils/getPassedConditions";
+import { getPassedConditions } from "@/utils/getPassedConditions";
+import StarRating from "@/components/rating/StarRating";
+import React from "react";
 
 type ActivityScoreDialogProps = {
   open: boolean;
@@ -33,9 +35,21 @@ export default function ActivityScoreDialog({
   selectedActivity,
   weather,
 }: ActivityScoreDialogProps) {
+  const [rating, setRating] = React.useState(selectedActivity.rating || 0);
+  
+  const handleRatingChange = async (newRating: number) => {
+    setRating(newRating);
+    await fetch(`/api/activity/rate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: selectedActivity.id, rating: newRating }),
+    });
+  };
+
+
   if (!selectedActivity || !weather) return null;
 
-  const conditions = calculateActivityScores(selectedActivity, weather);
+  const conditions = getPassedConditions(selectedActivity, weather);
 
   // Define all possible condition items
   const allConditionItems: ConditionItem[] = [
@@ -98,6 +112,15 @@ export default function ActivityScoreDialog({
         Condiciones para "{selectedActivity.name}"
       </DialogTitle>
       <DialogContent>
+        <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+          <Typography fontWeight="bold">Calificación:</Typography>
+          <StarRating value={selectedActivity.rating ?? 0} onChange={handleRatingChange} />
+          <Typography variant="body2" color="text.secondary">
+            {selectedActivity.rating !== null && selectedActivity.rating !== undefined
+              ? selectedActivity.rating.toFixed(1)
+              : "Sin calificación"}
+          </Typography>
+        </Box>
         <List>
           {shownConditionItems.map((item) => (
             <ListItem key={item.label}>

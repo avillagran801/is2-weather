@@ -13,7 +13,7 @@ export type conditionsPassed = {
     visibility: boolean | null;
 };
 
-export function calculateActivityScores(activity: ActivityWithCategories, weather: WeatherData): conditionsPassed {
+export function getPassedConditions(activity: ActivityWithCategories, weather: WeatherData): conditionsPassed {
 
     let conditions: conditionsPassed = {
         temperature: false,
