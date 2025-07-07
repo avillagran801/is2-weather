@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
-import Loading from "@/components/layout/loading";
+import Loading from "@/components/layout/Loading";
 import WeatherChart from "@/components/weather/WeatherChart";
 import CurrentWeatherBox from "@/components/weather/CurrentWeatherBox";
 import ScoredActivityCard from "@/components/activities/ScoredActivityCard";
