@@ -25,9 +25,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: {
         username: username,
         password: hashedPassword,
-        latitude: 0,
-        longitude: 0,
-        city_name: "",
+        latitude: -36.8785069,
+        longitude: -73.1467503,
+        city_name: "San Pedro de la Paz, Chile",
+        is_account_new: true,
       }
     });
 

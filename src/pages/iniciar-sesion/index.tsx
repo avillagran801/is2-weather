@@ -38,6 +38,7 @@ export default function IniciarSesion() {
       if (!auth?.error) {
         window.location.href = "/";
       }
+
     }
     catch (error) {
       console.log(error);
